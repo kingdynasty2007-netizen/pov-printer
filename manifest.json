@@ -1,0 +1,18 @@
+{
+  "scene_001": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_KUx0O9Fkpf3kUUU1UAPho4wi8EQvlwuk/output.png",
+    "local_path": "generated_images/scene_001.png",
+    "characters": [
+      "hannah"
+    ],
+    "scene_text": "1. prompt: Wide cinematic establishing shot of a small biblical-era Middle Eastern village just after sunrise, mud-brick homes, stone steps, clay jars, and a narrow dusty lane. Hannah stands outside her home in a relaxed three-quarter pose, left foot slightly forward, supporting a clay bowl against her waist with her left arm while her right hand pauses above the grain. Her shoulders are lowered, her head turned toward Micah approaching in the distance. Micah walks naturally toward her with an upright posture, one foot forward, trailing heel slightly raised, right arm swinging loosely and left hand near his rust-red sash. Warm golden morning light, polished children\u2019s story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, consistent character designs, full-body characters visible, no modern objects.\nrefs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_002": {
+    "status": "failed",
+    "error": "HTTPSConnectionPool(host='platform-outputs.agnes-ai.space', port=443): Max retries exceeded with url: /images/i2i/task_3EWD79GK7S0SiDR3VHXBH1xkJ4L7DNkZ/output.png (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)')))",
+    "error_category": "download",
+    "unverified_url": "https://platform-outputs.agnes-ai.space/images/i2i/task_3EWD79GK7S0SiDR3VHXBH1xkJ4L7DNkZ/output.png"
+  }
+}

@@ -1,29 +1,98 @@
-1. prompt: Wide cinematic establishing shot of a small biblical-era Middle Eastern village just after sunrise, mud-brick homes, stone steps, clay jars, and a narrow dusty lane. Hannah stands outside her home in a relaxed three-quarter pose, left foot slightly forward, supporting a clay bowl against her waist with her left arm while her right hand pauses above the grain. Her shoulders are lowered, her head turned toward Micah approaching in the distance. Micah walks naturally toward her with an upright posture, one foot forward, trailing heel slightly raised, right arm swinging loosely and left hand near his rust-red sash. Warm golden morning light, polished children’s story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, consistent character designs, full-body characters visible, no modern objects.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Elian, Jacob
+In the early morning light of a peaceful Middle Eastern village, Jacob stands on the stone step of their mud-brick home. He places a gentle hand on young Elian's shoulder, handing him a small wooden staff. Elian looks up at his father with wide, eager eyes, ready for the day's work.
 ---
-2. prompt: Medium two-shot in a sunlit biblical-era village lane. Hannah has turned fully toward Micah and has just placed a clay bowl on a low stone ledge. Both of her palms are open at waist height, her eyebrows slightly drawn together, chin lowered, and expression concerned but controlled. Micah stands two steps away with both feet shoulder-width apart, spine upright, right hand raised at chest height with the palm facing upward as he explains the urgent news, left hand relaxed beside his hip. His head tilts slightly forward in respectful conversation. Warm morning light, children’s story 2D animated cartoon style, clean expressive line art, soft shading, subtle gradients, emotional storytelling, consistent character appearance.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Rachel, Elian
+Rachel kneels before Elian in the dusty lane, fastening the strap of his small waterskin. She smiles warmly and brushes a stray lock of hair from his forehead. The golden sunrise illuminates the clay jars lined against their home.
 ---
-3. prompt: Side-view tracking shot of Hannah and Micah walking together along a winding path toward a hilltop sanctuary. Hannah walks on the left with a measured stride, right foot forward, left arm swinging naturally, and right hand lightly gathering the edge of her ochre shawl. Her torso leans forward slightly with determination and she looks toward the sanctuary. Micah walks half a step ahead on the right, shoulders squared but relaxed, right arm bent and subtly pointing toward the hill while his left arm hangs naturally. He turns his head back toward Hannah while keeping his feet directed forward. Dry grasses move in the breeze, ancient Middle Eastern hills in the distance, warm afternoon light, polished children’s story 2D animated cartoon style, clean line art, soft shading, cinematic atmosphere, full bodies visible.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Elian
+Elian walks alone down a winding dusty path, leading a small white lamb. He hums softly, kicking up little clouds of dust with his sandals. Green hills rise in the distance under a clear blue sky.
 ---
-4. prompt: Low-angle medium-wide shot at the gate of an ancient hilltop sanctuary. Azariah stands on the upper stone step in a dignified three-quarter pose, wooden staff planted firmly beside his right foot, right hand resting over the top of the staff, left hand open beside his robe, shoulders relaxed, head raised, and gaze directed toward Hannah and Micah. Hannah stands at the bottom step with both feet together in a respectful posture, hands folded loosely over her woven belt, looking upward with a serious but calm expression. Micah stands one step behind her with feet evenly apart, chin lowered in a respectful bow while keeping his back straight. Biblical-era stone architecture, gentle cinematic sunlight, children’s story 2D animated cartoon style, clean line art, soft shading, consistent proportions.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Elian
+Elian sits on a rocky outcrop, swinging his legs over the edge. He watches the lamb graze peacefully in a field of wildflowers. The wind gently rustles his tunic and the wool of the lamb.
 ---
-5. prompt: Shaded sanctuary courtyard with a long stone table, rolled maps, clay jars, and grain baskets. Azariah stands behind the table, bending slightly from the waist with his left palm flat on a simple map and his right index finger pointing toward a mountain pass. His feet are planted apart, expression thoughtful, eyes narrowed slightly. Hannah stands across from him, leaning forward just enough to study the map, left hand resting on the table edge and right hand touching her chin with two fingers. Micah stands at the right side of the table in profile, holding a rolled map under his left arm while his right hand traces the route above the map. His head follows the route and his mouth is slightly open as he asks a question. Overhead three-quarter camera angle, detailed hands and posture, warm filtered light, polished children’s story 2D animated cartoon style, clean line art, soft shading, subtle gradients.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS:
+Dark, heavy clouds suddenly roll in from the hills, swallowing the bright sun. The sky turns a bruised purple and gray. A strong wind begins to stir the dust on the ground.
 ---
-6. prompt: Medium-wide village square scene in late morning. Hannah stands at the center in a confident front-facing pose, feet slightly wider than hip-width, spine straight, one hand open toward the grain baskets with the palm upward while her other hand gestures gently toward a family bringing a sack. Her elbows remain bent and close to her body, expression warm and encouraging. In the background, Micah carries a woven basket from right to left with both hands, elbows bent, shoulders slightly forward from the weight, knees softly flexed, eyes checking his footing before looking toward Hannah for direction. Clay jars and woven baskets surround the square, warm sunlight, polished children’s story 2D animated cartoon style, clean line art, soft shading, cinematic storytelling, consistent character design.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Elian
+Elian scrambles to his feet, his face filled with worry. He tries to call to his lamb, but it has already run off toward the thickening brush. Rain begins to fall in heavy, cold drops.
 ---
-7. prompt: Dramatic afternoon scene on the road outside the village with a loaded wooden cart and dark clouds gathering over distant hills. Micah stands beside the cart in a three-quarter pose, feet staggered with his front foot angled toward the road and back foot turned toward the village. His right hand grips the cart rail while his left hand rests against his chest. His shoulders are subtly raised, brow furrowed, and gaze fixed on the dangerous hills. Hannah approaches from behind and stops half a step away, feet firmly planted, torso turned toward him, head lowered slightly so she can meet his eyes. Her hands remain open near her waist before she gently places her right hand on his upper arm. Micah’s shoulders begin to relax. Children’s story 2D animated cartoon style, clean line art, soft dramatic shading, cinematic storm light, emotional atmosphere.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Elian
+Elian runs through the now-twilight forest, branches scratching at his arms. He looks around wildly, trying to find a familiar landmark, but every tree and rock looks strange and unfamiliar.
 ---
-8. prompt: Symmetrical sunset composition in the sanctuary courtyard beside a loaded cart. Azariah stands facing the travelers with his staff held vertically in his left hand and his right hand raised at shoulder height, palm outward in a calm blessing gesture. His elbow is slightly bent, chin raised, and eyes compassionate. Hannah stands directly in front of him with feet close together, hands folded at her waist, shoulders relaxed, looking directly at him with quiet resolve. Micah stands one step behind Hannah and slightly to her right, head lowered respectfully but spine straight, both hands resting over the strap of his travel pouch, feet aligned toward the road. Warm amber and rose sunset light, ancient stone courtyard, polished children’s story 2D animated cartoon style, clean expressive line art, soft shading, subtle gradients, cinematic emotional tone.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS:
+The storm passes, leaving a world dripping with water and shrouded in mist. A narrow, unfamiliar path stretches ahead, leading deeper into the darkening woods. No sign of the village remains.
 ---
-9. prompt: Warm twilight scene at a dry settlement as the loaded cart arrives. Hannah kneels beside a child-height clay jar with her knees together and back upright, supporting the jar with one hand while passing a smaller bowl forward with the other. Her expression is gentle and reassuring as she looks toward the waiting families. Micah stands beside the cart in a careful lifting posture, knees flexed, back straight, both hands gripping a woven basket close to his torso. He places the basket on the ground and begins to straighten, one hand moving briefly toward his hip. Hannah rises by pressing one hand against her thigh for support, then turns toward Micah with a grateful smile. Stone walls, dry settlement, soft twilight glow, polished children’s story 2D animated cartoon style, clean line art, soft shading, emotional cinematic composition, clear posture and hand placement.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Elian
+Elian sits huddled beneath the broad leaves of a large bush, his knees drawn to his chest. Tears stream down his dirty cheeks as he stares into the growing darkness. His wooden staff lies forgotten beside him.
 ---
-10. prompt: Wide final cinematic tableau at dawn after the storm. Azariah stands on the left with his wooden staff planted beside him, weight evenly distributed across both feet, shoulders relaxed, free hand resting over his sash as he looks peacefully across the valley. Hannah stands in the center slightly ahead of the others, feet firmly planted, hands loosely clasped at waist level, head turned toward a thin stream of water flowing between the stones, posture upright but soft with relief. Micah stands on the right in a natural three-quarter pose, feet angled toward the valley, arms relaxed at his sides, shoulders no longer tense, looking first toward Hannah and then toward the water with a hopeful smile. Bright sunlight breaks over the valley, gentle mist, biblical-era Middle Eastern landscape, polished children’s story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic emotional lighting, consistent character appearance, no modern objects, no text.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: Elian
+A single tear rolls down Elian's cheek as he looks up at the first evening star piercing through the parting clouds. He wraps his arms around himself, feeling very small and alone in the vast, quiet wilderness.
+---
+CHARACTERS:
+An old shepherd's crook appears in the frame, followed by the robes of an elderly man. The shepherd crouches down, his face hidden in shadow, offering a silent, steady presence to the shivering boy.
+---
+CHARACTERS: Elian
+The old shepherd gently places a thick, woven cloak over Elian's shoulders. Elian looks up, his fear momentarily replaced by confused gratitude as the kind old man offers him a piece of hard bread.
+---
+CHARACTERS: Elian, Jacob
+Dawn breaks over the hills, painting the sky in soft pinks and oranges. Jacob runs along a familiar path, calling Elian's name with urgency. His face is etched with worry and hope.
+---
+CHARACTERS:
+From a high ridge, Elian sees the distant smoke rising from his village chimneys. He points excitedly, his whole body tense with the beginning of a run. The shepherd nods slowly, a sad smile on his face.
+---
+CHARACTERS: Elian, Jacob
+Elian bursts through the final line of bushes onto the village green, his small figure sprinting toward a waiting man. Jacob drops to his knees, opening his arms wide as Elian crashes into them.
+---
+CHARACTERS: Elian, Jacob
+Elian clings tightly to his father Jacob upon the sunlit village green, Jacob's arms wrapped around the small boy, his face buried in Elian's shoulder, tears welling in his eyes, warm golden light bathing the scene.
+---
+CHARACTERS: Jacob
+Jacob lifts his head from the embrace, looking outward across the green with a weary but grateful expression, one hand still resting protectively on Elian's back, dust settling on his sandals.
+---
+CHARACTERS: Rachel
+Rachel appears at the far edge of the village green, her hand shading her eyes against the bright sun, her posture tense with worry, her robe fluttering slightly in the breeze.
+---
+CHARACTERS: Rachel, Jacob, Elian
+Rachel sprints across the dusty green toward her family, her face transforming from fear to overwhelming joy as she spots Jacob and Elian together in their embrace, her arms already reaching forward.
+---
+CHARACTERS: Rachel, Elian
+Rachel drops to her knees and wraps her arms around Elian, pulling him close against her chest, her face pressed into his hair, tears streaming down her cheeks, while Jacob watches with a soft smile behind them.
+---
+CHARACTERS: Jacob, Rachel
+Jacob kneels beside his wife and son, placing a gentle hand on Rachel's shoulder and the other on Elian's back, completing the family circle on the sun-warmed earth of the village green.
+---
+CHARACTERS: Jacob, Rachel, Elian
+The family sits together on the ground, Jacob's arm around Rachel's shoulders, Rachel's arm around Elian, all three faces illuminated by the golden afternoon light, expressions peaceful and renewed.
+---
+CHARACTERS: Elian, Jacob
+Jacob speaks softly to Elian, bending close to whisper in his ear, Elian looking up at his father with wide trusting eyes, one of Jacob's hands cradling Elian's face gently.
+---
+CHARACTERS: Rachel, Elian
+Rachel holds Elian's small hands in both of hers, speaking to him with a tender smile, her head bowed toward him, her eyes bright with unshed tears of relief and love.
+---
+CHARACTERS: Jacob, Rachel
+Jacob and Rachel share a quiet glance across Elian's head, their eyes meeting with a deep understanding between them, the weight of days of sorrow lifting from both their faces.
+---
+CHARACTERS: Elian
+Elian rests his head against Rachel's chest, his eyes growing heavy with exhaustion, his small fingers still curled loosely in Rachel's robe, his breathing slowing into peaceful rhythm.
+---
+CHARACTERS: Jacob, Rachel
+Jacob rises slowly to his feet, steadying Rachel as she stands with Elian sleeping in her arms, the two of them silhouetted against the warm fading light of the setting sun.
+---
+CHARACTERS: Jacob, Rachel
+Jacob walks beside Rachel as she carries their sleeping son, their footsteps slow and deliberate along the dusty lane leading away from the green, mud-brick homes lining the path on either side.
+---
+CHARACTERS: Jacob, Rachel, Elian
+They arrive before their humble doorway, Jacob reaching out to push open the wooden door, Rachel stepping through the threshold still holding Elian close, the warm glow of an oil lamp visible within.
+---
+CHARACTERS: Rachel
+Rachel lays Elian down upon a woven mat near the cool earthen floor, covering him gently with a thin blanket, her movements slow and reverent, her face full of quiet gratitude as she watches him sleep.
+---
+CHARACTERS: rachel, jacob
+In a softly lit mud-brick room, jacob stands in the doorway with his face showing awe and gratitude. rachel sits beside the woven mat where elian sleeps peacefully, her hand resting gently on his blanket. jacob walks slowly toward them, his sandals whispering against the earthen floor. Warm golden lamplight illuminates their figures, casting a serene glow over the humble dwelling.
+---
+CHARACTERS: rachel, jacob
+rachel leans forward, her expression tender as she whispers the story of how elian was found wandering lost near the olive groves. jacob kneels beside the mat, his eyes fixed on elian's sleeping face, his hand covering his heart. The soft light catches the relief and joy in their features as they share this quiet moment of thanksgiving.
+---
+CHARACTERS: jacob, rachel
+jacob reaches out and takes elian's small hand in his own, his face full of promise and fatherly love. rachel watches them both, her eyes shining with tears of happiness, her hand gently resting on jacob's shoulder. The three of them sit together in the lamplight, the family complete and whole once more.

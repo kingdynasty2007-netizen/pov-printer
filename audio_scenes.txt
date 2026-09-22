@@ -1,0 +1,131 @@
+SCENE: scene_001
+VOICE: Aoede
+In the quiet village of Bethlehem, a father named Jacob prepared his young son, Elian, for a simple task. With a loving push, he sent the boy out to tend the flock for the day.
+
+SCENE: scene_002
+VOICE: Aoede
+His mother, Rachel, made sure his waterskin was full and his heart was steady. She kissed his forehead, blessing him before he wandered into the hills.
+
+SCENE: scene_003
+VOICE: Aoede
+Elian walked with pride, leading a gentle lamb beyond the stone walls of his home. The morning air was fresh, and the world felt endless and full of promise.
+
+SCENE: scene_004
+VOICE: Aoede
+He found a perfect spot on a sun-warmed rock to watch over his charge. The lamb grazed contentedly, and Elian felt like the most important shepherd in all the land.
+
+SCENE: scene_005
+VOICE: Aoede
+But the mountains hold secrets, and their weather changes in a heartbeat. Dark clouds gathered without warning, and the pleasant day turned cold and fierce.
+
+SCENE: scene_006
+VOICE: Aoede
+Elian tried to gather his lamb, but the animal fled in fear. The rain fell in sheets, blinding him, and when it stopped, the world was changed.
+
+SCENE: scene_007
+VOICE: Aoede
+He ran, but the paths he knew were gone, hidden under mud and new growth. Every direction looked the same, and the confident boy grew quiet with fear.
+
+SCENE: scene_008
+VOICE: Aoede
+Night began to fall, and the forest became a place of shadows and sounds. Elian was truly lost, far from the familiar smell of his father's home.
+
+SCENE: scene_009
+VOICE: Aoede
+He found shelter under a bush and curled into a small ball. The cold seeped into his bones, and he wept for the mother and father he loved.
+
+SCENE: scene_010
+VOICE: Aoede
+His tears came slowly at first, then in silent sobs. He felt incredibly small beneath the vast, starry sky that watched over him.
+
+SCENE: scene_011
+VOICE: Aoede
+An old shepherd, passing through the wilderness, heard a faint sound. He found the boy and did not speak, but simply sat beside him in the dark.
+
+SCENE: scene_012
+VOICE: Aoede
+With kindness, the stranger shared his cloak and his simple meal. Elian ate, warmed by the fire and the gentle patience of the unknown man.
+
+SCENE: scene_013
+VOICE: Aoede
+Back in the village, Jacob could not sleep. He told his wife of his worry and took a lamp, stepping out into the dark to search.
+
+SCENE: scene_014
+VOICE: Aoede
+At first light, Elian saw the smoke of home rising in the distance. He pointed, and though his savior remained behind, his heart leaped with hope.
+
+SCENE: scene_015
+VOICE: Aoede
+Elian ran until his lungs burned, and there was his father. Jacob caught him, holding him tight, thankful that the lost boy had finally found his way home.
+
+SCENE: scene_016
+VOICE: Aoede
+And Elian ran until his lungs burned, and there was his father. Jacob caught him, holding him tight, thankful that the lost boy had finally found his way home.
+
+SCENE: scene_017
+VOICE: Aoede
+Jacob held his son close, and though his heart was full, his eyes sought the one he had feared had been left behind, for a father's love is never quite at peace until all his children are gathered.
+
+SCENE: scene_018
+VOICE: Aoede
+At the edge of the green, a woman appeared, her hand raised against the sun, her steps uncertain upon the dust, for she had searched the hills and the valleys and found him not.
+
+SCENE: scene_019
+VOICE: Aoede
+Then Rachel saw them, and her breath caught in her throat. She ran across the green with all the strength left in her legs, her fears falling away like garments cast to the ground.
+
+SCENE: scene_020
+VOICE: Aoede
+She fell upon Elian and held him as though she would never let go, weeping freely now, for a mother's heart knows no peace until it has touched its own once more.
+
+SCENE: scene_021
+VOICE: Aoede
+And Jacob drew near and knelt with them, placing his hands upon them both, and so the family was whole again upon that sunlit green, bound together by love that had endured the longest night.
+
+SCENE: scene_022
+VOICE: Aoede
+They sat together as the afternoon light grew softer, the three of them in a quiet circle, and the world seemed made new again for those who had known sorrow and found joy beyond their asking.
+
+SCENE: scene_023
+VOICE: Aoede
+Jacob bent close to whisper words of comfort into Elian's ear, telling him that he was safe, that he was home, and that no darkness would ever again separate them.
+
+SCENE: scene_024
+VOICE: Aoede
+Rachel took Elian's small hands in hers and spoke to him softly, telling him of her own fear and her own prayers, so that he might know his mother's heart had never ceased to seek him.
+
+SCENE: scene_025
+VOICE: Aoede
+And Jacob and Rachel looked upon each other with eyes full of understanding, for they had both walked through the valley of anxiety, and yet they had not been abandoned.
+
+SCENE: scene_026
+VOICE: Aoede
+Elian's eyelids grew heavy at last, and he sank into the deep sleep of the weary child, his small face peaceful at last, freed from the terror that had plagued him.
+
+SCENE: scene_027
+VOICE: Aoede
+Jacob rose and offered his hand to Rachel, and she rose with Elian still sleeping in her arms, and together they began the slow walk home through the golden lanes of the village.
+
+SCENE: scene_028
+VOICE: Aoede
+They walked side by side along the dusty path, mud-brick walls rising on either side, the sounds of the village settling into evening, and the three of them drawn ever closer by love.
+
+SCENE: scene_029
+VOICE: Aoede
+They came at last to their door, and Jacob pushed it open to reveal the warm glow within, a sanctuary prepared for them all, where the lost would be welcomed and the weary would find rest.
+
+SCENE: scene_030
+VOICE: Aoede
+Rachel laid Elian gently upon the mat and covered him with a soft blanket, and she watched over him in the lamplight, her heart overflowing with gratitude, for the lost had been found and the family was made whole.
+
+SCENE: scene_031
+VOICE: Aoede
+And jacob came into the room, and behold, his son was restored to him in peace. He drew near and beheld rachel keeping watch over the sleeping boy, and his heart was filled with gratitude unto the Lord.
+
+SCENE: scene_032
+VOICE: Aoede
+Then rachel told him all that had befallen, how they had found the lost boy wandering alone in the fields. And jacob knelt beside the mat, listening with wonder and thankfulness, for the Lord had brought him back safe and sound.
+
+SCENE: scene_033
+VOICE: Aoede
+And jacob took the boy's hand in his own, making a promise to care for him always. And rachel stood beside them, her heart overflowing with joy, for the family that had been scattered was now gathered together once more.

@@ -1,8 +1,12 @@
 # ============================================================
 # FILE: batch_image_generator.py
-# CHANGE: skips any scene already marked "ok" in manifest.json
-# before queuing — makes this script safely re-runnable/resumable
-# instead of redoing completed work from scratch.
+# CHANGE: generation_worker and verification_worker now wrap their
+# per-item work in try/except. Previously, ANY unexpected exception
+# (e.g. brain_core missing a function) killed that worker thread
+# PERMANENTLY — with 5 verify workers, one repeating bug could kill
+# all 5, leaving nothing to ever finalize another scene for the rest
+# of the run. Now a crash fails just that one scene and the thread
+# keeps running.
 # ============================================================
 
 import queue
@@ -131,34 +135,47 @@ def generation_worker(lane):
             continue
 
         scene_key = f"scene_{scene_number:03d}"
-        state = get_scene_state(scene_key)
-        board.update(scene_key, "generating")
 
+        # Everything below is wrapped — an unexpected crash here fails
+        # ONLY this scene and lets the thread keep running, instead of
+        # silently killing this entire lane for the rest of the run.
         try:
-            url = generate_image_url(lane, characters, state["scene_text"], state["extra_instruction"])
-        except Exception as e:
-            error_text = str(e)
-            category = classify_error(error_text)
+            state = get_scene_state(scene_key)
+            board.update(scene_key, "generating")
 
-            if category == "content_policy":
-                escalate(scene_number, scene_key, characters, error_text)
-            elif category == "transient":
-                n = bump_blind(scene_key)
-                if n <= MAX_BLIND_RETRIES:
-                    board.update(scene_key, f"[RETRY {n}/{MAX_BLIND_RETRIES}:transient]")
-                    gen_queue.put((scene_number, characters, None))
-                else:
-                    finalize_failed(scene_key, "transient", error_text)
-            else:
-                n = bump_blind(scene_key)
-                if n <= 1:
-                    board.update(scene_key, f"[RETRY {n}/1:other]")
-                    gen_queue.put((scene_number, characters, None))
-                else:
+            try:
+                url = generate_image_url(lane, characters, state["scene_text"], state["extra_instruction"])
+            except Exception as e:
+                error_text = str(e)
+                category = classify_error(error_text)
+
+                if category == "content_policy":
                     escalate(scene_number, scene_key, characters, error_text)
-            continue
+                elif category == "transient":
+                    n = bump_blind(scene_key)
+                    if n <= MAX_BLIND_RETRIES:
+                        board.update(scene_key, f"[RETRY {n}/{MAX_BLIND_RETRIES}:transient]")
+                        gen_queue.put((scene_number, characters, None))
+                    else:
+                        finalize_failed(scene_key, "transient", error_text)
+                else:
+                    n = bump_blind(scene_key)
+                    if n <= 1:
+                        board.update(scene_key, f"[RETRY {n}/1:other]")
+                        gen_queue.put((scene_number, characters, None))
+                    else:
+                        escalate(scene_number, scene_key, characters, error_text)
+                continue
 
-        verify_queue.put((scene_number, scene_key, characters, url))
+            verify_queue.put((scene_number, scene_key, characters, url))
+
+        except Exception as e:
+            n = bump_blind(scene_key)
+            board.update(scene_key, f"[WORKER CRASH:gen] {type(e).__name__}: {str(e)[:60]}")
+            if n <= MAX_BLIND_RETRIES:
+                gen_queue.put((scene_number, characters, None))
+            else:
+                finalize_failed(scene_key, "worker_crash", f"{type(e).__name__}: {e}")
 
 
 def verification_worker():
@@ -168,40 +185,49 @@ def verification_worker():
         except queue.Empty:
             continue
 
-        lane = next_verify_lane()
-        state = get_scene_state(scene_key)
-        board.update(scene_key, "verifying")
+        try:
+            lane = next_verify_lane()
+            state = get_scene_state(scene_key)
+            board.update(scene_key, "verifying")
 
-        result, call_error = verify_image(lane, url, characters, state["scene_text"])
-        passed = verification_passed(result)
+            result, call_error = verify_image(lane, url, characters, state["scene_text"])
+            passed = verification_passed(result)
 
-        if passed:
-            output_path = f"{OUTPUT_FOLDER}/{scene_key}.png"
-            try:
-                download_image(url, output_path)
-            except Exception as e:
-                finalize_failed(scene_key, "download", str(e), unverified_url=url)
-                continue
+            if passed:
+                output_path = f"{OUTPUT_FOLDER}/{scene_key}.png"
+                try:
+                    download_image(url, output_path)
+                except Exception as e:
+                    finalize_failed(scene_key, "download", str(e), unverified_url=url)
+                    continue
 
-            update_manifest_entry(scene_key, {
-                "url": url, "local_path": output_path,
-                "characters": characters, "scene_text": state["scene_text"],
-                "verified": True, "status": "ok",
-            })
-            board.update(scene_key, "verified & downloaded", done=True)
-            mark_finalized()
+                update_manifest_entry(scene_key, {
+                    "url": url, "local_path": output_path,
+                    "characters": characters, "scene_text": state["scene_text"],
+                    "verified": True, "status": "ok",
+                })
+                board.update(scene_key, "verified & downloaded", done=True)
+                mark_finalized()
 
-        elif passed is None:
+            elif passed is None:
+                n = bump_blind(scene_key)
+                if n <= MAX_BLIND_RETRIES:
+                    board.update(scene_key, f"[RETRY {n}/{MAX_BLIND_RETRIES}:verify_unreachable]")
+                    verify_queue.put((scene_number, scene_key, characters, url))
+                else:
+                    finalize_failed(scene_key, "verify_unreachable", call_error or "unknown", unverified_url=url)
+
+            else:
+                issue = result.get("issue", "unknown")
+                escalate(scene_number, scene_key, characters, issue)
+
+        except Exception as e:
             n = bump_blind(scene_key)
+            board.update(scene_key, f"[WORKER CRASH:verify] {type(e).__name__}: {str(e)[:60]}")
             if n <= MAX_BLIND_RETRIES:
-                board.update(scene_key, f"[RETRY {n}/{MAX_BLIND_RETRIES}:verify_unreachable]")
                 verify_queue.put((scene_number, scene_key, characters, url))
             else:
-                finalize_failed(scene_key, "verify_unreachable", call_error or "unknown", unverified_url=url)
-
-        else:
-            issue = result.get("issue", "unknown")
-            escalate(scene_number, scene_key, characters, issue)
+                finalize_failed(scene_key, "worker_crash", f"{type(e).__name__}: {e}")
 
 
 def main():

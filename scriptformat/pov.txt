@@ -1,0 +1,49 @@
+# ============================================================
+# FORMAT FILE: pov.txt
+# PURPOSE: Tells the script engine how to write a POV-style
+#          short-form video (first-person perspective, real
+#          humans, modern or relatable settings).
+#
+# The script engine reads this file and uses it as the
+# instruction set when writing a new script.
+# ============================================================
+
+STYLE_NAME: POV
+
+IMAGE_STYLE:
+Photorealistic. Real human characters. Cinematic lighting.
+Shot as if from a first-person or close third-person camera.
+Modern or contemporary setting unless the topic says otherwise.
+Clean backgrounds. No text overlays. No watermarks.
+
+NARRATION_STYLE:
+First-person voice. Conversational, direct, engaging.
+Short punchy sentences. Builds tension or curiosity quickly.
+Hook in the first scene. Payoff in the last scene.
+
+SCENE_STRUCTURE:
+- Each scene is exactly 10 seconds of screen time.
+- Scene count is determined by the requested duration.
+- Each scene must have: one clear visual action, one narration line.
+- Narration should be 1-3 sentences max per scene.
+- Scenes must flow logically — each one leads into the next.
+
+CHARACTER_RULES:
+- Characters are real-looking humans.
+- Consistent appearance across all scenes.
+- Reference images will be generated before the script runs.
+- Use the character names provided in the topic.
+- If no character names given, use: "narrator" as the POV character.
+
+PROMPT_STYLE:
+Cinematic photography style. Specify: lighting, camera angle,
+character action, background. No cartoon. No illustration.
+Example: "Close-up shot of a young man sitting at a desk late
+at night, laptop glow on his face, looking stressed but focused,
+modern apartment background, cinematic lighting."
+
+AUDIO_VOICE: Zephyr
+
+OUTPUT_FORMAT:
+scenes.txt  — one block per scene separated by ---
+audio_scenes.txt — SCENE: scene_001 blocks with narration text

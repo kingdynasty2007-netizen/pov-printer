@@ -1,18 +1,230 @@
 {
-  "scene_001": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_KUx0O9Fkpf3kUUU1UAPho4wi8EQvlwuk/output.png",
-    "local_path": "generated_images/scene_001.png",
+  "scene_002": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_tNKYdR7P73o7novOCpNPrsXqBi5Gm17O/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_002.png",
     "characters": [
-      "hannah"
+      "rachel",
+      "elian"
     ],
-    "scene_text": "1. prompt: Wide cinematic establishing shot of a small biblical-era Middle Eastern village just after sunrise, mud-brick homes, stone steps, clay jars, and a narrow dusty lane. Hannah stands outside her home in a relaxed three-quarter pose, left foot slightly forward, supporting a clay bowl against her waist with her left arm while her right hand pauses above the grain. Her shoulders are lowered, her head turned toward Micah approaching in the distance. Micah walks naturally toward her with an upright posture, one foot forward, trailing heel slightly raised, right arm swinging loosely and left hand near his rust-red sash. Warm golden morning light, polished children\u2019s story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, consistent character designs, full-body characters visible, no modern objects.\nrefs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png",
+    "scene_text": "Rachel kneels before Elian in the dusty lane, fastening the strap of his small waterskin. She smiles warmly and brushes a stray lock of hair from his forehead. The golden sunrise illuminates the clay jars lined against their home.",
     "verified": true,
     "status": "ok"
   },
-  "scene_002": {
+  "scene_010": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_TeUNO5dtO0WQaFAyXv7cVTXIujSDvhlt/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_010.png",
+    "characters": [
+      "elian"
+    ],
+    "scene_text": "A single tear rolls down Elian's cheek as he looks up at the first evening star piercing through the parting clouds. He wraps his arms around himself, feeling very small and alone in the vast, quiet wilderness.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_015": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_MK2qIV1gVDcPSYnIr4mtgN0XabDcb4qM/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_015.png",
+    "characters": [
+      "elian",
+      "jacob"
+    ],
+    "scene_text": "Elian bursts through the final line of bushes onto the village green, his small figure sprinting toward a waiting man. Jacob drops to his knees, opening his arms wide as Elian crashes into them.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_024": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_AlEVlDGo5iRPaShzK0UIkGLCukh0N9jk/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_024.png",
+    "characters": [
+      "rachel",
+      "elian"
+    ],
+    "scene_text": "Rachel holds Elian's small hands in both of hers, speaking to him with a tender smile, her head bowed toward him, her eyes bright with unshed tears of relief and love.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_031": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_Zei3zQJmPWXJ5uMSDYOaEQ35qcS3zxcp/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_031.png",
+    "characters": [
+      "rachel",
+      "jacob"
+    ],
+    "scene_text": "In a softly lit mud-brick room, jacob stands in the doorway with his face showing awe and gratitude. rachel sits beside the woven mat where elian sleeps peacefully, her hand resting gently on his blanket. jacob walks slowly toward them, his sandals whispering against the earthen floor. Warm golden lamplight illuminates their figures, casting a serene glow over the humble dwelling.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_033": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_WpFxAhmG6HyggkvlvI1jxn2WBgWP97JK/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_033.png",
+    "characters": [
+      "jacob",
+      "rachel"
+    ],
+    "scene_text": "jacob reaches out and takes elian's small hand in his own, his face full of promise and fatherly love. rachel watches them both, her eyes shining with tears of happiness, her hand gently resting on jacob's shoulder. The three of them sit together in the lamplight, the family complete and whole once more.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_026": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_SOlQkLJ7tQ6V4Vdz86zCO6NS2UA5DAU2/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_026.png",
+    "characters": [
+      "elian"
+    ],
+    "scene_text": "Elian rests his head against Rachel's chest, his eyes growing heavy with exhaustion, his small fingers still curled loosely in Rachel's robe, his breathing slowing into peaceful rhythm.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_007": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_EoQ6b9C5A7Tpl0Pbj0vkORUxQM1G1TLC/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_007.png",
+    "characters": [
+      "elian"
+    ],
+    "scene_text": "Elian runs through the now-twilight forest, branches scratching at his arms. He looks around wildly, trying to find a familiar landmark, but every tree and rock looks strange and unfamiliar.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_001": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_55bHvIAZubjB4QGGXXQp3R3LO4e9NMl7/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_001.png",
+    "characters": [
+      "elian",
+      "jacob"
+    ],
+    "scene_text": "In the early morning light of a peaceful Middle Eastern village, Jacob stands on the stone step of their mud-brick home. He places a gentle hand on young Elian's shoulder, handing him a small wooden staff. Elian looks up at his father with wide, eager eyes, ready for the day's work.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_030": {
     "status": "failed",
-    "error": "HTTPSConnectionPool(host='platform-outputs.agnes-ai.space', port=443): Max retries exceeded with url: /images/i2i/task_3EWD79GK7S0SiDR3VHXBH1xkJ4L7DNkZ/output.png (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)')))",
-    "error_category": "download",
-    "unverified_url": "https://platform-outputs.agnes-ai.space/images/i2i/task_3EWD79GK7S0SiDR3VHXBH1xkJ4L7DNkZ/output.png"
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134210778451977D1v2N0QG)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient"
+  },
+  "scene_020": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_006": {
+    "status": "failed",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134440352693278V51ktHkR)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient"
+  },
+  "scene_009": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_012": {
+    "status": "failed",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134532525811370bkfZBqO0)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient"
+  },
+  "scene_003": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_018": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_016": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_021": {
+    "status": "failed",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134654411577535xpY4qvvR)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient"
+  },
+  "scene_027": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_029": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_028": {
+    "status": "failed",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134803459776202UaDw1Ebe)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient"
+  },
+  "scene_005": {
+    "status": "failed",
+    "error": "http 400: {\"error\":{\"message\":\"extra_body.image must not be empty (request id: 20260919135059808723314We3aDE94)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"code\":\"invalid_request\"}}",
+    "error_category": "brain_exhausted"
+  },
+  "scene_032": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_5XWeJor3fqjRnAcrDUW6cNTmZzhF4DTg/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_032.png",
+    "characters": [
+      "rachel",
+      "jacob"
+    ],
+    "scene_text": "rachel leans forward, her expression tender as she whispers the story of how elian was found wandering lost near the olive groves. jacob kneels beside the mat, his eyes fixed on elian's sleeping face, his hand covering his heart. The soft light catches the relief and joy in their features as they share this quiet moment of thanksgiving.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_004": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_017": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_008": {
+    "status": "failed",
+    "error": "http 400: {\"error\":{\"message\":\"extra_body.image must not be empty (request id: 20260919135149900836353c9GCBTOI)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"code\":\"invalid_request\"}}",
+    "error_category": "brain_exhausted"
+  },
+  "scene_011": {
+    "status": "failed",
+    "error": "http 400: {\"error\":{\"message\":\"extra_body.image must not be empty (request id: 202609191352058863977881VXfQEua)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"code\":\"invalid_request\"}}",
+    "error_category": "brain_exhausted"
+  },
+  "scene_023": {
+    "status": "failed",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919135225911151298pghvIcN3)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient"
+  },
+  "scene_025": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_022": {
+    "status": "failed",
+    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
+    "error_category": "transient"
+  },
+  "scene_014": {
+    "status": "failed",
+    "error": "http 400: {\"error\":{\"message\":\"extra_body.image must not be empty (request id: 202609191353163850048504aOxdQRG)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"code\":\"invalid_request\"}}",
+    "error_category": "brain_exhausted"
+  },
+  "scene_013": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_1oLZRNEonwijAGGcvbZs477bbqrmha2Q/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_013.png",
+    "characters": [
+      "elian",
+      "jacob"
+    ],
+    "scene_text": "Dawn breaks over the hills, painting the sky in soft pinks and oranges. Jacob runs along a familiar path, calling Elian's name with urgency. His face is etched with worry and hope.",
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_019": {
+    "status": "failed",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 2026091913585156033961QcRyrICh)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient"
   }
 }

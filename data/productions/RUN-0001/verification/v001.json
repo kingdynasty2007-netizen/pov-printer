@@ -1,0 +1,69 @@
+{
+  "passed": false,
+  "status": "NEEDS_REWRITE",
+  "checks": {
+    "hook": {
+      "passed": true,
+      "reason": "Opening with Jonathan stripping his royal garments and giving them to David immediately creates intrigue and stakes, raising the question of why a crown prince would give his inheritance to another."
+    },
+    "biblical_accuracy": {
+      "passed": true,
+      "reason": "Key events (covenant in 1 Sam 18:3, armor gift in 18:4, Saul's jealousy in 18:7, spear attack in 18:10-11, arrow signal in ch. 20, David fleeing to wilderness) are faithful to scripture. Minor dramatization (bronze breastplate beneath tunic) is reasonable storytelling context."
+    },
+    "scripture_usage": {
+      "passed": true,
+      "reason": "Scripture is referenced naturally and accurately (e.g., 'soul of Jonathan was knit to the soul of David' from 1 Sam 18:1). However, the audio cuts off at scene 5, so scripture integration cannot be fully evaluated for the remainder."
+    },
+    "story_structure": {
+      "passed": false,
+      "reason": "Strong hook-setup-conflict escalation through scenes 1-9, but the script is incomplete — narration ends at scene 5 and scene 16 has no audio, leaving the climax and resolution undefined."
+    },
+    "pacing": {
+      "passed": true,
+      "reason": "Each scene advances the story: gift → covenant → jealousy → danger → escape → signal → farewell → separation. No repeated exposition observed."
+    },
+    "character_development": {
+      "passed": true,
+      "reason": "David's arc is clear: from recipient of friendship to burdened heir-apparent's friend to exiled runner. Jonathan's motivation (loyalty over throne) is consistently shown. Saul's jealousy is clearly developed."
+    },
+    "emotional_progression": {
+      "passed": true,
+      "reason": "Builds naturally from warm covenant to rising tension, fear, urgency, grief at farewell, and isolation. Emotional intensity peaks at the farewell (scene 11) and Jonathan's tears (scene 13)."
+    },
+    "curiosity": {
+      "passed": true,
+      "reason": "Each scene raises compelling questions: What will Saul do? How will Jonathan signal David? Will they escape? Why does David carry the sword with conflicted emotion?"
+    },
+    "climax": {
+      "passed": false,
+      "reason": "The story lacks a clearly defined major event as climax. The farewell is emotionally powerful but not structurally positioned as the dramatic peak — the arrow signal scene (9-10) could serve this role but is underdeveloped in narration."
+    },
+    "payoff_resolution": {
+      "passed": false,
+      "reason": "The script has no resolution. Scenes 6-16 lack narration entirely, and there is no concluding narration or scene that resolves the story or ties back to the theme of 'a good friend.'"
+    },
+    "narration_quality": {
+      "passed": true,
+      "reason": "Available narration (scenes 1-5) is clear, warm, cinematic, and appropriate for general audience. Language is evocative without being overly complex."
+    },
+    "visual_storytelling": {
+      "passed": true,
+      "reason": "Each scene has strong visual descriptions suitable for animation — armor exchange, spear throw, arrow signal, tearful farewell, David in the cave with the sword. Particularly effective: silhouette of lone figure under acacia tree."
+    },
+    "duration_scene_suitability": {
+      "passed": false,
+      "reason": "Script is incomplete — only 5 of 15 scenes have narration. Scene 16 has no characters or audio. The remaining 10 scenes need full narration to match the 150-second duration plan."
+    }
+  },
+  "required_fixes": [
+    "Complete narration for scenes 6-16 to fill the full 150-second runtime",
+    "Add a clear climax scene with elevated narration (arrow signal or farewell should carry the dramatic peak)",
+    "Write a resolution scene with narration that closes the story and reinforces the 'good friend' theme",
+    "Ensure every scene has audio narration matching the 10-second-per-scene structure"
+  ],
+  "warnings": [
+    "Script stops at scene 5 — approximately two-thirds of the audio is missing",
+    "Scene 16 lists no characters and has no narration, making it non-functional for the pipeline",
+    "Consider adding an explicit closing narration that references the enduring nature of their friendship, echoing the covenant theme"
+  ]
+}

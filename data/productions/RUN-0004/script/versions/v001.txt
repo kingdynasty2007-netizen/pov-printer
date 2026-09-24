@@ -1,0 +1,127 @@
+=== SCENES ===
+CHARACTERS: Shepherd
+A lone shepherd stands on a rocky ridge under a star‑filled night sky. His flock sleeps in a stone‑walled pen below. In the distance, yellow eyes gleam in the darkness.
+---
+CHARACTERS: Shepherd
+The shepherd steps forward, raising his staff. A large wolf emerges from the shadows, teeth bared, muscles coiled to pounce.
+---
+CHARACTERS: Shepherd, Wolf
+The shepherd slams his staff against the rocks, shouting. The wolf hesitates, then lunges. The shepherd meets the attack, swinging the staff to drive the beast away.
+---
+CHARACTERS: Shepherd
+The wolf flees into the night. The shepherd breathes heavily, then kneels to check on his sheep, gently touching the wool of a trembling lamb.
+---
+CHARACTERS: Jesus
+In the sunlit colonnade of Solomon’s Portico, Jesus stands before a small crowd. He gestures toward the hills outside Jerusalem.
+---
+CHARACTERS: Jesus, Pharisee
+Two Pharisees exchange skeptical glances. One steps forward, arms crossed, and speaks sharply to Jesus.
+---
+CHARACTERS: Jesus
+Jesus turns to them, his expression gentle but firm. He begins to speak, using the image of the shepherd they just witnessed.
+---
+CHARACTERS: Shepherd
+Back in the parable, the shepherd leads his flock through a narrow mountain pass at dawn. He pauses to let each sheep drink from a stream.
+---
+CHARACTERS: Pharisee
+Another Pharisee, younger and more aggressive, interrupts Jesus. “How can you say these things? You have no authority!”
+---
+CHARACTERS: Jesus
+Jesus looks past the Pharisees to the crowd. “The one who enters the sheepfold without climbing in is a thief and a robber.”
+---
+CHARACTERS: Shepherd, Wolf
+At night again, a different figure—hired help—sees the wolf approaching and runs away. The wolves scatter among the sheep.
+---
+CHARACTERS: Shepherd, Wolf
+The good shepherd charges into the pen, staff raised. He fights off the wolves, taking a wound to his arm, but drives them from the flock.
+---
+CHARACTERS: Jesus
+Jesus’ voice rises with passion. “I am the good shepherd. The good shepherd lays down his life for the sheep.”
+---
+CHARACTERS: Jesus, Crowd
+A woman in the crowd weeps openly. A young boy looks up at Jesus with wide, awestruck eyes. Others murmur in confusion.
+---
+CHARACTERS: Jesus
+Jesus turns toward the temple courts. “There are other sheep I have that are not of this fold. I must bring them also.”
+---
+CHARACTERS: Jesus, Pharisee
+Jesus walks along the temple colonnade, his voice carrying to those nearby. The Pharisee stands a few paces behind him, arms folded tight across his chest, jaw clenched at the words about sheep outside Israel's flock. His eyes narrow as he watches Jesus turn toward the gathering crowd.
+---
+CHARACTERS: Jesus, Pharisee, Shepherd
+Near the temple entrance, a weathered shepherd stands watching from the edge of the crowd, his hands calloused from years tending flocks. Jesus meets his gaze across the courtyard, and for a moment the world seems to still between them. The Pharisee follows Jesus's look, confusion and something like fear flickering across his face.
+---
+CHARACTERS: Jesus, Shepherd
+Jesus steps away from the temple and onto the dusty path leading down the hillside. The shepherd falls into step behind him, keeping a respectful distance. Golden afternoon light stretches across the stones as they walk, the city walls rising behind them, the open country beckoning ahead.
+
+=== AUDIO ===
+SCENE: scene_001
+VOICE: Calm, wise storyteller
+Under a canopy of ancient stars, a shepherd kept watch over his father’s flock. The mountains were silent, but danger never slept.
+
+SCENE: scene_002
+VOICE: Calm, wise storyteller
+From the blackness came the glint of hungry eyes. A wolf had found the pen.
+
+SCENE: scene_003
+VOICE: Calm, wise storyteller
+The shepherd did not flee. He stepped between the beast and the vulnerable, raising his staff to meet the threat.
+
+SCENE: scene_004
+VOICE: Calm, wise storyteller
+With a final blow, the wolf was driven back into the darkness. The shepherd knelt among his flock, checking each one for harm.
+
+SCENE: scene_005
+VOICE: Calm, wise storyteller
+In Jerusalem, Jesus stood in the shaded colonnade of Solomon’s Portico. The air was thick with question and expectation.
+
+SCENE: scene_006
+VOICE: Calm, wise storyteller
+Some among the religious leaders watched him with hardened hearts. They had heard his words and refused to accept their source.
+
+SCENE: scene_007
+VOICE: Calm, wise storyteller
+Jesus used what they knew. “Consider the shepherd,” he began, “who knows his sheep and they know him.”
+
+SCENE: scene_008
+VOICE: Calm, wise storyteller
+He painted a picture of a shepherd leading his flock to green pastures, to still waters, never leaving a single one behind.
+
+SCENE: scene_009
+VOICE: Calm, wise storyteller
+But the Pharisees grew restless. They saw his popularity as a threat to their own authority.
+
+SCENE: scene_010
+VOICE: Calm, wise storyteller
+Jesus answered them plainly. “I tell you the truth, anyone who does not enter the sheepfold by the gate, but climbs in some other way, is a thief and a robber.”
+
+SCENE: scene_011
+VOICE: Calm, wise storyteller
+Then he showed them the opposite: a hired hand who ran at the first sign of danger, leaving the sheep to be scattered and torn.
+
+SCENE: scene_012
+VOICE: Calm, wise storyteller
+The good shepherd fought. He took wounds so the sheep would live. His love was not a duty—it was a choice.
+
+SCENE: scene_013
+VOICE: Calm, wise storyteller
+Jesus looked directly at them. “I am the good shepherd. The good shepherd lays down his life for the sheep.”
+
+SCENE: scene_014
+VOICE: Calm, wise storyteller
+A ripple went through the crowd. Some fell to their knees. Others exchanged bewildered glances. What did he mean?
+
+SCENE: scene_015
+VOICE: Calm, wise storyteller
+Jesus spoke of sheep beyond Israel, of a day when he would gather all who would listen. But the hour was not yet complete.
+
+SCENE: scene_016
+VOICE: Warm, contemplative male voice
+But the Pharisees had not yet understood. To them, salvation belonged only to Israel alone. The idea that God would reach beyond their chosen people stirred something dangerous in their hearts. And Jesus knew exactly what they were thinking.
+
+SCENE: scene_017
+VOICE: Gentle, reverent tone
+Far from the temple gates, a shepherd who had spent his life among rough hills and cold nights now stood in the shadow of stone walls. He felt uneasy, unworthy even, to be so near the teachings of the prophets. Yet when Jesus looked at him, the shepherd felt seen in a way no lamb or wound or watchful night had ever made him feel.
+
+SCENE: scene_018
+VOICE: Soft, hopeful quality
+Walking side by side with the shepherd, Jesus spoke not of temples or laws, but of a shepherd who knew his own. The road wound downward, away from Jerusalem and toward the countryside where sheep grazed freely. Here, the shepherd might understand what it meant to be found.

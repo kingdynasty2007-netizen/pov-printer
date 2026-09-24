@@ -1,0 +1,10 @@
+{
+  "passed": false,
+  "status": "FAILED_QUALITY_GATE",
+  "checks": {},
+  "required_fixes": [
+    "Verification system error: LLM call failed after 3 attempts: HTTP 500: {\"error\":{\"message\":\"json: cannot unmarshal array into Go struct field GeneralOpenAIRequest.max_tokens of type uint (request id: 20260922221307888992628gh4Y"
+  ],
+  "warnings": [],
+  "error": "LLM call failed after 3 attempts: HTTP 500: {\"error\":{\"message\":\"json: cannot unmarshal array into Go struct field GeneralOpenAIRequest.max_tokens of type uint (request id: 20260922221307888992628gh4YErik)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"co"
+}

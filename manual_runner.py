@@ -1,33 +1,33 @@
 # ============================================================
 # FILE: manual_runner.py
-# PURPOSE: Run a topic OR an uploaded script RIGHT NOW, interactively.
-# Writes scenes.txt / video_scenes.txt / audio_scenes.txt /
-# ref_prompts.json and STOPS — never runs image/video/audio/assembly
-# itself. Checks whether topic_queue.py's automatic run is active
-# first.
+# PURPOSE: Interactive entry point for the manual production pipeline.
 #
-# CHANGE: fully interactive now (no command-line flags needed) —
-# asks for topic-or-script, lists available formats by number, asks
-# for duration in mm:ss, asks for optional character names.
-# CHANGE: a failed script write now correctly marks the topic
-# "failed" in Supabase instead of leaving it stuck as "running"
-# forever.
+# Asks the user for topic/script, format, duration, characters.
+# Delegates ALL pipeline logic to production_manager.py.
+# Checks for a conflicting background run first.
 #
 # RUN: python manual_runner.py
+# RUN (dry-run / safe test): python manual_runner.py --dry-run
 # ============================================================
 
 import os
 import sys
 import time
-from datetime import datetime, timezone
+import argparse
 from dotenv import load_dotenv
-from db import supabase
-import script_engine
-import run_lock
-from duration_utils import parse_duration, format_duration
 
 load_dotenv()
 
+import run_lock
+import script_engine
+from duration_utils import parse_duration, format_duration
+import production_manager as pm
+import storage_manager as sm
+
+
+# ============================================================
+# CONFLICT HANDLING
+# ============================================================
 
 def handle_conflict():
     status = run_lock.get_background_status()
@@ -67,47 +67,9 @@ def handle_conflict():
         return False
 
 
-def create_manual_topic_row(style, topic_text, duration_secs, character_names):
-    try:
-        response = supabase.table("topics").insert({
-            "topic": topic_text,
-            "style": style,
-            "status": "running",
-            "duration_secs": duration_secs,
-            "character_names": ",".join(character_names),
-        }).execute()
-        return response.data[0]["id"]
-    except Exception as e:
-        print(f"⚠️  Could not save topic to Supabase: {e}")
-        return None
-
-
-def mark_script_ready(topic_id):
-    if not topic_id:
-        return
-    try:
-        supabase.table("topics").update({
-            "status": "script_ready",
-            "updated_at": datetime.now(timezone.utc).isoformat(),
-        }).eq("id", topic_id).execute()
-    except Exception as e:
-        print(f"⚠️  Could not update topic status: {e}")
-
-
-def mark_topic_failed(topic_id, reason):
-    """Fix for a real bug: previously a failed script write left the
-    topic stuck as 'running' in Supabase forever."""
-    if not topic_id:
-        return
-    try:
-        supabase.table("topics").update({
-            "status": "failed",
-            "error": str(reason)[:500],
-            "updated_at": datetime.now(timezone.utc).isoformat(),
-        }).eq("id", topic_id).execute()
-    except Exception as e:
-        print(f"⚠️  Could not update topic status: {e}")
-
+# ============================================================
+# INPUT PROMPTS
+# ============================================================
 
 def ask_topic_or_script():
     print("What do you want to do?")
@@ -159,7 +121,7 @@ def ask_style():
 
 
 def ask_duration():
-    text = input("\nDuration? (mm:ss, e.g. 5:30): ").strip()
+    text = input("\nDuration? (mm:ss, e.g. 1:00 for 60 seconds): ").strip()
     try:
         return parse_duration(text)
     except ValueError as e:
@@ -172,48 +134,160 @@ def ask_characters():
     return [c.strip() for c in text.split(",") if c.strip()] if text else []
 
 
-def main():
-    print("\n=== MANUAL SCRIPT RUNNER ===\n")
+# ============================================================
+# SUPABASE TOPIC ROW (optional — graceful if unavailable)
+# ============================================================
 
+def create_supabase_topic(style, topic_text, duration_secs, character_names):
+    try:
+        from db import supabase
+        from datetime import datetime, timezone
+        response = supabase.table("topics").insert({
+            "topic": topic_text,
+            "style": style,
+            "status": "running",
+            "duration_secs": duration_secs,
+            "character_names": ",".join(character_names),
+        }).execute()
+        return response.data[0]["id"]
+    except Exception as e:
+        print(f"⚠️  Could not save topic to Supabase (continuing without it): {e}")
+        return None
+
+
+def mark_supabase_ready(topic_id):
+    if not topic_id:
+        return
+    try:
+        from db import supabase
+        from datetime import datetime, timezone
+        supabase.table("topics").update({
+            "status": "script_ready",
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }).eq("id", topic_id).execute()
+    except Exception as e:
+        print(f"⚠️  Could not update Supabase topic status: {e}")
+
+
+def mark_supabase_failed(topic_id, reason):
+    if not topic_id:
+        return
+    try:
+        from db import supabase
+        from datetime import datetime, timezone
+        supabase.table("topics").update({
+            "status": "failed",
+            "error": str(reason)[:500],
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }).eq("id", topic_id).execute()
+    except Exception as e:
+        print(f"⚠️  Could not update Supabase topic status: {e}")
+
+
+# ============================================================
+# MAIN
+# ============================================================
+
+def main():
+    parser = argparse.ArgumentParser(description="POV Printer — Manual Pipeline")
+    parser.add_argument(
+        "--dry-run", action="store_true",
+        help="Safe test mode — no expensive AI/media calls.",
+    )
+    parser.add_argument(
+        "--run-media", action="store_true",
+        help="Also run image/audio/video generation after breakdown.",
+    )
+    parser.add_argument(
+        "--topic", type=str, default=None,
+        help="Topic (skips interactive prompt, for scripting).",
+    )
+    parser.add_argument(
+        "--format", type=str, default=None, dest="fmt",
+        help="Format name (skips interactive prompt).",
+    )
+    parser.add_argument(
+        "--duration", type=str, default=None,
+        help="Duration in mm:ss (skips interactive prompt).",
+    )
+    args = parser.parse_args()
+
+    print("\n=== POV PRINTER — MANUAL PIPELINE ===\n")
+
+    if args.dry_run:
+        print("🧪 DRY RUN MODE — no expensive API calls will be made.\n")
+
+    # ---- Conflict check ----
     if run_lock.is_background_running():
         if not handle_conflict():
             return
 
-    topic_text, raw_script_text = ask_topic_or_script()
-    style = ask_style()
-    duration_secs = ask_duration()
-    character_names = ask_characters()
+    # ---- Gather inputs ----
+    if args.topic and args.fmt and args.duration:
+        # Non-interactive mode (for scripting / tests)
+        topic_text = args.topic
+        raw_script_text = None
+        style = args.fmt
+        try:
+            duration_secs = parse_duration(args.duration)
+        except ValueError as e:
+            print(f"❌ {e}")
+            sys.exit(1)
+        character_names = []
+    else:
+        topic_text, raw_script_text = ask_topic_or_script()
+        style = ask_style()
+        duration_secs = ask_duration()
+        character_names = ask_characters()
 
     scene_count = max(1, duration_secs // script_engine.SECONDS_PER_SCENE)
 
     print(f"\n📝 Topic: {topic_text}")
-    print(f"🎨 Style: {style}")
+    print(f"🎨 Format: {style}")
     print(f"⏱️  Duration: {format_duration(duration_secs)} ({scene_count} scenes)")
     if character_names:
         print(f"👤 Characters: {', '.join(character_names)}")
+    if args.dry_run:
+        print("🧪 Mode: DRY RUN")
 
-    topic_id = create_manual_topic_row(style, topic_text, duration_secs, character_names)
-
-    try:
-        script_engine.run(
-            topic=topic_text if raw_script_text is None else None,
-            style=style,
-            duration_secs=duration_secs,
-            scene_count=scene_count,
-            character_names=character_names,
-            topic_id=topic_id,
-            raw_script_text=raw_script_text,
+    # ---- Optional Supabase row ----
+    supabase_topic_id = None
+    if not args.dry_run:
+        supabase_topic_id = create_supabase_topic(
+            style, topic_text, duration_secs, character_names
         )
-    except (RuntimeError, ValueError) as e:
-        print(f"❌ {e}")
-        mark_topic_failed(topic_id, e)
+
+    # ---- Run pipeline ----
+    try:
+        result = pm.run_manual_pipeline(
+            topic=topic_text,
+            fmt=style,
+            duration_secs=duration_secs,
+            character_names=character_names,
+            raw_script_text=raw_script_text,
+            supabase_topic_id=supabase_topic_id,
+            dry_run=args.dry_run,
+            run_media=args.run_media,
+        )
+
+        if supabase_topic_id:
+            mark_supabase_ready(supabase_topic_id)
+
+        print("\n✅ Pipeline complete.")
+        print(f"   Run ID: {result['run_id']}")
+        print(f"   Root:   {result['paths']['root']}")
+        print(f"   Scenes: {result['scene_count']}")
+        print("\n   Next steps:")
+        if not args.run_media:
+            print("   1. Review breakdown/ files")
+            print("   2. Run: python ref_character_generator.py")
+            print("   3. Run: python run_pipeline.py")
+
+    except RuntimeError as e:
+        print(f"\n❌ Pipeline stopped: {e}")
+        if supabase_topic_id:
+            mark_supabase_failed(supabase_topic_id, e)
         sys.exit(1)
-
-    mark_script_ready(topic_id)
-
-    print("\n✅ Script written. Stopping here — nothing else was run.")
-    print("   Review scenes.txt / video_scenes.txt / audio_scenes.txt, then run")
-    print("   ref_character_generator.py yourself when you're ready to spend on generation.")
 
 
 if __name__ == "__main__":

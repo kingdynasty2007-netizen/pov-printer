@@ -1,0 +1,106 @@
+=== SCENES ===
+CHARACTERS: Saul
+Inside the royal palace of Gibeah, King Saul sits on his throne, his face shadowed by a dark turmoil. A spirit of distress weighs heavily upon him. The court is dimly lit by oil lamps, and the king's hands grip the armrests tightly as he stares blankly ahead, troubled and restless.
+---
+CHARACTERS: David
+In a quiet corner of the palace, young David sits holding a wooden harp. His fingers move gently across the strings, playing soothing music. His eyes are closed in concentration, and his expression is calm and peaceful. The warm light of an oil lamp illuminates his gentle face as the melody fills the chamber.
+---
+CHARACTERS: Saul, David
+King Saul sits on his throne as David plays the harp before him. The dark spirit lifts slightly, and Saul's tense shoulders relax. He listens intently, his expression softening as the music brings him moments of relief. Servants stand quietly in the background.
+---
+CHARACTERS: David, Jonathan
+In the palace courtyard, Jonathan, the king's son, first sets eyes on David. His face lights up with wonder and delight. David stands modestly near the harp, while Jonathan approaches him with open arms and a warm smile. Between them, an invisible bond instantly forms — two souls recognizing each other across the stone-paved ground.
+---
+CHARACTERS: David, Jonathan
+Jonathan and David stand face to face in the courtyard, speaking earnestly. Jonathan grips David's hand with both of his own, his expression full of sincerity and love. David looks humbled yet deeply moved. The afternoon sun casts a golden glow around the two young men as their friendship is sealed.
+---
+CHARACTERS: Jonathan, David
+Jonathan takes off his royal robe — the crimson garment marking him as the heir to the throne — and wraps it around David's shoulders. He then unfastens his sword and places it in David's hands. David looks astonished but accepts the gifts with reverence, his eyes glistening. The gesture speaks louder than any words.
+---
+CHARACTERS: Jonathan, David
+Jonathan and David stand together on a stone terrace overlooking the city of Jerusalem. Jonathan places a firm hand on David's shoulder, speaking with deep conviction. David listens with gratitude and awe. The vast landscape stretches behind them — rolling hills and ancient rooftops bathed in warm evening light.
+---
+CHARACTERS: Saul
+In the throne room, King Saul watches from his seat as David stands before the court. The king's face darkens with jealousy and suspicion. His hands clench into fists. The earlier peace is gone, replaced by a dangerous tension that fills the chamber like a gathering storm.
+---
+CHARACTERS: Saul, Jonathan
+Saul hurls a spear toward David, who dodges narrowly. The spear embeds itself in the wall. Jonathan leaps forward, shielding David with his own body, his face contorted with fear and anger. Other guards rush to intervene as the king's rage fills the throne room.
+---
+CHARACTERS: Jonathan
+Jonathan stands alone in a dimly lit corridor of the palace, his face heavy with sorrow. He presses his forehead against the cool stone wall, his hands gripping his sword belt. Outside, thunder rumbles in the distance. He knows his father's heart has turned against his dearest friend, and he is torn between loyalty and love.
+---
+CHARACTERS: Jonathan
+At night, Jonathan slips silently through the palace corridors. He carries a small bundle — his own weapons and provisions — hidden within his cloak. Moonlight streams through narrow windows, casting silver paths on the stone floor. His eyes are determined despite the fear in his heart.
+---
+CHARACTERS: David, Jonathan
+Outside the city gates of Bethlehem, David waits in the shadows of a large stone. Jonathan runs toward him across the dark field, and the two embrace with tearful joy. They speak in urgent whispers, their faces reflecting both the sweetness of reunion and the weight of what lies ahead. Stars shine above them.
+---
+CHARACTERS: Jonathan
+Jonathan stands beside a great stone in an open field near Bethlehem. He nocks an arrow to his bow and draws back with focused intensity. The evening sky is painted in shades of violet and gold. He releases the arrow high into the air, watching it arc upward — a silent signal meant to reach only one person.
+---
+CHARACTERS: David
+A young servant boy — Jonathan's trusted attendant — runs across the field toward David, who stands waiting near a pile of stones. The servant points urgently toward the sky where Jonathan's arrow has landed. David's face shifts from hope to solemn understanding, knowing now that he must flee for his life.
+---
+CHARACTERS: Jonathan, David
+David and Jonathan stand together one final time beside the great stone in the field. They embrace deeply, both men weeping openly. Jonathan whispers words of covenant and love, promising that goodness will pursue David always. David clings to his friend, knowing this may be their last meeting. The sky darkens around them.
+
+=== AUDIO ===
+SCENE: scene_001
+VOICE: Male, warm and cinematic
+King Saul was troubled by a dark spirit, and his palace grew heavy with unrest. No one knew what would come next — only that something was breaking inside the king's heart.
+
+SCENE: scene_002
+VOICE: Male, warm and cinematic
+A young shepherd named David was brought to the palace. He carried a harp and a gift no one expected — the ability to bring peace through music.
+
+SCENE: scene_003
+VOICE: Male, warm and cinematic
+When David played, the spirit left Saul. The king was comforted, and David became a favored servant in the royal court.
+
+SCENE: scene_004
+VOICE: Male, warm and cinematic
+But it was not the king who was changed that day. Jonathan, the prince, saw David — and something extraordinary happened. His soul was knit to David's soul. He loved him as himself.
+
+SCENE: scene_005
+VOICE: Male, warm and cinematic
+Jonathan did not merely like David. He chose him. In that courtyard, before witnesses, before the world could interfere, a bond was forged that would outlive kingdoms.
+
+SCENE: scene_006
+VOICE: Male, warm and cinematic
+Jonathan removed his royal robe — the symbol of his birthright — and gave it to David. He gave him his sword, his bow, his belt. Everything he had, he shared. A prince became a servant to his friend.
+
+SCENE: scene_007
+VOICE: Male, warm and cinematic
+They stood together on the terrace, looking out over Jerusalem, and Jonathan spoke words that would echo through centuries: David, you are more righteous than I. The Lord will fulfill all that He promised you.
+
+SCENE: scene_008
+VOICE: Male, steady and tense
+But a shadow fell over this friendship. King Saul saw how the people celebrated David — how women sang his name — and jealousy took root in his heart like a poison.
+
+SCENE: scene_009
+VOICE: Male, dramatic and intense
+Saul threw a spear at David, twice. He wanted him dead. But Jonathan stepped between them, placing his own life in harm's way to protect his friend.
+
+SCENE: scene_010
+VOICE: Male, somber and reflective
+Jonathan was the son of the king, yet he chose loyalty over lineage. That night, alone in the palace corridor, he wrestled with a terrible choice — his father or his friend.
+
+SCENE: scene_011
+VOICE: Male, determined and urgent
+Jonathan made his choice. Under cover of darkness, he slipped away from the palace. He carried provisions and weapons, moving quietly through moonlit halls — not to betray his father, but to save his friend.
+
+SCENE: scene_012
+VOICE: Male, emotional and tender
+Outside Bethlehem, in the gathering dark, Jonathan found David. They held each other and wept. No words were needed. Two hearts had already said everything.
+
+SCENE: scene_013
+VOICE: Male, focused and atmospheric
+Jonathan rose to the field and drew his bow. He loosed an arrow high into the evening sky — a coded signal, known only to David. The arrow told the story that words could not.
+
+SCENE: scene_014
+VOICE: Male, grave and urgent
+The servant boy ran to David and pointed upward. David understood immediately. The arrow had been shot beyond the reach of retrieval — meaning Saul was fully intent on his destruction. There was no turning back.
+
+SCENE: scene_015
+VOICE: Male, deeply emotional and reverent
+David and Jonathan embraced one last time beneath the darkening sky. They wept together. Jonathan vowed that the Lord would be between them forever, and that kindness would pursue David until death. Then David went into the wilderness, carrying with him the love of a true friend.

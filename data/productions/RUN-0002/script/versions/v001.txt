@@ -1,0 +1,169 @@
+=== SCENES ===
+CHARACTERS: Eliav, Jonah
+A dusty courtyard of a prosperous Middle Eastern homestead at golden hour. Eliav, the father, stands near the entrance of a sturdy mud-brick home, his hands resting on a wooden staff. Before him, his younger son Jonah stands with restless energy, one foot tapping, eyes fixed on the horizon road. Between them sits a small wooden chest filled with silver coins, the younger son's portion of the inheritance. The father's face is unreadable — caught between heartbreak and release. Warm sunlight bathes the courtyard, casting long shadows.
+---
+CHARACTERS: Jonah
+Close shot of Jonah's face, eyes bright with restless ambition. He clutches a leather pouch of coins tightly. Behind him, through an open doorway, faint shapes of servants and a large estate are visible. His jaw is set with determination mixed with impatience. The golden light catches dust motes around him.
+---
+CHARACTERS: Eliav, Jonah
+The courtyard scene continues. Jonah steps back from the wooden chest, turning toward the long dirt road that leads away from the homestead. He does not look back. Eliav remains still by the doorway, his hand slightly raised as if to stop him, but he does not move. The weight of the moment hangs in the dry air.
+---
+CHARACTERS: Jonah
+Jonah walking alone on a dusty caravan road, the sun high overhead. He carries a small travel pack slung over one shoulder. The road stretches far ahead into a hazy horizon. Birds circle above. His pace is quick and confident, eager to leave everything behind.
+---
+CHARACTERS: Jonah
+A vibrant but chaotic marketplace in a foreign city. Jonah stands at a gambling table surrounded by laughing men, throwing coins onto the board. He wears finer, flashier clothes now — a rich purple tunic with gold embroidery. His expression is wild with reckless joy. Servants pour wine, music plays, and the city bustles around him under bright daylight.
+---
+CHARACTERS: Jonah
+Interior of a lavish banquet hall. Jonah sits at a long table loaded with fine food and wine, surrounded by careless companions. He raises a golden cup high, laughing loudly. Others cheer and throw flowers. The scene is opulent — tapestries, cushions, and flickering oil lamps. Jonah looks completely unburdened.
+---
+CHARACTERS: Jonah
+A wide shot of the same foreign city, but the sky has turned sickly yellow. Cracked earth and dead animals are visible in the distance. A sign of famine hangs over everything. Jonah stands alone in a marketplace, his fine clothes now dusty and faded, his expression shifting from confidence to unease as merchants turn their backs on him.
+---
+CHARACTERS: Jonah
+Jonah crouched outside a farmer's muddy pen, feeding pigs. His once-fine clothes are ragged and stained. His face is gaunt, hollow-cheeked, eyes downcast in shame. A handful of bitter pod husks lies in his palm. Flies buzz around the pigs nearby. The lighting is dull and gray, the mood heavy with despair.
+---
+CHARACTERS: Jonah
+Close-up of Jonah's face, tears cutting through the dirt on his cheeks. His eyes are wide with sudden clarity and regret. Behind him, the pig pen blurs out of focus. His hands grip his knees tightly. The moment is raw and deeply personal — the turning point of his heart.
+---
+CHARACTERS: Eliav, Jonah
+The dirt road leading back to the homestead. Jonah walks slowly, his body worn and humble, wearing a rough burlap garment. He keeps his head bowed. In the distance, the silhouette of his father's homestead appears on a hill. The evening light is soft and amber, almost hopeful.
+---
+CHARACTERS: Eliav
+Eliav standing on a stone terrace overlooking the valley, his body leaning forward, eyes scanning the road below with desperate hope. He has been watching for days. His weathered face shows years of worry. The wind lifts the edge of his blue sash. Below, the long road stretches into the golden distance.
+---
+CHARACTERS: Eliav, Jonah
+Eliav running down the stone steps of his homestead, his robes fluttering. His face transforms from grief to overwhelming joy. In the distance, a small broken figure — Jonah — is approaching the gate. Eliav does not wait. He rushes forward with open arms, his expression one of unstoppable love and mercy.
+---
+CHARACTERS: Eliav, Jonah
+The courtyard of the homestead. Eliav has pulled Jonah into a tight embrace, both men on their knees, the father weeping openly while holding his ruined son close. Jonah's face is buried in his father's shoulder, tears streaming. Servants gather around in the background, some wiping their eyes. The golden sunset fills the scene with warmth.
+---
+CHARACTERS: Eliav
+Eliav standing in the courtyard, his arms raised in joyful command. A feast is being prepared — oxen are led forward, tables are spread with bread and fruit, musicians begin to play. His face glows with relief and celebration. The homestead erupts into life and color under the warm evening light.
+---
+CHARACTERS: Micah
+Micah standing alone on a quiet hill overlooking the homestead at dusk. He leans on a wooden staff, his expression shadowed with confusion and resentment. Below, torchlight and music rise from the celebration in the courtyard. His arms are crossed tightly over his chest. The contrast between his isolation and the joyful scene below is palpable.
+---
+CHARACTERS: Micah
+Scene description. Micah stands at the edge of the gathering, having descended from the hill. His arms are still crossed tightly over his chest, his face set in stubborn resentment. Servants move around him, laughing and passing platters of food, but he remains apart — a dark figure untouched by the warmth surrounding him. The torchlight flickers across his weathered face, highlighting the tension in his jaw.
+
+---
+CHARACTERS: Eliav, Micah
+Scene description. Eliav, the father, steps out from the doorway of the great house into the courtyard. He moves past the dancing guests without breaking stride, his robes sweeping behind him, and approaches Micah directly. His expression is neither angry nor scolding — it is tender, almost sorrowful. He reaches Micah and places both hands gently on his son’s shoulders, but Micah does not look at him. He stares fixedly toward the horizon, his lips pressed into a thin line.
+
+---
+CHARACTERS: Eliav, Micah
+Scene description. Micah finally turns his head toward his father, his eyes blazing with years of pent-up hurt. His voice is sharp, accusatory, his fingers pointing toward the feasting hall behind them. Eliav listens quietly, his grip on Micah’s shoulders firm but warm, his face steady with love and an unshakable peace. The celebration roars on behind them, oblivious to the quiet tragedy unfolding in the shadows of the courtyard gate.
+
+SCRIPTURE:
+Luke 15:28-30
+Luke 15:31-32
+
+IMAGE_PROMPT:
+Wide shot of a Middle Eastern homestead courtyard at night, illuminated by torches and oil lamps. Micah stands apart from the joyful gathering, arms crossed, face shadowed with bitterness. Servants and guests celebrate behind him in warm golden light, while he remains in a pool of cool shadow near the edge of the frame. Mud-brick walls, clay jars, wooden pillars. Polished children's story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, full-body character, no modern objects, no text.
+
+---
+
+IMAGE_PROMPT:
+Medium cinematic shot of Eliav, an elderly Middle Eastern man with a grey beard and wise, tender eyes, walking purposefully through a celebratory courtyard at night. He wears a simple white robe with a brown sash. Servants blur past him in the background, laughing and carrying food. Eliav's expression is compassionate and determined as he moves toward someone off-screen. Warm torchlight glows around him. Polished children's story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, no modern objects, no text.
+
+---
+
+IMAGE_PROMPT:
+Medium two-shot of Eliav standing before Micah in a candlelit courtyard at night. Eliav has both hands gently on Micah's shoulders, his face filled with love and quiet urgency. Micah is turned away, jaw clenched, eyes avoiding his father's gaze, his expression a mix of anger and deep hurt. Torches and festive guests glow softly in the blurred background. The contrast between the father's open warmth and the son's closed heart is palpable. Warm golden and cool blue lighting. Polished children's story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, full-body characters visible, no modern objects, no text.
+
+---
+
+AUDIO_START
+SCENE: scene_016
+VOICE: Narrator
+Micah had not yet entered the house. He stood at the edge of the light, far from the music and the dancing, his heart heavy with a bitterness he could not name.
+
+SCENE: scene_017
+VOICE: Narrator
+Then he saw his father moving through the crowd, not toward the hall, but toward him. Eliav did not call for servants or raise his voice. He walked straight to Micah and took him gently by the shoulders.
+
+SCENE: scene_018
+VOICE: Narrator
+But Micah would not meet his father's eyes. Instead, his words came sharp and bitter — every year of faithful labor, every sacrifice he had made, thrown back at the one who had walked away and was now celebrated like a hero. And his father, his heart breaking yet unyielding in love, did not turn away.
+
+SCRIPTURE:
+Luke 15:28-32
+
+AUDIO_END
+
+=== AUDIO ===
+SCENE: scene_001
+VOICE: warm_male_narrator
+There was a man who had two sons, and one day, the younger of them came to him with a request that would change everything. He asked for his share of the inheritance — not after his father's death, but now, while the man still drew breath.
+
+SCENE: scene_002
+VOICE: warm_male_narrator
+The young man's heart was restless. He had dreams of freedom, of a life beyond the dust and duties of home. He counted his coins and felt only impatience — as if every moment spent there was a moment wasted.
+
+SCENE: scene_003
+VOICE: warm_male_narrator
+Against every father's instinct, the man divided his property and let his son go. He watched him walk away down the long road, hoping with all his heart that he would return — though he did not yet know what the distance would cost them both.
+
+SCENE: scene_004
+VOICE: warm_male_narrator
+Far from home, in a city that did not know his name, the young man threw himself into a life of reckless freedom. Every coin became a celebration, every night a new excuse to forget where he had come from.
+
+SCENE: scene_005
+VOICE: warm_male_narrator
+He lived like a king among strangers, surrounded by laughter and fine wine, convinced that this was what freedom truly felt like. But freedom, he would soon learn, is not the same as peace.
+
+SCENE: scene_006
+VOICE: warm_male_narrator
+Then the money ran out. And not long after, a terrible famine struck the land. The city that had welcomed him so warmly turned its back, and the young man found himself starving, alone, and desperate.
+
+SCENE: scene_007
+VOICE: warm_male_narrator
+In his lowest hour, he took work feeding pigs — an unthinkable humiliation for a Jew. He was so hungry that he wished he could eat the pods the pigs were eating, but no one gave him anything.
+
+SCENE: scene_008
+VOICE: warm_male_narrator
+It was in the dirt, among the swine, that his eyes were opened. He remembered his father's home, his father's kindness, and he knew what he had to do. He would return — not as a son, but as a servant. Anything was better than this.
+
+SCENE: scene_009
+VOICE: warm_male_narrator
+So he began the long walk home, each step heavier than the last, carrying nothing but regret and a repentant heart. He rehearsed the words he would speak, hoping somewhere between shame and hope that his father might still receive him.
+
+SCENE: scene_010
+VOICE: warm_male_narrator
+But his father had not forgotten him. Day after day, Eliav had stood on the terrace, scanning the road, watching for a son he refused to believe was gone for good. Love does not stop hoping, even when it is wounded.
+
+SCENE: scene_011
+VOICE: warm_male_narrator
+And when he saw his son — bruised, thin, and distant — something in the father broke wide open. He did not wait for apologies. He did not demand explanations. He ran.
+
+SCENE: scene_012
+VOICE: warm_male_narrator
+He ran to meet his broken boy and held him close, weeping over him as the son confessed his failures. The father silence his words with a kiss, declaring that his son was lost and now was found, dead and now was alive.
+
+SCENE: scene_013
+VOICE: warm_male_narrator
+The celebration was immediate and wild. The best robe was brought out, jewelry was placed on his fingers, and the fattened calf was killed. The father would not let sorrow have the final word.
+
+SCENE: scene_014
+VOICE: warm_male_narrator
+Music and torchlight filled the courtyard as the father rejoiced over the return of his son. Forgiveness, once given, is not half-hearted. It throws a party.
+
+SCENE: scene_015
+VOICE: warm_male_narrator
+But not everyone was celebrating. Far away on a hill, the older son stood in the dark, watching the joy below with a heart full of questions — and his story, too, was only just beginning.
+
+SCENE: scene_016
+VOICE: Narrator
+Micah had not yet entered the house. He stood at the edge of the light, far from the music and the dancing, his heart heavy with a bitterness he could not name.
+
+SCENE: scene_017
+VOICE: Narrator
+Then he saw his father moving through the crowd, not toward the hall, but toward him. Eliav did not call for servants or raise his voice. He walked straight to Micah and took him gently by the shoulders.
+
+SCENE: scene_018
+VOICE: Narrator
+But Micah would not meet his father's eyes. Instead, his words came sharp and bitter — every year of faithful labor, every sacrifice he had made, thrown back at the one who had walked away and was now celebrated like a hero. And his father, his heart breaking yet unyielding in love, did not turn away.
+
+SCRIPTURE:
+Luke 15:28-32

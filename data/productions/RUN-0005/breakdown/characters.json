@@ -1,0 +1,19 @@
+{
+  "characters": [
+    {
+      "name": "david",
+      "format": "bible_story",
+      "needs_reference": true
+    },
+    {
+      "name": "samuel",
+      "format": "bible_story",
+      "needs_reference": true
+    },
+    {
+      "name": "saul",
+      "format": "bible_story",
+      "needs_reference": true
+    }
+  ]
+}

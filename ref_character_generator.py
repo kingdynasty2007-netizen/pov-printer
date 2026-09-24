@@ -141,7 +141,7 @@ def extract_image_style(format_content):
     lines = format_content.splitlines()
     capturing = False
     collected = []
-    section_header_pattern = re.compile(r"^[A-Z][A-Z_]*:\s*$")
+    section_header_pattern = re.compile(r"^[A-Z][A-Z_]*:\s*$|#\s*(=+\s*)*$|#\s*\d+\.\s*[A-Z]")
 
     for line in lines:
         stripped = line.strip()
@@ -153,7 +153,11 @@ def extract_image_style(format_content):
         if capturing:
             collected.append(line)
 
-    return "\n".join(collected).strip()
+    result = "\n".join(collected).strip()
+    # Remove trailing separator lines from comment headers
+    while result.startswith("#") and "=" in result:
+        result = result.lstrip("#").lstrip().strip()
+    return result
 
 
 def _guess_mime(path_or_url):
@@ -458,6 +462,11 @@ def main():
             print(f"⚠️  Could not load format file for style '{style}' — style won't be enforced")
     else:
         print("⚠️  No style recorded in ref_prompts.json — style won't be enforced")
+
+    if image_style_text:
+        for name in ref_prompts:
+            ref_prompts[name] = ref_prompts[name].replace("[style-appropriate description]", image_style_text)
+        print(f"🔧 Replaced [style-appropriate description] with actual style text in {len(ref_prompts)} prompt(s)")
 
     items = list(ref_prompts.items())
     print(f"📋 Found {len(items)} character(s): {', '.join(ref_prompts.keys())}\n")

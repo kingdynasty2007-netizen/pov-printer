@@ -497,10 +497,7 @@ Must never be presented as confirmed biblical fact.
 # 18. IMAGE STYLE
 # ============================================================
 
-DO NOT replace the existing image style.
-
-Use this as the foundational visual style:
-
+IMAGE_STYLE:
 Polished children's story 2D animated cartoon style.
 Clean line art, soft shading, subtle gradients.
 Biblical-era Middle Eastern setting.

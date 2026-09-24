@@ -1,0 +1,10 @@
+{
+  "passed": false,
+  "status": "FAILED_QUALITY_GATE",
+  "checks": {},
+  "required_fixes": [
+    "Verification system error: Unterminated string starting at: line 20 column 16 (char 2936)"
+  ],
+  "warnings": [],
+  "error": "Unterminated string starting at: line 20 column 16 (char 2936)"
+}

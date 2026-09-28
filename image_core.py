@@ -7,6 +7,21 @@
 # amount of time before anyone retries — instead of every lane
 # instantly walking back into the same full queue, which is what
 # caused the endless retry loop at 85-scene scale.
+#
+# CHANGE 2: verify_image now ALSO scores generated characters
+# against their reference image for visual identity similarity
+# (face/hair/build), 0-100, and requires >= MIN_IDENTITY_SIMILARITY_SCORE.
+# This runs alongside the existing checklist, not instead of it.
+#
+# CHANGE 3: fixed a JSON-parsing bug — raw.strip("```json") was
+# stripping individual characters, not the substring, which could
+# silently corrupt valid model output. Replaced with _clean_json_response().
+#
+# CHANGE 4: scenes can now optionally reference a LOCATION and/or
+# PROPS (in addition to CHARACTERS) — persistent references just
+# like characters, but for backgrounds/settings and recurring
+# objects. Optional: a scene with no LOCATION:/PROPS: line behaves
+# exactly as before.
 # ============================================================
 
 import os
@@ -34,15 +49,19 @@ REFERENCE_CACHE_RETRY_DELAY_SECONDS = 3
 
 GEN_COOLDOWN_ON_QUEUE_FULL_SECONDS = 45   # how long ALL gen lanes back off after a 503
 
+MIN_IDENTITY_SIMILARITY_SCORE = 80   # generated character must score >= this vs reference
+
 IMAGE_MODEL = "agnes-image-2.1-flash"
 VERIFY_MODEL = "agnes-2.0-flash"
-IMAGE_SIZE = "1024x768"
+IMAGE_SIZE = "1024x576"
 
 SCENES_FILE = os.path.join(BASE_DIR, "scenes.txt")
 FRAMES_FILE = os.path.join(BASE_DIR, "frames.txt")
 OUTPUT_FOLDER = os.path.join(BASE_DIR, "generated_images")
 MANIFEST_FILE = os.path.join(BASE_DIR, "manifest.json")
 REFERENCE_CHARACTERS_FILE = os.path.join(BASE_DIR, "reference_characters.json")
+REFERENCE_LOCATIONS_FILE = os.path.join(BASE_DIR, "reference_locations.json")
+REFERENCE_PROPS_FILE = os.path.join(BASE_DIR, "reference_props.json")
 
 CROWD_CHARACTERS = set()
 
@@ -65,6 +84,26 @@ def _load_reference_images():
     sys.exit(1)
 
 REFERENCE_IMAGES = _load_reference_images()
+
+
+def _load_optional_reference_json(path, label):
+    """
+    Like _load_reference_images but OPTIONAL — locations/props aren't
+    required for every story. Returns {} (with a note, not an error)
+    if the file is missing or empty.
+    """
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+            if content:
+                data = json.loads(content)
+                if data:
+                    return data
+    print(f"ℹ️  No {label} references found ({os.path.basename(path)}) — scenes with no matching LOCATION/PROPS tag are unaffected.")
+    return {}
+
+REFERENCE_LOCATIONS = _load_optional_reference_json(REFERENCE_LOCATIONS_FILE, "location")
+REFERENCE_PROPS = _load_optional_reference_json(REFERENCE_PROPS_FILE, "prop")
 
 
 def _guess_mime(path_or_url):
@@ -109,6 +148,32 @@ if _reference_cache_failures:
     print(f"\n❌ HARD STOP: {len(_reference_cache_failures)} reference image(s) failed to cache: "
           f"{', '.join(_reference_cache_failures)}")
     sys.exit(1)
+
+
+def _cache_optional_reference_set(ref_dict, label):
+    """Same caching as characters, but a failure here just drops that
+    one entry (with a warning) instead of hard-stopping the whole run
+    — locations/props are optional enrichments, not required inputs."""
+    cache = {}
+    for name, url in ref_dict.items():
+        try:
+            cache[name] = _fetch_as_data_uri(url)
+            print(f"   ✓ {label}:{name}")
+        except Exception as e:
+            print(f"   ⚠️  {label}:{name} could not be cached ({e}) — scenes tagging it will skip this reference")
+    return cache
+
+if REFERENCE_LOCATIONS:
+    print("📥 Caching location references as base64...")
+    REFERENCE_LOCATIONS_B64 = _cache_optional_reference_set(REFERENCE_LOCATIONS, "location")
+else:
+    REFERENCE_LOCATIONS_B64 = {}
+
+if REFERENCE_PROPS:
+    print("📥 Caching prop references as base64...")
+    REFERENCE_PROPS_B64 = _cache_optional_reference_set(REFERENCE_PROPS, "prop")
+else:
+    REFERENCE_PROPS_B64 = {}
 
 
 def _collect_keys(prefix):
@@ -174,12 +239,19 @@ def update_manifest_entry(scene_key, updates):
 def parse_scene(raw_block, block_position):
     lines = raw_block.strip().splitlines()
     character_names = list(REFERENCE_IMAGES.keys())[:1] or ["main_character"]
+    location_name = None
+    prop_names = []
     remaining_lines = []
 
     for line in lines:
         stripped = line.strip()
         if stripped.upper().startswith("CHARACTERS:"):
             character_names = [n.strip() for n in stripped.split(":", 1)[1].split(",") if n.strip()]
+        elif stripped.upper().startswith("LOCATION:"):
+            value = stripped.split(":", 1)[1].strip().lower()
+            location_name = value or None
+        elif stripped.upper().startswith("PROPS:"):
+            prop_names = [n.strip().lower() for n in stripped.split(":", 1)[1].split(",") if n.strip()]
         else:
             remaining_lines.append(line)
 
@@ -202,7 +274,23 @@ def parse_scene(raw_block, block_position):
         print(f"   Fix the CHARACTERS: line. Stopping — not guessing.")
         sys.exit(1)
 
-    return {"characters": character_names, "text": scene_text, "frame_id": frame_id}
+    # LOCATION/PROPS are soft references — unlike characters, an
+    # unregistered name doesn't stop the run. It just means this scene
+    # gets no visual reference for that tag (the scene's own prose
+    # still describes it; it just won't be pinned to a fixed look).
+    if location_name and location_name not in REFERENCE_LOCATIONS_B64:
+        print(f"ℹ️  Scene block #{block_position}: LOCATION '{location_name}' has no cached reference — using text description only.")
+        location_name = None
+
+    prop_names = [p for p in prop_names if p in REFERENCE_PROPS_B64]
+
+    return {
+        "characters": character_names,
+        "text": scene_text,
+        "frame_id": frame_id,
+        "location": location_name,
+        "props": prop_names,
+    }
 
 
 def load_scenes(file_path):
@@ -218,14 +306,14 @@ def load_scenes(file_path):
     for position, raw_block in enumerate(raw_blocks, start=1):
         parsed = parse_scene(raw_block, position)
         scene_number = parsed["frame_id"] if parsed["frame_id"] is not None else position
-        scenes.append((scene_number, parsed["characters"], parsed["text"]))
+        scenes.append((scene_number, parsed["characters"], parsed["text"], parsed["location"], parsed["props"]))
 
     return scenes
 
 
 def get_current_scene_keys():
     scenes = load_scenes(SCENES_FILE)
-    return {f"scene_{number:03d}" for number, _, _ in scenes}
+    return {f"scene_{number:03d}" for number, _, _, _, _ in scenes}
 
 
 def get_position_labels(named_count):
@@ -265,7 +353,8 @@ reference.
 """
 
 
-def build_prompt(characters, scene_text, extra_instruction=""):
+def build_prompt(characters, scene_text, extra_instruction="", location=None, props=None):
+    props = props or []
     named = [c for c in characters if c in REFERENCE_IMAGES]
     crowd = [c for c in characters if c in CROWD_CHARACTERS]
     positions = get_position_labels(len(named))
@@ -307,6 +396,25 @@ def build_prompt(characters, scene_text, extra_instruction=""):
     parts = [instruction, STYLE_PROMPT]
     if named:
         parts.append(POSE_INDEPENDENCE_NOTE)
+
+    if location and location in REFERENCE_LOCATIONS:
+        parts.append(
+            "LOCATION REFERENCE:\nAn additional reference image is provided for this "
+            f"scene's setting: {location.replace('_', ' ').upper()}. Match its "
+            "architecture, terrain, and lighting exactly — characters and action "
+            "happen WITHIN this established location; do not redesign the location itself."
+        )
+
+    if props:
+        known_props = [p for p in props if p in REFERENCE_PROPS]
+        if known_props:
+            prop_list = ", ".join(p.replace("_", " ").upper() for p in known_props)
+            parts.append(
+                f"PROP REFERENCE(S):\nAdditional reference image(s) are provided for: "
+                f"{prop_list}. Render each exactly as shown in its reference when it "
+                "appears in this scene — same shape, material, and color."
+            )
+
     if extra_instruction:
         parts.append("ADDITIONAL CONSTRAINT (important):\n" + extra_instruction)
     parts.append("SCENE:\n" + scene_text)
@@ -353,9 +461,16 @@ def _trigger_gen_cooldown(seconds):
             _gen_cooldown_until = candidate
 
 
-def generate_image_url(lane, characters, scene_text, extra_instruction=""):
-    prompt = build_prompt(characters, scene_text, extra_instruction)
+def generate_image_url(lane, characters, scene_text, extra_instruction="", location=None, props=None):
+    props = props or []
+    prompt = build_prompt(characters, scene_text, extra_instruction, location=location, props=props)
+
     reference_urls = [REFERENCE_IMAGES[name] for name in characters if name in REFERENCE_IMAGES]
+    if location and location in REFERENCE_LOCATIONS:
+        reference_urls.append(REFERENCE_LOCATIONS[location])
+    for prop in props:
+        if prop in REFERENCE_PROPS:
+            reference_urls.append(REFERENCE_PROPS[prop])
 
     payload = {
         "model": IMAGE_MODEL,
@@ -393,12 +508,26 @@ def download_image(url, output_path):
         f.write(response.content)
 
 
-def verify_image(lane, image_url, characters, scene_text):
+def _clean_json_response(raw):
+    """Strips a ```json ... ``` fence WITHOUT eating stray characters —
+    the old raw.strip("```json") stripped individual characters, not
+    the substring, and could silently corrupt valid JSON."""
+    raw = raw.strip()
+    raw = re.sub(r"^```(?:json)?\s*", "", raw)
+    raw = re.sub(r"\s*```$", "", raw)
+    return raw.strip()
+
+
+def verify_image(lane, image_url, characters, scene_text, location=None, props=None):
+    props = props or []
     character_list = ", ".join(c.replace("_", " ") for c in characters)
     named = [c for c in characters if c in REFERENCE_IMAGES]
     ref_data_uris = [REFERENCE_IMAGES_B64.get(c) for c in named]
     have_refs = bool(named) and all(ref_data_uris)
     positions = get_position_labels(len(named))
+
+    known_location = location if (location and location in REFERENCE_LOCATIONS_B64) else None
+    known_props = [p for p in props if p in REFERENCE_PROPS_B64]
 
     ref_labels = "\n".join(
         f"- Reference image {i + 1} = {c.replace('_', ' ').upper()}"
@@ -429,16 +558,69 @@ the swap explicitly in "issue".
             f"outfit_match_ok or height_proportion_ok scrutiny to them."
         )
 
-    if have_refs:
-        intro = f"""You are given {len(named)} reference image(s) followed by ONE
-generated scene image (the LAST image). Compare directly against the
-reference(s) — do not guess from the text alone.
+    # ---- Build the ordered list of reference images attached to this
+    # verify call, and remember which index range belongs to what, so
+    # the prompt text and the actual attached images always agree. ----
+    ref_images_in_order = list(ref_data_uris) if have_refs else []
+    next_ref_number = len(ref_images_in_order) + 1
+
+    location_label_line = ""
+    if known_location:
+        location_label_line = f"- Reference image {next_ref_number} = LOCATION: {known_location.replace('_',' ').upper()} (the required setting/background)"
+        ref_images_in_order.append(REFERENCE_LOCATIONS_B64[known_location])
+        next_ref_number += 1
+
+    props_label_lines = []
+    for p in known_props:
+        props_label_lines.append(f"- Reference image {next_ref_number} = PROP: {p.replace('_',' ').upper()}")
+        ref_images_in_order.append(REFERENCE_PROPS_B64[p])
+        next_ref_number += 1
+
+    extra_ref_labels = "\n".join([l for l in [location_label_line] + props_label_lines if l])
+
+    if have_refs or known_location or known_props:
+        intro = f"""You are given reference image(s) followed by ONE generated scene
+image (the LAST image). Compare directly against the reference(s) —
+do not guess from the text alone.
 
 {ref_labels}
+{extra_ref_labels}
 - The final image is the GENERATED SCENE to check.{crowd_note}
 {identity_check}"""
     else:
         intro = "Look at this generated scene image and check it against the description below."
+
+    similarity_check_text = ""
+    similarity_json_field = ""
+    if have_refs:
+        similarity_check_text = """
+8. identity_similarity_score: score 0-100, how closely does each named
+   character's FACE, HAIR, and BUILD match their reference image —
+   ignore pose and outfit color (already covered above). 100 = clearly
+   the same person, 0 = no resemblance. If multiple named characters,
+   give the LOWEST individual score (the worst match), not an average.
+"""
+        similarity_json_field = ',\n"identity_similarity_score": <integer 0-100>'
+
+    background_check_text = ""
+    background_json_field = ""
+    if known_location:
+        background_check_text = """
+9. background_match_ok: does the scene's background/setting match the
+   LOCATION reference image — same architecture, terrain, and general
+   layout (lighting/time-of-day may vary with the scene text)?
+"""
+        background_json_field = ',\n"background_match_ok": true/false'
+
+    props_check_text = ""
+    props_json_field = ""
+    if known_props:
+        props_check_text = """
+10. props_match_ok: does/do the PROP reference object(s) appear in the
+    scene (if the scene text calls for them) and match their reference
+    image(s) — same shape, material, and color?
+"""
+        props_json_field = ',\n"props_match_ok": true/false'
 
     check_prompt = f"""
 {intro}
@@ -457,19 +639,18 @@ Check ALL of the following:
    watch specifically for stretching or elongation?
 6. era_consistency_ok: no modern/anachronistic elements anywhere?
 7. pose_action_ok: pose matches the SCENE TEXT, not the reference image's pose?
-
+{similarity_check_text}{background_check_text}{props_check_text}
 Respond ONLY with JSON, no other text:
 {{"count_ok": true/false, "role_match_ok": true/false,
 "outfit_match_ok": true/false, "style_match_ok": true/false,
 "height_proportion_ok": true/false, "era_consistency_ok": true/false,
-"pose_action_ok": true/false,
+"pose_action_ok": true/false{similarity_json_field}{background_json_field}{props_json_field},
 "issue": "<name the failing check(s) and describe briefly, or 'none'>"}}
 """
 
     content = [{"type": "text", "text": check_prompt}]
-    if have_refs:
-        for data_uri in ref_data_uris:
-            content.append({"type": "image_url", "image_url": {"url": data_uri}})
+    for data_uri in ref_images_in_order:
+        content.append({"type": "image_url", "image_url": {"url": data_uri}})
     content.append({"type": "image_url", "image_url": {"url": image_url}})
 
     payload = {"model": VERIFY_MODEL, "messages": [{"role": "user", "content": content}]}
@@ -487,11 +668,19 @@ Respond ONLY with JSON, no other text:
             continue
         try:
             raw = response.json()["choices"][0]["message"]["content"]
-            raw = raw.strip().strip("```json").strip("```").strip()
-            return json.loads(raw), None
+            raw = _clean_json_response(raw)
+            result = json.loads(raw)
         except Exception as e:
             last_error = f"parse error: {e}"
             continue
+
+        if have_refs:
+            score = result.get("identity_similarity_score")
+            result["identity_similarity_ok"] = (
+                isinstance(score, (int, float)) and score >= MIN_IDENTITY_SIMILARITY_SCORE
+            )
+
+        return result, None
 
     return None, last_error
 
@@ -502,4 +691,7 @@ def verification_passed(result):
     required_keys = ["count_ok", "role_match_ok", "outfit_match_ok",
                       "style_match_ok", "height_proportion_ok", "era_consistency_ok",
                       "pose_action_ok"]
+    for optional_key in ("identity_similarity_ok", "background_match_ok", "props_match_ok"):
+        if optional_key in result:
+            required_keys.append(optional_key)
     return all(result.get(key) is True for key in required_keys)

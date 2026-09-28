@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "status": "PASS",
+  "checks": {
+    "hook": {
+      "passed": true,
+      "reason": "Opens with an intriguing statement about a 'price settled between brothers' and 'something far more precious,' immediately creating mystery and tension."
+    },
+    "biblical_accuracy": {
+      "passed": true,
+      "reason": "Faithfully follows Genesis 25:29-34: Esau returns famished from the fields, Jacob cooks red lentil stew, Esau sells his birthright, and Scripture records he despised his birthright. Invented dialogue is dramatization not presented as exact quotation; no invented facts are presented as biblical truth."
+    },
+    "scripture_usage": {
+      "passed": true,
+      "reason": "References key scriptural elements—Esau also called Edom, the birthright, the covenant promise to Abraham and Isaac, and the phrase 'he despised his birthright'—all grounded in Genesis 25 without misattribution."
+    },
+    "story_structure": {
+      "passed": true,
+      "reason": "Clear arc from hook (brothers' price settled) through setup (hunger and demand), conflict (birthright vs. stew), escalation (Jacob's proposal), climax (the sale and oath), and resolution (theological warning about trading the eternal for the temporary)."
+    },
+    "pacing": {
+      "passed": true,
+      "reason": "Each paragraph advances the narrative without repetition or redundant exposition; the story moves steadily from hunger to transaction to moral reflection."
+    },
+    "character_development": {
+      "passed": true,
+      "reason": "Esau's motivation (physical exhaustion and immediate desire) and arc (from hunger to indifference to irreversible loss) are clearly established; Jacob's contrasting awareness of the birthright's worth is also clear."
+    },
+    "emotional_progression": {
+      "passed": true,
+      "reason": "Intensity builds naturally from physical desperation through the transaction to solemn moral weight, peaking at the revelation that Esau 'never truly saw what he had thrown away until it was gone forever.'"
+    },
+    "curiosity": {
+      "passed": true,
+      "reason": "The opening hook asks an implicit question about what was traded; each section deepens the stakes—the birthright's significance, Esau's dismissal, and the tragic permanence of the choice—giving viewers reason to continue watching."
+    },
+    "climax": {
+      "passed": true,
+      "reason": "The sale of the birthright is the clearly defined major event, treated as the emotional and thematic peak with weight and consequence."
+    },
+    "payoff_resolution": {
+      "passed": true,
+      "reason": "The ending ties back to the opening's promise of a 'price settled,' delivering a clear moral: the birthright was lost through indifference, not deception, leaving a lasting warning about trading inheritance for temporary satisfaction."
+    },
+    "narration_quality": {
+      "passed": true,
+      "reason": "Language is warm, cinematic, and accessible—phrases like 'red as the earth itself' and 'steaming bowl' create vivid imagery while maintaining a reverent, storybook tone appropriate for general audiences."
+    },
+    "visual_storytelling": {
+      "passed": true,
+      "reason": "Every element translates well to animation: open fields, Esau's exhaustion, the pot of red stew, the two brothers in conversation, the oath, eating and departing—all are visually clear and animated-friendly."
+    },
+    "duration_scene_suitability": {
+      "passed": true,
+      "reason": "The script covers three major beats (setup, transaction, reflection) that map well to 18 scenes at 10 seconds each, with sufficient content per scene without cramming or padding."
+    }
+  },
+  "required_fixes": [],
+  "warnings": []
+}

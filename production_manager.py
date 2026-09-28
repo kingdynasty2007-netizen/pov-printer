@@ -3,9 +3,22 @@
 # PURPOSE: Orchestrates the full manual production pipeline.
 #
 # FLOW:
-#   INPUT → RESEARCH → SCRIPT (v001) → VERIFY → REWRITE LOOP
-#   → HARD PASS GATE → BREAKDOWN → METADATA → THUMBNAIL
+#   INPUT → RESEARCH → STORY (v001, full prose) → STORY VERIFY
+#   → STORY REWRITE LOOP → STORY PASS GATE
+#   → BREAKDOWN GENERATION (scenes, ALWAYS adapted from the approved
+#     story — never invented independently from the topic)
+#   → CONSISTENCY VERIFY (scenes vs. the approved story)
+#   → CONSISTENCY REWRITE LOOP → HARD PASS GATE
+#   → BREAKDOWN (parse into structured artifacts) → METADATA → THUMBNAIL
 #   → (existing media systems)
+#
+# CHANGE: the full story is now a first-class stage with its own
+# versioned folder (story/versions/) and its own quality gate — the
+# same hook/pacing/biblical_accuracy/etc. checks that used to run on
+# the scene-broken text now run on the actual narrative. The scene
+# breakdown is generated FROM that approved story (script_engine.run()
+# always receives it as raw_script_text) and is then checked for
+# CONSISTENCY against it, not re-graded for quality from scratch.
 #
 # Does NOT run image/audio/video generation itself.
 # Calls the existing script_engine, bible_strory_lookup,
@@ -15,13 +28,11 @@
 # YouTube API: NOT implemented here.
 # Automatic queue: NOT implemented here.
 #
-# FIXES APPLIED:
-#   - Server/parse errors from verifier do not burn rewrite slots.
-#   - Scene count sanity check: truncated scripts (< 80% of expected
-#     scenes) override FAILED_QUALITY_GATE to NEEDS_REWRITE.
-#   - scenes.txt / audio_scenes.txt / video_scenes.txt are only
-#     written to root AFTER script PASS — not during generation.
-#   - video_scenes.txt added to root sync.
+# KNOWN BREAKING CHANGE: tests/test_pipeline.py calls run_verification_loop()
+# with the OLD signature (scripture_references=...) and patches
+# sv.verify_dry_run — that function now does scene-vs-story consistency
+# checking and calls sv.verify_scenes_against_story_dry_run instead.
+# Those tests need updating to match (not done in this pass).
 # ============================================================
 
 import os
@@ -101,53 +112,163 @@ def run_research(run_id, paths, topic, fmt):
 
 
 # ============================================================
-# SCRIPT GENERATION
+# FULL STORY GENERATION (new — upstream of the scene breakdown)
 # ============================================================
 
-def generate_script(run_id, paths, topic, fmt, duration_secs,
-                    character_names, raw_script_text=None,
-                    dry_run=False):
-    """
-    Generate or ingest a script. Saves as the next version (v001 on first run).
-    Returns (script_text, version_label).
+def _dry_run_story(topic):
+    return f"[DRY RUN STORY] This is a placeholder full story for topic: {topic}."
 
-    NOTE: script_engine.run() writes scenes.txt / audio_scenes.txt to the
-    project root as a side effect. Those root files are STAGING ONLY and
-    will be overwritten after PASS by _sync_breakdown_to_root(). Do not
-    treat them as approved until the pipeline reaches breakdown.
+def generate_story(run_id, paths, topic, fmt, duration_secs,
+                   raw_story_text=None, scripture_references=None, dry_run=False):
+    """
+    Generate (or ingest) the FULL STORY — plain prose, no scene markers,
+    no camera direction. This is the source of truth everything
+    downstream (scene breakdown, metadata) is adapted from.
+
+    scripture_references: passed straight through to
+    script_engine.generate_story() so the story is grounded in the
+    same passages the quality gate later verifies it against
+    (bible_story format only — empty/None for other formats).
+
+    Saves as the next story version (v001 on first run).
+    Returns (story_text, version_label).
+    """
+    if raw_story_text:
+        _log(run_id, "📄 Ingesting provided text as story v001...")
+        story_text = raw_story_text
+    elif dry_run:
+        _log(run_id, "🧪 [DRY RUN] Generating placeholder story...")
+        story_text = _dry_run_story(topic)
+    else:
+        _log(run_id, "📝 Writing full story...")
+        import script_engine
+        story_text = script_engine.generate_story(
+            topic, fmt, duration_secs, scripture_references=scripture_references,
+        )
+
+    version_label = sm.save_story_version(paths, story_text)
+    sm.update_production(run_id, stage="story_generated")
+    return story_text, version_label
+
+
+def rewrite_story(run_id, paths, topic, fmt, duration_secs,
+                  previous_story_text, verification_result,
+                  scripture_references=None, dry_run=False):
+    """
+    Rewrite the full story based on quality-gate feedback.
+    scripture_references is threaded through the same way generate_story()
+    does it, so a rewrite stays grounded too, not just the first draft.
+    Returns (new_story_text, new_version_label).
+    """
+    required_fixes = verification_result.get("required_fixes", [])
+    fixes_text = (
+        "\n".join(f"- {f}" for f in required_fixes)
+        if required_fixes else "- General quality improvement needed."
+    )
+
+    if dry_run:
+        _log(run_id, "🧪 [DRY RUN] Generating story rewrite placeholder...")
+        new_story_text = _dry_run_story(f"{topic} [REWRITE]")
+    else:
+        _log(run_id, "🔄 Rewriting story based on verification feedback...")
+        import script_engine
+
+        rewrite_topic = (
+            f"REWRITE INSTRUCTIONS — the previous version of this story "
+            f"failed quality checks.\nRequired fixes:\n{fixes_text}\n\n"
+            f"Previous story (for reference — do NOT copy it, fix the "
+            f"issues):\n{previous_story_text[:3000]}\n\n"
+            f"Now write an improved version of the story for topic: {topic}\n"
+        )
+        new_story_text = script_engine.generate_story(
+            rewrite_topic, fmt, duration_secs, scripture_references=scripture_references,
+        )
+
+    new_version_label = sm.save_story_version(paths, new_story_text)
+    sm.update_production(run_id, stage="story_rewritten")
+    _log(run_id, f"   ✅ Story rewrite saved as {new_version_label}")
+    return new_story_text, new_version_label
+  
+def run_story_verification_loop(run_id, paths, topic, fmt, duration_secs,
+                                initial_story_text, initial_version_label,
+                                scripture_references, dry_run=False):
+    """
+    Verify → rewrite → re-verify loop for the FULL STORY. This is the
+    real content quality gate (hook, pacing, biblical_accuracy, climax,
+    etc.) — it runs ONCE here, before any scene breakdown exists.
+
+    Returns (approved_story_text, approved_story_version_label, final_verification_result)
+    or raises RuntimeError if FAILED_QUALITY_GATE.
     """
     scene_count = _scene_count(duration_secs)
+    current_story = initial_story_text
+    current_version = initial_version_label
+    rewrite_count = 0
 
-    if raw_script_text:
-        _log(run_id, "📄 Ingesting existing script as v001...")
-        script_text = raw_script_text
+    while True:
+        _log(run_id, f"🔍 Verifying story {current_version}...")
+        sm.update_production(run_id, stage="verifying_story", verification_status="running")
 
-    elif dry_run:
-        _log(run_id, "🧪 [DRY RUN] Generating placeholder script...")
-        script_text = _dry_run_script(topic, scene_count)
+        if dry_run:
+            force_pass = (rewrite_count >= 1)
+            result = sv.verify_dry_run(
+                current_story, topic, fmt, duration_secs, scene_count,
+                force_pass=force_pass,
+            )
+        else:
+            result = sv.verify(
+                current_story, topic, fmt, duration_secs, scene_count,
+                scripture_references=scripture_references,
+            )
 
-    else:
-        _log(run_id, f"✍️  Generating script ({scene_count} scenes)...")
-        import script_engine
-        result = script_engine.run(
-            topic=topic,
-            style=fmt,
-            duration_secs=duration_secs,
-            scene_count=scene_count,
-            character_names=character_names,
-            topic_id=None,
-            raw_script_text=None,
-        )
-        scenes_txt = result.get("scenes_txt", "")
-        audio_txt = result.get("audio_txt", "")
-        script_text = f"=== SCENES ===\n{scenes_txt}\n\n=== AUDIO ===\n{audio_txt}"
+        sm.save_json(paths, "verification", f"story_{current_version}.json", result)
+        _log(run_id, f"   Status: {result['status']}")
 
-    version_label = sm.save_script_version(paths, script_text)
-    sm.update_production(run_id,
-                         current_script_version=version_label,
-                         script_status="generated")
-    return script_text, version_label
+        if result["passed"]:
+            _log(run_id, f"   ✅ STORY QUALITY GATE PASSED ({current_version})")
+            sm.update_production(run_id, verification_status="story_passed", stage="story_approved")
+            sm.set_current_story(paths, current_story)
+            return current_story, current_version, result
 
+        if result["status"] == "FAILED_QUALITY_GATE":
+            sm.update_production(run_id, verification_status="story_failed_quality_gate",
+                                 stage="failed", error="Story failed quality gate — pipeline stopped.")
+            raise RuntimeError(
+                f"❌ Story FAILED_QUALITY_GATE on {current_version}. "
+                f"Required fixes: {result.get('required_fixes', [])}"
+            )
+
+        is_system_error = result.get("_parse_error", False) or result.get("_server_error", False)
+
+        if is_system_error:
+            _log(run_id, "   ⚠️  SYSTEM ERROR during story verification — retrying same version (rewrite slot NOT consumed)")
+        else:
+            rewrite_count += 1
+            _log(run_id, f"   ⚠️  Story NEEDS_REWRITE (attempt {rewrite_count}/{MAX_REWRITE_ATTEMPTS})")
+            for fix in result.get("required_fixes", []):
+                _log(run_id, f"      → {fix}")
+
+        if rewrite_count >= MAX_REWRITE_ATTEMPTS and not is_system_error:
+            sm.update_production(run_id, verification_status="story_failed_quality_gate",
+                                 stage="failed", error=f"Exceeded {MAX_REWRITE_ATTEMPTS} story rewrite attempts.")
+            raise RuntimeError(
+                f"❌ Story still failing after {MAX_REWRITE_ATTEMPTS} rewrite attempt(s). "
+                f"Pipeline stopped. Last status: {result['status']}"
+            )
+
+        sm.update_production(run_id, stage="rewriting_story", verification_status="story_needs_rewrite")
+
+        if not is_system_error:
+            current_story, current_version = rewrite_story(
+                run_id, paths, topic, fmt, duration_secs,
+                current_story, result, scripture_references=scripture_references,
+                dry_run=dry_run,
+            )
+
+
+# ============================================================
+# SCENE BREAKDOWN GENERATION (always adapted from the approved story)
+# ============================================================
 
 def _dry_run_script(topic, scene_count):
     """Minimal placeholder script for dry-run / test mode."""
@@ -159,78 +280,106 @@ def _dry_run_script(topic, scene_count):
     return "\n".join(lines)
 
 
-# ============================================================
-# REWRITE
-# ============================================================
+def generate_script(run_id, paths, topic, fmt, duration_secs,
+                    character_names, story_text, dry_run=False):
+    """
+    Generate the scene-by-scene breakdown — ALWAYS adapted from the
+    approved story_text (never invented independently from the topic).
+    This is what keeps the breakdown from drifting off-story.
+    Saves as the next version (v001 on first run).
+    Returns (script_text, version_label).
+    """
+    scene_count = _scene_count(duration_secs)
+
+    if dry_run:
+        _log(run_id, "🧪 [DRY RUN] Generating placeholder script...")
+        script_text = _dry_run_script(topic, scene_count)
+    else:
+        _log(run_id, f"✍️  Breaking approved story into {scene_count} scenes...")
+        import script_engine
+        result = script_engine.run(
+            topic=topic,
+            style=fmt,
+            duration_secs=duration_secs,
+            scene_count=scene_count,
+            character_names=character_names,
+            topic_id=None,
+            raw_script_text=story_text,
+        )
+        scenes_txt = result.get("scenes_txt", "")
+        audio_txt = result.get("audio_txt", "")
+        script_text = f"=== SCENES ===\n{scenes_txt}\n\n=== AUDIO ===\n{audio_txt}"
+
+    version_label = sm.save_script_version(paths, script_text)
+    sm.update_production(run_id, current_script_version=version_label, script_status="generated")
+    return script_text, version_label
+
 
 def rewrite_script(run_id, paths, topic, fmt, duration_secs,
                    character_names, previous_script_text,
-                   verification_result, dry_run=False):
+                   verification_result, story_text, dry_run=False):
     """
-    Generate a new script version based on verification failures.
+    Regenerate the scene breakdown from the SAME approved story,
+    incorporating consistency-check feedback (e.g. "scene 4 shows an
+    event not in the story").
     Returns (new_script_text, new_version_label).
     """
     scene_count = _scene_count(duration_secs)
     required_fixes = verification_result.get("required_fixes", [])
     fixes_text = (
         "\n".join(f"- {f}" for f in required_fixes)
-        if required_fixes
-        else "- General quality improvement needed."
+        if required_fixes else "- General consistency improvement needed."
     )
 
     if dry_run:
         _log(run_id, "🧪 [DRY RUN] Generating rewrite placeholder...")
         new_script_text = _dry_run_script(f"{topic} [REWRITE]", scene_count)
-
     else:
-        _log(run_id, "🔄 Rewriting script based on verification feedback...")
+        _log(run_id, "🔄 Rebreaking story into scenes based on consistency feedback...")
         import script_engine
 
-        rewrite_topic = (
-            f"REWRITE INSTRUCTIONS — the previous version of this script failed "
-            f"quality checks.\n"
-            f"Required fixes:\n{fixes_text}\n\n"
-            f"Previous script (for reference — do NOT copy it, fix the issues):\n"
-            f"{previous_script_text[:3000]}\n\n"
-            f"Now write an improved version of the script for topic: {topic}\n"
+        rewrite_instruction = (
+            f"IMPORTANT — the previous scene breakdown of this story drifted "
+            f"from it. Fix this when breaking it down again:\n{fixes_text}\n\n"
+            f"Break down ONLY the story below — do not invent new plot, "
+            f"characters, or events beyond what it contains:\n\n{story_text}"
         )
 
         result = script_engine.run(
-            topic=rewrite_topic,
+            topic=topic,
             style=fmt,
             duration_secs=duration_secs,
             scene_count=scene_count,
             character_names=character_names,
             topic_id=None,
-            raw_script_text=None,
+            raw_script_text=rewrite_instruction,
         )
         scenes_txt = result.get("scenes_txt", "")
         audio_txt = result.get("audio_txt", "")
         new_script_text = f"=== SCENES ===\n{scenes_txt}\n\n=== AUDIO ===\n{audio_txt}"
 
     new_version_label = sm.save_script_version(paths, new_script_text)
-    sm.update_production(run_id,
-                         current_script_version=new_version_label,
-                         script_status="rewritten")
+    sm.update_production(run_id, current_script_version=new_version_label, script_status="rewritten")
     _log(run_id, f"   ✅ Rewrite saved as {new_version_label}")
     return new_script_text, new_version_label
 
 
 # ============================================================
-# VERIFICATION LOOP
+# CONSISTENCY VERIFICATION LOOP (scenes vs. approved story)
 # ============================================================
 
 def run_verification_loop(run_id, paths, topic, fmt, duration_secs,
-                           character_names, initial_script_text,
-                           initial_version_label, scripture_references,
-                           dry_run=False):
+                          character_names, initial_script_text,
+                          initial_version_label, story_text,
+                          dry_run=False):
     """
-    Verify → rewrite → re-verify loop.
-    Enforces MAX_REWRITE_ATTEMPTS hard limit.
+    Verify the SCENE BREAKDOWN against the approved story — not a
+    standalone quality gate (that already happened at the story stage).
+    Checks the breakdown stayed faithful: same characters, same events,
+    same order, nothing invented or dropped.
 
-    Server errors and parse errors do NOT burn a rewrite slot —
-    they retry verification on the same script version.
-
+    Verify → rewrite → re-verify loop. Enforces MAX_REWRITE_ATTEMPTS.
+    Server/parse errors do NOT burn a rewrite slot.
     Truncated scripts (< 80% of expected scenes) override
     FAILED_QUALITY_GATE to NEEDS_REWRITE automatically.
 
@@ -243,31 +392,23 @@ def run_verification_loop(run_id, paths, topic, fmt, duration_secs,
     rewrite_count = 0
 
     while True:
-        _log(run_id, f"🔍 Verifying {current_version}...")
-        sm.update_production(run_id,
-                             stage="verifying",
-                             verification_status="running")
+        _log(run_id, f"🔍 Verifying {current_version} against approved story...")
+        sm.update_production(run_id, stage="verifying", verification_status="running")
 
-        # ---- Run verifier ----
         if dry_run:
             force_pass = (rewrite_count >= 1)
-            result = sv.verify_dry_run(
-                current_script, topic, fmt, duration_secs, scene_count,
-                force_pass=force_pass,
+            result = sv.verify_scenes_against_story_dry_run(
+                current_script, story_text, force_pass=force_pass,
             )
         else:
-            result = sv.verify(
-                current_script, topic, fmt, duration_secs, scene_count,
-                scripture_references=scripture_references,
+            result = sv.verify_scenes_against_story(
+                current_script, story_text, topic, fmt,
             )
 
         sm.save_verification(paths, current_version, result)
         _log(run_id, f"   Status: {result['status']}")
 
         # ---- Scene count sanity check ----
-        # If the script is simply missing scenes (generation was truncated),
-        # override FAILED_QUALITY_GATE to NEEDS_REWRITE so the pipeline
-        # regenerates rather than hard-stopping.
         expected_scenes = scene_count
         actual_scenes = _count_scenes_in_script(current_script)
         if (
@@ -277,7 +418,7 @@ def run_verification_loop(run_id, paths, topic, fmt, duration_secs,
             _log(run_id,
                  f"   ⚠️  Script has {actual_scenes}/{expected_scenes} scenes — "
                  f"overriding FAILED_QUALITY_GATE to NEEDS_REWRITE "
-                 f"(generation was truncated, not a quality failure)")
+                 f"(generation was truncated, not a consistency failure)")
             result["status"] = "NEEDS_REWRITE"
             result["passed"] = False
             if not result.get("required_fixes"):
@@ -287,9 +428,8 @@ def run_verification_loop(run_id, paths, topic, fmt, duration_secs,
                     f"Regenerate with the full scene count."
                 ]
 
-        # ---- PASS ----
         if result["passed"]:
-            _log(run_id, f"   ✅ QUALITY GATE PASSED ({current_version})")
+            _log(run_id, f"   ✅ BREAKDOWN MATCHES STORY ({current_version})")
             sm.update_production(run_id,
                                  verification_status="passed",
                                  script_status="approved",
@@ -297,19 +437,16 @@ def run_verification_loop(run_id, paths, topic, fmt, duration_secs,
             sm.set_current_script(paths, current_script)
             return current_script, current_version, result
 
-        # ---- FAILED_QUALITY_GATE — hard stop ----
         if result["status"] == "FAILED_QUALITY_GATE":
             sm.update_production(run_id,
                                  verification_status="failed_quality_gate",
                                  stage="failed",
-                                 error="Script failed quality gate — pipeline stopped.")
+                                 error="Breakdown diverged from approved story — pipeline stopped.")
             raise RuntimeError(
                 f"❌ FAILED_QUALITY_GATE on {current_version}. "
                 f"Required fixes: {result.get('required_fixes', [])}"
             )
 
-        # ---- NEEDS_REWRITE ----
-        # Server errors and parse errors do NOT burn a rewrite slot.
         is_system_error = (
             result.get("_parse_error", False)
             or result.get("_server_error", False)
@@ -327,7 +464,6 @@ def run_verification_loop(run_id, paths, topic, fmt, duration_secs,
             for fix in result.get("required_fixes", []):
                 _log(run_id, f"      → {fix}")
 
-        # ---- Rewrite limit reached ----
         if rewrite_count >= MAX_REWRITE_ATTEMPTS and not is_system_error:
             sm.update_production(run_id,
                                  verification_status="failed_quality_gate",
@@ -343,17 +479,16 @@ def run_verification_loop(run_id, paths, topic, fmt, duration_secs,
                              stage="rewriting",
                              verification_status="needs_rewrite")
 
-        # System errors retry verification on the same script — no rewrite needed
         if not is_system_error:
             current_script, current_version = rewrite_script(
                 run_id, paths, topic, fmt, duration_secs,
-                character_names, current_script, result,
+                character_names, current_script, result, story_text,
                 dry_run=dry_run,
             )
 
 
 # ============================================================
-# POST-PASS BREAKDOWN
+# POST-PASS BREAKDOWN (unchanged — parses the approved scene text)
 # ============================================================
 
 def run_breakdown(run_id, paths, approved_script_text, topic, fmt,
@@ -367,30 +502,24 @@ def run_breakdown(run_id, paths, approved_script_text, topic, fmt,
     _log(run_id, "📋 Running post-pass breakdown...")
     scene_count = _scene_count(duration_secs)
 
-    # ---- Characters ----
     characters_data = _extract_characters(
         approved_script_text, character_names, fmt
     )
     sm.save_json(paths, "breakdown", "characters.json", characters_data)
 
-    # ---- Scenes ----
     scenes_data = _extract_scenes(approved_script_text, scene_count, fmt)
     scenes_txt = _format_scenes_txt(scenes_data)
     sm.save_text(paths, "breakdown", "scenes.txt", scenes_txt)
 
-    # ---- Audio scenes ----
     audio_txt = _format_audio_scenes(scenes_data)
     sm.save_text(paths, "breakdown", "audio_scenes.txt", audio_txt)
 
-    # ---- Video scenes ----
     video_txt = _format_video_scenes(scenes_data)
     sm.save_text(paths, "breakdown", "video_scenes.txt", video_txt)
 
-    # ---- Image prompts ----
     image_prompts = _build_image_prompts(scenes_data, fmt)
     sm.save_json(paths, "breakdown", "image_prompts.json", image_prompts)
 
-    # ---- Research artifacts (ensure latest copy is in research/) ----
     sm.save_json(paths, "research", "story_facts.json", story_facts)
     sm.save_json(paths, "research", "scripture_references.json", scripture_references)
 
@@ -426,7 +555,6 @@ def _extract_scenes(script_text, scene_count, fmt):
     """
     scenes = []
 
-    # Extract SCENES section
     scenes_section = ""
     if "=== SCENES ===" in script_text:
         parts = script_text.split("=== SCENES ===", 1)
@@ -440,14 +568,12 @@ def _extract_scenes(script_text, scene_count, fmt):
     else:
         scenes_section = script_text
 
-    # Split on scene breaks
     raw_blocks = (
         [b.strip() for b in scenes_section.split("---") if b.strip()]
         if "---" in scenes_section
         else ([scenes_section.strip()] if scenes_section.strip() else [])
     )
 
-    # Extract audio section
     audio_section = ""
     if "=== AUDIO ===" in script_text:
         audio_section = script_text.split("=== AUDIO ===", 1)[1]
@@ -478,7 +604,6 @@ def _extract_scenes(script_text, scene_count, fmt):
             "scripture_ref": _extract_scripture_ref(block),
         })
 
-    # If no scenes parsed, create placeholders
     if not scenes:
         for i in range(1, scene_count + 1):
             scenes.append({
@@ -507,7 +632,7 @@ def _parse_audio_section(audio_text):
             continue
         lines = block.splitlines()
         text_lines = []
-        for line in lines[1:]:   # skip scene key line
+        for line in lines[1:]:
             if line.strip().upper().startswith("VOICE:"):
                 continue
             text_lines.append(line)
@@ -609,14 +734,15 @@ def _build_image_prompts(scenes_data, fmt):
 
 
 # ============================================================
-# METADATA & THUMBNAIL
+# METADATA & THUMBNAIL (unchanged — now sourced from the full story)
 # ============================================================
 
-def run_metadata(run_id, paths, topic, fmt, approved_script_text,
+def run_metadata(run_id, paths, topic, fmt, source_text,
                  scripture_references, dry_run=False):
     """
-    Generate YouTube metadata and thumbnail plan from the APPROVED script.
-    Saves to metadata/ directory.
+    Generate YouTube metadata and thumbnail plan from the approved
+    STORY (richer prose reads better than the scene-broken format for
+    a YouTube description). Saves to metadata/ directory.
     """
     _log(run_id, "🏷️  Generating metadata and thumbnail plan...")
 
@@ -625,10 +751,10 @@ def run_metadata(run_id, paths, topic, fmt, approved_script_text,
         thumbnail_plan = _dry_run_thumbnail(topic)
     else:
         youtube_meta = _generate_youtube_metadata(
-            topic, fmt, approved_script_text, scripture_references
+            topic, fmt, source_text, scripture_references
         )
         thumbnail_plan = _generate_thumbnail_plan(
-            topic, fmt, approved_script_text
+            topic, fmt, source_text
         )
 
     sm.save_json(paths, "metadata", "youtube.json", youtube_meta)
@@ -736,7 +862,7 @@ def _sync_breakdown_to_root(paths):
 
 
 # ============================================================
-# MEDIA PIPELINE (calls existing scripts via subprocess)
+# MEDIA PIPELINE (calls existing scripts via subprocess) — unchanged
 # ============================================================
 
 def _run_media_pipeline(run_id, paths):
@@ -797,11 +923,14 @@ def run_manual_pipeline(
     Full manual pipeline entry point.
 
     Args:
-        topic:              Topic string or script label.
+        topic:              Topic string or story label.
         fmt:                Format name (e.g. 'bible_story').
         duration_secs:      Target duration in seconds.
         character_names:    Optional list of character names.
-        raw_script_text:    If provided, use as v001 (existing-script mode).
+        raw_script_text:    If provided, used as the STORY v001 directly
+                             (existing-script mode) — no LLM story
+                             generation, but it still goes through the
+                             story quality gate like any other story.
         supabase_topic_id:  Optional Supabase topic ID to link.
         dry_run:            If True, skip expensive LLM/media calls.
         run_media:          If True, call existing media pipeline after breakdown.
@@ -834,29 +963,45 @@ def run_manual_pipeline(
 
     try:
         # ---- RESEARCH ----
-        print("↓ BIBLE RESEARCH")
+        print("↓ RESEARCH")
         story_facts, scripture_references = run_research(
             run_id, paths, topic, fmt
         )
 
-        # ---- SCRIPT GENERATION / INGESTION ----
-        print("\n↓ SCRIPT GENERATION")
+        # ---- FULL STORY GENERATION / INGESTION ----
+        print("\n↓ STORY GENERATION")
+        sm.update_production(run_id, stage="story_generation")
+        story_text, story_version = generate_story(
+            run_id, paths, topic, fmt, duration_secs,
+            raw_story_text=raw_script_text, scripture_references=scripture_references,
+            dry_run=dry_run,
+        )
+        print(f"  Story {story_version} ready")
+
+        # ---- STORY VERIFICATION LOOP ----
+        print("\n↓ STORY VERIFICATION")
+        approved_story, approved_story_version, story_verification = run_story_verification_loop(
+            run_id, paths, topic, fmt, duration_secs,
+            story_text, story_version, scripture_references, dry_run=dry_run,
+        )
+        print(f"\n↓ STORY QUALITY GATE PASSED ({approved_story_version})")
+
+        # ---- SCENE BREAKDOWN GENERATION (adapted from the approved story) ----
+        print("\n↓ SCENE BREAKDOWN GENERATION")
         sm.update_production(run_id, stage="script_generation")
         script_text, version_label = generate_script(
             run_id, paths, topic, fmt, duration_secs,
-            character_names, raw_script_text=raw_script_text,
-            dry_run=dry_run,
+            character_names, approved_story, dry_run=dry_run,
         )
         print(f"  Script {version_label} ready")
 
-        # ---- VERIFICATION LOOP ----
-        print("\n↓ VERIFICATION")
+        # ---- CONSISTENCY VERIFICATION LOOP ----
+        print("\n↓ CONSISTENCY VERIFICATION")
         approved_script, approved_version, final_verification = run_verification_loop(
             run_id, paths, topic, fmt, duration_secs,
             character_names, script_text, version_label,
-            scripture_references, dry_run=dry_run,
+            approved_story, dry_run=dry_run,
         )
-
         print(f"\n↓ QUALITY GATE PASSED ({approved_version})")
 
         # ---- BREAKDOWN ----
@@ -872,12 +1017,11 @@ def run_manual_pipeline(
         print("\n↓ METADATA")
         sm.update_production(run_id, stage="metadata")
         youtube_meta, thumbnail_plan = run_metadata(
-            run_id, paths, topic, fmt, approved_script,
+            run_id, paths, topic, fmt, approved_story,
             scripture_references, dry_run=dry_run,
         )
 
         # ---- SYNC APPROVED FILES TO ROOT ----
-        # Only happens here — after PASS — never during generation.
         _sync_breakdown_to_root(paths)
 
         sm.update_production(run_id,
@@ -887,6 +1031,7 @@ def run_manual_pipeline(
 
         print(f"\n{'='*60}")
         print(f"  ✅ PIPELINE COMPLETE: {run_id}")
+        print(f"  Approved story: {approved_story_version}")
         print(f"  Approved script: {approved_version}")
         print(f"  Scenes: {len(scenes_data)}")
         print(f"  Root: {paths['root']}")
@@ -896,6 +1041,7 @@ def run_manual_pipeline(
             "run_id": run_id,
             "paths": paths,
             "status": "ready_for_media",
+            "approved_story_version": approved_story_version,
             "approved_version": approved_version,
             "scene_count": len(scenes_data),
             "characters": characters_data,

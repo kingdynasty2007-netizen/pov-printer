@@ -165,14 +165,14 @@ Respond ONLY with JSON:
         try:
             message = response.json()["choices"][0]["message"]
             raw = (message.get("content") or "").strip()
-            raw = raw.strip("```json").strip("```").strip()
+            raw = re.sub(r"^```(?:json)?\s*", "", raw)
+            raw = re.sub(r"\s*```$", "", raw).strip()
             if not raw:
                 raise ValueError("empty")
             parsed = json.loads(raw)
         except Exception:
             last_error = f"[{lane}] parse_error"
             continue
-
         strategy = parsed.get("strategy")
         category = parsed.get("category", "other")
 

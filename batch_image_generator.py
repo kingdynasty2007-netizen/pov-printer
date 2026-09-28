@@ -7,6 +7,14 @@
 # all 5, leaving nothing to ever finalize another scene for the rest
 # of the run. Now a crash fails just that one scene and the thread
 # keeps running.
+#
+# CHANGE 2: scene state now also carries an optional LOCATION and
+# PROPS list (parsed by image_core.load_scenes) so generation and
+# verification can pull in those reference images too. The gen_queue
+# / verify_queue tuple SHAPES are unchanged — location/props travel
+# via scene_state (same place extra_instruction already lives), not
+# through the queues, so retries/escalation paths didn't need to
+# change at all.
 # ============================================================
 
 import queue
@@ -28,9 +36,14 @@ verify_queue = queue.Queue()
 scene_state = {}
 state_lock = threading.Lock()
 
-def init_scene_state(scene_key, scene_text):
+def init_scene_state(scene_key, scene_text, location=None, props=None):
     with state_lock:
-        scene_state[scene_key] = {"scene_text": scene_text, "extra_instruction": ""}
+        scene_state[scene_key] = {
+            "scene_text": scene_text,
+            "extra_instruction": "",
+            "location": location,
+            "props": props or [],
+        }
 
 def get_scene_state(scene_key):
     with state_lock:
@@ -144,7 +157,10 @@ def generation_worker(lane):
             board.update(scene_key, "generating")
 
             try:
-                url = generate_image_url(lane, characters, state["scene_text"], state["extra_instruction"])
+                url = generate_image_url(
+                    lane, characters, state["scene_text"], state["extra_instruction"],
+                    location=state.get("location"), props=state.get("props"),
+                )
             except Exception as e:
                 error_text = str(e)
                 category = classify_error(error_text)
@@ -190,7 +206,10 @@ def verification_worker():
             state = get_scene_state(scene_key)
             board.update(scene_key, "verifying")
 
-            result, call_error = verify_image(lane, url, characters, state["scene_text"])
+            result, call_error = verify_image(
+                lane, url, characters, state["scene_text"],
+                location=state.get("location"), props=state.get("props"),
+            )
             passed = verification_passed(result)
 
             if passed:
@@ -204,6 +223,7 @@ def verification_worker():
                 update_manifest_entry(scene_key, {
                     "url": url, "local_path": output_path,
                     "characters": characters, "scene_text": state["scene_text"],
+                    "location": state.get("location"), "props": state.get("props"),
                     "verified": True, "status": "ok",
                 })
                 board.update(scene_key, "verified & downloaded", done=True)
@@ -237,17 +257,17 @@ def main():
     scenes = load_scenes(SCENES_FILE)
     manifest = load_manifest()
 
-    all_scene_keys = [f"scene_{n:03d}" for n, _, _ in scenes]
+    all_scene_keys = [f"scene_{n:03d}" for n, _, _, _, _ in scenes]
     total = len(all_scene_keys)
 
     to_queue = []
     already_done = 0
-    for scene_number, characters, scene_text in scenes:
+    for scene_number, characters, scene_text, location, props in scenes:
         scene_key = f"scene_{scene_number:03d}"
         if manifest.get(scene_key, {}).get("status") == "ok":
             already_done += 1
             continue
-        to_queue.append((scene_number, characters, scene_text))
+        to_queue.append((scene_number, characters, scene_text, location, props))
 
     if already_done:
         print(f"⏭️  {already_done}/{total} scenes already complete — skipping, resuming the rest")
@@ -257,9 +277,9 @@ def main():
         return
 
     scene_keys = []
-    for scene_number, characters, scene_text in to_queue:
+    for scene_number, characters, scene_text, location, props in to_queue:
         scene_key = f"scene_{scene_number:03d}"
-        init_scene_state(scene_key, scene_text)
+        init_scene_state(scene_key, scene_text, location=location, props=props)
         gen_queue.put((scene_number, characters, scene_text))
         scene_keys.append(scene_key)
 

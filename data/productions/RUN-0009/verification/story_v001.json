@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "status": "PASS",
+  "checks": {
+    "hook": {
+      "passed": true,
+      "reason": "Opens with immediate tension — a father waiting alone on a dusty road, creating a compelling question about whether the son will return."
+    },
+    "biblical_accuracy": {
+      "passed": true,
+      "reason": "Major events faithfully follow Luke 15:11-32: inheritance request, distant country, wild living, famine, pig-feeding, coming to senses, father's run and embrace, robe/ring/calf. The older brother subplot is omitted but no invented facts or contradictions are presented as biblical truth."
+    },
+    "scripture_usage": {
+      "passed": false,
+      "reason": "While the content closely paraphrases Luke 15, no specific scripture passage (e.g., 'Luke 15:11-32') is referenced or cited in the script, which the check explicitly asks for."
+    },
+    "story_structure": {
+      "passed": true,
+      "reason": "Clear five-act structure: hook (father waiting) → setup (inheritance demand and departure) → conflict (wasting wealth, famine) → escalation (pig feeding, repentance, journey home) → climax (father running and embracing) → resolution (celebration)."
+    },
+    "pacing": {
+      "passed": true,
+      "reason": "Each paragraph advances the narrative without repeating exposition; key moments (departure, downfall, repentance, return, celebration) each get focused treatment."
+    },
+    "character_development": {
+      "passed": true,
+      "reason": "The younger son's arc is clear: entitlement and reckless ambition → desperate emptiness → sober repentance → humble return. His motivation and transformation are well traced."
+    },
+    "emotional_progression": {
+      "passed": true,
+      "reason": "Emotional intensity rises naturally from patience and longing, through loss and shame, to repentance, and peaks at the father's joyful, tearful reunion — then resolves in celebration."
+    },
+    "curiosity": {
+      "passed": true,
+      "reason": "Each section leaves a compelling thread: Will he return? What happened to his money? Will the father forgive? Will there be a celebration?"
+    },
+    "climax": {
+      "passed": true,
+      "reason": "The climax is clearly defined: the father sees his son from afar, runs to him, and embraces him — the emotional and narrative peak of the entire story."
+    },
+    "payoff_resolution": {
+      "passed": true,
+      "reason": "The ending properly resolves the story: the son is welcomed home, restoration is declared ('dead was alive again'), and celebration fills the house."
+    },
+    "narration_quality": {
+      "passed": true,
+      "reason": "Language is clear, warm, and cinematic. Phrases like 'He had waited many days. He had waited many nights.' and 'the old man ran' are evocative and accessible for a general audience."
+    },
+    "visual_storytelling": {
+      "passed": true,
+      "reason": "Every scene is highly visual and animatable: dusty road, dividing wealth, wild living, famine/starvation, feeding pigs, journey home, father running, embrace, robe/ring/calf, celebration with music and dancing."
+    },
+    "duration_scene_suitability": {
+      "passed": true,
+      "reason": "The script covers a complete narrative arc in roughly 9–10 substantial paragraphs, easily distributable across 18 scenes at 10 seconds each with appropriate visual pauses and emotional beats for each scene."
+    }
+  },
+  "required_fixes": [],
+  "warnings": [
+    "scripture_usage failed: no explicit Bible passage reference is included in the script. Consider adding a narration cue such as 'As told in Luke 15:11-32' for viewers and pipeline tracking.",
+    "The older brother character and his response to the celebration — a significant part of the biblical parable (Luke 15:25-32) — is entirely absent. This may leave the story incomplete thematically, especially regarding the father's broader message about grace and jealousy."
+  ]
+}

@@ -1,0 +1,196 @@
+[
+  {
+    "scene_id": "scene_001",
+    "characters": [
+      "hannah",
+      "peninnah"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Hannah, Peninnah\nIn the dusty marketplace of Ephraim, Hannah walks quickly through the crowd with her head bowed, clutching a woven basket to her chest. Peninnah stands nearby surrounded by her many children, laughing loudly, and deliberately speaks loud enough for Hannah to hear, mocking her silence and barrenness. Other women in the market glance at Hannah with pity or indifference. The sun is high and harsh, casting long shadows.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_002",
+    "characters": [
+      "hannah",
+      "peninnah"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Hannah, Peninnah\nInside a modest mud-brick home in Ephraim, Peninnah stands in the doorway with her arms spread wide, gesturing dramatically to her cluster of loud laughing children playing around her feet. Hannah sits alone on a woven mat in the corner of the room, her face buried partially in her hands, shoulders trembling silently with suppressed tears. Warm golden light streams through a small opening in the wall.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_003",
+    "characters": [
+      "hannah"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Hannah\nHannah sits alone before the Lord at the tabernacle in Shiloh, her hands pressed tightly against her chest, her lips moving silently in fervent prayer, tears streaming freely down her flushed cheeks. The great wooden doors of the tabernacle stand open behind her, revealing the dim sacred interior. Evening twilight casts a deep blue and purple glow across the stone floor.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_004",
+    "characters": [
+      "eli",
+      "hannah"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Eli, Hannah\nEli the priest, leaning heavily on his wooden staff, watches Hannah from a few steps away with a frown of suspicion and concern. Hannah remains bent forward in prayer, unaware he is watching, her mouth still moving silently, her whole body trembling with the force of her unspoken pleas. The warm interior lamplight of the tabernacle glows behind them.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_005",
+    "characters": [
+      "eli",
+      "hannah"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "hope",
+    "description": "CHARACTERS: Eli, Hannah\nEli approaches Hannah gently, his stern expression softening into one of understanding and fatherly compassion. He places a reassuring hand on her shoulder as she looks up, her tear-stained face transforming with relief as she speaks her vow aloud — promising that if God gives her a son, she will dedicate him to the Lord for all his days. The lamplight catches the hope重新 rising in her dark eyes.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_006",
+    "characters": [
+      "eli"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Eli\nEli the priest raises both his hands in a gesture of blessing over Hannah, his weathered face radiant with warmth and spiritual authority. His lips move as he speaks words of peace and divine favor upon her. The soft golden lamplight from the tabernacle surrounds him like a halo, emphasizing his role as God's servant.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_007",
+    "characters": [
+      "hannah"
+    ],
+    "environment": "village",
+    "emotion": "awe",
+    "description": "CHARACTERS: Hannah\nHannah walks through the quiet village of Ephraim at dawn, her head held high for the first time in years, a faint peaceful smile touching her lips. The morning sun paints the sky in soft pinks and golds, and the dew glistens on the dusty path. She pauses briefly, touching her lower abdomen with a look of quiet wonder and gratitude.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_008",
+    "characters": [
+      "hannah",
+      "samuel_as_baby"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "joy",
+    "description": "CHARACTERS: Hannah, Samuel_as_baby\nInside their home, Hannah holds her newborn son Samuel close against her chest, her face buried in the soft linen cloth wrapping him. She weeps openly now, but these are tears of overwhelming joy — her eyes are bright, her lips curved in a trembling smile. Sunlight floods the room through the doorway, illuminating the precious mother and child in a warm golden embrace.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_009",
+    "characters": [
+      "samuel_as_child",
+      "hannah"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "love",
+    "description": "CHARACTERS: Samuel_as_child, Hannah\nThree years later, a cheerful toddler Samuel stumbles across a sunlit dirt yard, his chubby legs barely keeping up with his mother. Hannah kneels before him with her arms wide open, her face alight with bittersweet love, knowing each day with him is borrowed time. Her fingers gently brush his dark curly hair as he reaches up to her. The late afternoon light is rich and golden.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_010",
+    "characters": [
+      "hannah",
+      "samuel_as_child"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "hope",
+    "description": "CHARACTERS: Hannah, Samuel_as_child\nAt the threshold of their home, Hannah prepares for the journey to Shiloh. A woven basket sits filled with flour and a clay jar of wine. A young bull stands patiently nearby, tied with a rope. Hannah bends to lift little Samuel into her arms, her face set with resolve and quiet sorrow beneath her faith. The morning light is bright and clear.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_011",
+    "characters": [
+      "hannah",
+      "samuel_as_child",
+      "eli"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Hannah, Samuel_as_child, Eli\nBefore the tabernacle at Shiloh, Hannah stands tall, holding young Samuel securely in her arms. Eli the priest, now very old and leaning on his staff, looks down at the child with reverent recognition. The great bronze altar and the thick wooden doors of the tabernacle fill the background under a clear blue sky.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_012",
+    "characters": [
+      "hannah",
+      "eli"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "hope",
+    "description": "CHARACTERS: Hannah, Eli\nHannah speaks softly to Eli, her voice carrying the weight of fulfilled promise. She says, \"Lord, I am the woman who stood here beside you. You gave me what I begged for. Now I give him back.\" Her eyes glisten but her jaw is set with courageous faith. Samuel peeks over her arm, reaching a small hand toward her face. The light around them seems almost luminous.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_013",
+    "characters": [
+      "hannah",
+      "samuel_as_child"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "love",
+    "description": "CHARACTERS: Hannah, Samuel_as_child\nA heartbreakingly beautiful moment — Hannah holds Samuel one final time, pressing her cheek against his small head, her eyes closed tight as if memorizing every detail. Her arms are wrapped completely around him, unwilling to let go even for a heartbeat. Tears escape from beneath her closed lids, but her embrace is fierce and full of love.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_014",
+    "characters": [
+      "hannah",
+      "samuel_as_child",
+      "eli"
+    ],
+    "environment": "biblical-era setting",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Hannah, Samuel_as_child, Eli\nHannah lowers Samuel gently into Eli's waiting arms, her fingers reluctantly slipping away from her son's small body one moment at a time. Samuel looks up at her with trusting dark eyes, reaching back toward her even as she sets him down. Eli receives the child with reverent gravity. Hannah steps back, her chest heaving, her face a mask of agony and surrender.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_015",
+    "characters": [
+      "hannah"
+    ],
+    "environment": "village, hillside, valley",
+    "emotion": "neutral",
+    "description": "CHARACTERS: Hannah\nYears later, an older Hannah stands alone on a hillside overlooking the valley where Shiloh once stood. Samuel, now a young man serving as prophet over Israel, can be seen in the distant village below. She watches him with profound peaceful pride, one hand resting on her heart, the wind gently stirring her gray-streaked hair. The sunset paints the sky in deep gold and violet.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_016",
+    "characters": [
+      "hannah",
+      "samuel_as_child"
+    ],
+    "environment": "temple",
+    "emotion": "neutral",
+    "description": "CHARACTERS: hannah, samuel_as_child\nOn a sunlit terrace in Ramah, Hannah sits mending cloth while young Samuel visits between temple duties. He kneels beside her, pressing a small wildflower into her palm. Her weathered hand closes gently around the bloom, eyes bright with unshed tears of gratitude. Behind them, the terraced hills of Ephraim rise in soft green layers, a clay jar and woven basket resting near the stone step. Cinematic medium shot, warm afternoon light, polished children's story 2D animated cartoon style.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_017",
+    "characters": [
+      "samuel_as_child"
+    ],
+    "environment": "temple",
+    "emotion": "neutral",
+    "description": "CHARACTERS: samuel_as_child\nInside the temple at Shiloh, young Samuel stands before the ark, lighting the evening lamps. His small frame is silhouetted against the golden glow, robe simple and pure. The stone pillars and wooden beams frame him reverently. Incense smoke curls upward in the dim light. Wide shot emphasizing his devotion and the sacred space, soft candlelight and incense haze, polished 2D animated style.",
+    "format": "bible_story"
+  },
+  {
+    "scene_id": "scene_018",
+    "characters": [
+      "hannah"
+    ],
+    "environment": "hillside, valley",
+    "emotion": "neutral",
+    "description": "CHARACTERS: hannah\nAt dusk on the hillside overlooking the valley, an older Hannah stands alone once more. Her gray hair catches the fading violet light. She raises both hands in silent prayer, lips moving in familiar rhythm — the same words she spoke decades ago at Shiloh. The first star appears above. Long shot, twilight atmosphere, wind gently stirring her robes, polished cinematic animation style.",
+    "format": "bible_story"
+  }
+]

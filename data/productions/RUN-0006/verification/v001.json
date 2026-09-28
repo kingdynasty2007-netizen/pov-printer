@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "status": "PASS",
+  "checks": {
+    "characters_match_ok": {
+      "passed": true,
+      "reason": "All characters in the breakdown — Hannah, Peninnah, Eli, Samuel (as baby/toddler/young man) — appear in the approved story; no new characters are invented."
+    },
+    "events_match_ok": {
+      "passed": true,
+      "reason": "Every scene depicts an event from the approved story: marketplace mockery, home provocation, prayer at Shiloh, Eli's suspicion and blessing, Hannah's peace/conception, Samuel's birth, weaning and departure, the dedication to Eli, and the final reflective moment. No invented plot events or contradicted outcomes."
+    },
+    "coverage_ok": {
+      "passed": true,
+      "reason": "The breakdown covers all major beats in reasonable proportion: the opening mockery, the intense prayer and vow, Eli's blessing, conception and birth, the three-year nursing period, the dedication at Shiloh, and the concluding reflection on Hannah's faith."
+    },
+    "order_match_ok": {
+      "passed": true,
+      "reason": "The scenes follow the story's chronological narrative order without reordering major events: mockery → prayer → blessing → conception → birth → weaning/departure → dedication → later reflection."
+    },
+    "tone_match_ok": {
+      "passed": true,
+      "reason": "The mood and tone consistently match the story's reverent, emotional, and deeply spiritual tone — depicting grief, sorrow, joy, fierce love, and sacrificial surrender in alignment with the source."
+    }
+  },
+  "required_fixes": [],
+  "warnings": [
+    "Final scene lists characters 'hannah, samuel_as_chil' but has no scene description content. This may be an incomplete or placeholder entry that should be addressed.",
+    "Typo in final scene character tag: 'samuel_as_chil' instead of 'samuel_as_child'."
+  ]
+}

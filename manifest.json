@@ -1,280 +1,245 @@
 {
-  "scene_002": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_tNKYdR7P73o7novOCpNPrsXqBi5Gm17O/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_002.png",
+  "scene_011": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_uKsdnOhu264vCTuJ5qO1AcuyuLqbnxtj/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_011.png",
     "characters": [
-      "rachel",
-      "elian"
+      "esau"
     ],
-    "scene_text": "Rachel kneels before Elian in the dusty lane, fastening the strap of his small waterskin. She smiles warmly and brushes a stray lock of hair from his forehead. The golden sunrise illuminates the clay jars lined against their home.",
-    "verified": true,
-    "status": "ok"
-  },
-  "scene_010": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_TeUNO5dtO0WQaFAyXv7cVTXIujSDvhlt/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_010.png",
-    "characters": [
-      "elian"
-    ],
-    "scene_text": "A single tear rolls down Elian's cheek as he looks up at the first evening star piercing through the parting clouds. He wraps his arms around himself, feeling very small and alone in the vast, quiet wilderness.",
+    "scene_text": "Medium side-profile shot of Esau walking alone through the rocky wasteland, the last amber light of sunset painting his rough face in profile, his eyes fixed on some distant point with no remorse visible. The wind lifts dust around his feet as he moves steadily away, a solitary hunter returning to empty land.",
+    "location": null,
+    "props": [],
     "verified": true,
     "status": "ok"
   },
   "scene_015": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_MK2qIV1gVDcPSYnIr4mtgN0XabDcb4qM/output.png",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_H9BA1wMflayhCrjsWSC4O4WtueQE2GHi/output.png",
     "local_path": "/public/pov_printer/generated_images/scene_015.png",
     "characters": [
-      "elian",
       "jacob"
     ],
-    "scene_text": "Elian bursts through the final line of bushes onto the village green, his small figure sprinting toward a waiting man. Jacob drops to his knees, opening his arms wide as Elian crashes into them.",
+    "scene_text": "Medium close-up of Jacob standing alone at the edge of his tent in the deep blue darkness, one hand raised slightly as if still feeling the weight of the birthright now resting in his possession. His expression is solemn, not triumphant, and the cold starlight falls on his face as he stares into the distance where his brother is gone forever.",
+    "location": null,
+    "props": [],
     "verified": true,
     "status": "ok"
   },
-  "scene_024": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_AlEVlDGo5iRPaShzK0UIkGLCukh0N9jk/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_024.png",
+  "scene_017": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_8yEZyIs2rO5Es99GQoeXWTIOtZNTuDgo/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_017.png",
     "characters": [
-      "rachel",
-      "elian"
-    ],
-    "scene_text": "Rachel holds Elian's small hands in both of hers, speaking to him with a tender smile, her head bowed toward him, her eyes bright with unshed tears of relief and love.",
-    "verified": true,
-    "status": "ok"
-  },
-  "scene_031": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_Zei3zQJmPWXJ5uMSDYOaEQ35qcS3zxcp/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_031.png",
-    "characters": [
-      "rachel",
+      "esau",
       "jacob"
     ],
-    "scene_text": "In a softly lit mud-brick room, jacob stands in the doorway with his face showing awe and gratitude. rachel sits beside the woven mat where elian sleeps peacefully, her hand resting gently on his blanket. jacob walks slowly toward them, his sandals whispering against the earthen floor. Warm golden lamplight illuminates their figures, casting a serene glow over the humble dwelling.",
+    "scene_text": "Esau steps forward, his jaw clenched, pointing a trembling finger at Jacob while his voice rises in accusation. Jacob stands rigid but does not flinch, his gaze steady despite the pain visible in his own eyes. Outside the tent flap, the warm desert wind stirs the fabric gently, carrying the sound of distant livestock and the quiet of an evening that has changed everything.",
+    "location": null,
+    "props": [],
     "verified": true,
     "status": "ok"
   },
-  "scene_033": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_WpFxAhmG6HyggkvlvI1jxn2WBgWP97JK/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_033.png",
+  "scene_019": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_05tNwwG4L7wCKnBXogHKZi83ZXGqgbe0/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_019.png",
     "characters": [
-      "jacob",
-      "rachel"
+      "jacob"
     ],
-    "scene_text": "jacob reaches out and takes elian's small hand in his own, his face full of promise and fatherly love. rachel watches them both, her eyes shining with tears of happiness, her hand gently resting on jacob's shoulder. The three of them sit together in the lamplight, the family complete and whole once more.",
-    "verified": true,
-    "status": "ok"
-  },
-  "scene_026": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_SOlQkLJ7tQ6V4Vdz86zCO6NS2UA5DAU2/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_026.png",
-    "characters": [
-      "elian"
-    ],
-    "scene_text": "Elian rests his head against Rachel's chest, his eyes growing heavy with exhaustion, his small fingers still curled loosely in Rachel's robe, his breathing slowing into peaceful rhythm.",
-    "verified": true,
-    "status": "ok"
-  },
-  "scene_007": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_EoQ6b9C5A7Tpl0Pbj0vkORUxQM1G1TLC/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_007.png",
-    "characters": [
-      "elian"
-    ],
-    "scene_text": "Elian runs through the now-twilight forest, branches scratching at his arms. He looks around wildly, trying to find a familiar landmark, but every tree and rock looks strange and unfamiliar.",
+    "scene_text": "Jacob stands at the edge of the camp, a lone figure against the vast darkening sky, his leather bundle pressed to his chest. The first stars appear above him as he gazes toward the horizon where his journey will soon begin. His face carries no triumph \u2014 only the heavy weight of a blessing obtained through cunning and the beginning of a long road that will test his faith.",
+    "location": null,
+    "props": [],
     "verified": true,
     "status": "ok"
   },
   "scene_001": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_55bHvIAZubjB4QGGXXQp3R3LO4e9NMl7/output.png",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_zvFJUKd9Rid8jwccbVhBl8oY7ZMJ5Wpm/output.png",
     "local_path": "/public/pov_printer/generated_images/scene_001.png",
     "characters": [
-      "elian",
+      "esau",
       "jacob"
     ],
-    "scene_text": "In the early morning light of a peaceful Middle Eastern village, Jacob stands on the stone step of their mud-brick home. He places a gentle hand on young Elian's shoulder, handing him a small wooden staff. Elian looks up at his father with wide, eager eyes, ready for the day's work.",
+    "scene_text": "Wide cinematic shot of the wilderness camp at golden hour as Esau stumbles into frame from the dusty open fields, his body exhausted and covered in dust, tunic torn and stained from the hunt. He collapses onto his knees beside Jacob's cooking fire, gasping for breath, throat working as he stares desperately at the steaming red stew. Jacob stands calmly nearby, stirring the pot with a wooden spoon, watching his brother with quiet calculating eyes. Two brothers separated by hunger and ambition stand between the dying embers and the vast empty land.",
+    "location": "edom_camp",
+    "props": [
+      "lentil_stew_bowl"
+    ],
     "verified": true,
     "status": "ok"
   },
-  "scene_030": {
-    "status": "failed",
-    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134210778451977D1v2N0QG)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
-    "error_category": "transient"
-  },
-  "scene_020": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_006": {
-    "status": "ok",
-    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134440352693278V51ktHkR)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
-    "error_category": "transient",
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_I0SzNVlsxSlgMdO8uRORMYQnnBFV2wKN/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_006.png",
+  "scene_014": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_JEwMkSXpvoz5zXdGtDNHX2bsimwAaOCd/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_014.png",
     "characters": [
-      "david"
-    ],
-    "scene_text": "David stands at a village well drawing water in a clay jug. He looks tired from the work, wiping his forehead with his arm. Other villagers move about in the background. Hot midday sun creates strong shadows. Simple clothing and surroundings.",
-    "verified": true
-  },
-  "scene_009": {
-    "status": "ok",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient",
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_5NbdQS4wWPWMRlevxU4zz6RXXDVWNVfs/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_009.png",
-    "characters": [
-      "saul",
-      "david"
-    ],
-    "scene_text": "King Saul stands tall and imposing, speaking with authority to young David. David stands respectful but determined before the king. Saul gestures outward toward the battlefield. Soldiers and tents fill the background of the camp. Afternoon light.",
-    "verified": true
-  },
-  "scene_012": {
-    "status": "ok",
-    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134532525811370bkfZBqO0)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
-    "error_category": "transient",
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_BmLaPWIAyjdCVHk46YHdLDd1nsT4hcep/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_012.png",
-    "characters": [
-      "david"
-    ],
-    "scene_text": "David stands triumphant over the fallen giant, holding Goliath's own massive bronze sword with both hands. His face shows relief and wonder. The Israelite camp cheers in the background. Golden sunset light bathes the scene in warm orange and red.",
-    "verified": true
-  },
-  "scene_003": {
-    "status": "ok",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient",
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_Juk7adnfoCwnbc9lHkF05k90fxo7kZa0/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_003.png",
-    "characters": [
-      "david"
-    ],
-    "scene_text": "Close shot of a golden horn being filled with rich olive oil. The oil pours slowly, catching the warm light. The horn sits on rough wooden ground. Symbolic moment of anointing about to happen. Soft focus background.",
-    "verified": true
-  },
-  "scene_018": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_016": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_021": {
-    "status": "failed",
-    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134654411577535xpY4qvvR)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
-    "error_category": "transient"
-  },
-  "scene_027": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_029": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_028": {
-    "status": "failed",
-    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919134803459776202UaDw1Ebe)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
-    "error_category": "transient"
-  },
-  "scene_005": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_032": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_5XWeJor3fqjRnAcrDUW6cNTmZzhF4DTg/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_032.png",
-    "characters": [
-      "rachel",
+      "esau",
       "jacob"
     ],
-    "scene_text": "rachel leans forward, her expression tender as she whispers the story of how elian was found wandering lost near the olive groves. jacob kneels beside the mat, his eyes fixed on elian's sleeping face, his hand covering his heart. The soft light catches the relief and joy in their features as they share this quiet moment of thanksgiving.",
+    "scene_text": "Extreme wide cinematic shot of the two brothers from a great distance \u2014 Esau a small dark figure vanishing into the western wilderness on one side of the frame, Jacob a smaller still figure near the tents on the other, the vast red earth of Edom stretching between them under a deep indigo night sky. The empty clay bowl is nearly invisible in the foreground, a final silent witness to what was sold and what was lost.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_003": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_J7Ez0sGqQTKtxZpabn8NK9REX7msomy9/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_003.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Medium two-shot of Jacob leaning forward slightly, speaking to Esau with a low but firm voice, his eyes locked on his brother's face. Esau stands unsteadily on unsteady legs, his hand still outstretched toward the bowl, mouth open in desperation. The red stew glows in the firelight between them, both brothers framed against the darkening sky.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_012": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_JgBJNERptigdDNgARPLxz597wJWkpAGH/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_012.png",
+    "characters": [
+      "jacob"
+    ],
+    "scene_text": "Medium close-up of Jacob standing at the edge of the camp, looking out toward the wilderness where Esau disappeared, his arms at his sides, his face caught between satisfaction and something heavier. The first stars appear above him as the golden light fades to cool blue twilight over the Hebrew hills.\n===SCENE_BREAK",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_016": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_6S6YLGI6TvqusD2orLKdTqAfdP3Wv6I6/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_016.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "In the dim interior of Isaac's tent, Esau enters looking disheveled and angry, his face flushed with resentment. He stops short when he sees Jacob standing near the doorway, clutching a small leather bundle containing the birthright document. Their eyes meet across the tent, and for a moment neither speaks \u2014 the air between them thick with unspoken betrayal and broken brotherhood.",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_007": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_wUNI6JdrgLLRHNq1Y4PSUBOuI6tHsyme/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_007.png",
+    "characters": [
+      "esau"
+    ],
+    "scene_text": "Close shot of Esau drinking deeply from the bowl, his head thrown back slightly, a few drops of red stew running down his chin onto his dusty tunic. His eyes are half-closed in pure physical relief, all thought of birthrights and oaths gone from his face. The empty camp fades into soft focus behind him.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_009": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_4tfrlo1Kh76I3Hcd0usgLkmA3VfxkT1p/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_009.png",
+    "characters": [
+      "jacob"
+    ],
+    "scene_text": "Close medium shot of Jacob alone by the dying fire, his face illuminated by the last orange embers, his expression thoughtful and grave as he stares into the space where Esau stood. He picks up the empty clay bowl and traces its rim with his thumb, the weight of what just transpired settling over his features. The tent shadows grow long around him.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_010": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_xMv222YWjOre6ofCFH7tHIOn9bOXIw5B/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_010.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Wide cinematic establishing shot of the full camp at twilight, two figures visible \u2014 Esau walking alone into the deepening wilderness on the left, his figure growing smaller against the vast darkening horizon, and Jacob sitting by the fire near the tents on the right, a solitary still figure. The red earth stretches endlessly between them, symbolizing the distance now opened between the two brothers.",
+    "location": null,
+    "props": [],
     "verified": true,
     "status": "ok"
   },
   "scene_004": {
     "status": "ok",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient",
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_2Spak0Bg4fwqLn5kkRYXPMeNiIbjs5YB/output.png",
+    "error": "pose_action_ok: The scene text specifies a 'Close shot of Esau's face' where he looks down with a glassy/exhausted expression and open mouth, but the generated image is a medium/wide shot of both full-body characters standing side-by-side. role_match_ok: Action does not match scene description (close-up vs wide shot, expression mismatch).",
+    "error_category": "brain_exhausted",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_Nl21vddXdSaFTPPdZtZyKIiRXOxzVw3v/output.png",
     "local_path": "/public/pov_printer/generated_images/scene_004.png",
     "characters": [
-      "david"
-    ],
-    "scene_text": "Young David stands in a sunlit field with his sheep grazing around him. He holds a small wooden harp in his hands, playing it with focused expression. The wind gently moves his hair. Green pasture, blue sky with soft clouds. Peaceful afternoon atmosphere.",
-    "verified": true
-  },
-  "scene_017": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_008": {
-    "status": "ok",
-    "error": "http 400: {\"error\":{\"message\":\"extra_body.image must not be empty (request id: 20260919135149900836353c9GCBTOI)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"code\":\"invalid_request\"}}",
-    "error_category": "brain_exhausted",
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_aDBTamMYdFLGNokvnZ8CFJSovVZbYFmJ/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_008.png",
-    "characters": [
-      "david"
-    ],
-    "scene_text": "David walks confidently down a rocky path toward the Israelite camp, his five smooth stones carried in a shepherd's bag. He carries his wooden staff. The camp tents and soldiers are visible in the distance behind him. Brave expression on his face.",
-    "verified": true
-  },
-  "scene_011": {
-    "status": "ok",
-    "error": "http 400: {\"error\":{\"message\":\"extra_body.image must not be empty (request id: 202609191352058863977881VXfQEua)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"code\":\"invalid_request\"}}",
-    "error_category": "brain_exhausted",
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_FkUITaUY46MA6Jt5qr9aP4xBDeLIaZVT/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_011.png",
-    "characters": [
-      "david"
-    ],
-    "scene_text": "Close-up of David's hand releasing the stone from his sling. The stone blurs with speed as it flies through the air toward its target. The sling's leather strap whips around David's wrist. Intense concentration on David's face visible in the background.",
-    "verified": true
-  },
-  "scene_023": {
-    "status": "failed",
-    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 20260919135225911151298pghvIcN3)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
-    "error_category": "transient"
-  },
-  "scene_025": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_022": {
-    "status": "failed",
-    "error": "http 504: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!",
-    "error_category": "transient"
-  },
-  "scene_014": {
-    "status": "failed",
-    "error": "http 400: {\"error\":{\"message\":\"extra_body.image must not be empty (request id: 202609191353163850048504aOxdQRG)\",\"type\":\"AgnesAI_error\",\"param\":\"\",\"code\":\"invalid_request\"}}",
-    "error_category": "brain_exhausted"
-  },
-  "scene_013": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_1oLZRNEonwijAGGcvbZs477bbqrmha2Q/output.png",
-    "local_path": "/public/pov_printer/generated_images/scene_013.png",
-    "characters": [
-      "elian",
+      "esau",
       "jacob"
     ],
-    "scene_text": "Dawn breaks over the hills, painting the sky in soft pinks and oranges. Jacob runs along a familiar path, calling Elian's name with urgency. His face is etched with worry and hope.",
+    "scene_text": "Close shot of Esau's face as he looks down at the steaming red stew, his eyes glassy with exhaustion and instinctual hunger, his mouth slightly open. He does not look at Jacob but speaks absently, his voice rough and weak, offering something intangible in exchange for the food. The bowl fills the lower frame, red and steaming, reflecting the firelight.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true
+  },
+  "scene_008": {
+    "status": "failed",
+    "error": "pose_action_ok: The scene text describes Esau wiping his mouth with the back of his hand and the bowl being empty (with a hollow clatter), but the image shows him wiping his mouth with a cloth/napkin and the bowl is full of stew.",
+    "error_category": "brain_exhausted"
+  },
+  "scene_002": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_9hsmYMcp7keECZwRf58z7SLlzAhxWV98/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_002.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Close medium shot of Esau reaching a trembling hand toward the clay bowl of red lentil stew, his lips cracked and parched, eyes pleading. Jacob steps slightly between Esau and the bowl, raising one hand in a stop gesture while keeping his other hand on the wooden spoon, his expression unreadable and composed. The warm evening light catches the steam rising from the stew between them like a barrier.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
     "verified": true,
     "status": "ok"
   },
-  "scene_019": {
+  "scene_006": {
+    "status": "ok",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 202609261134442305553568YqomLHM)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_uRlF3tZj7It1oinas2w24vzbjuEOh3DS/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_006.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Close medium shot of Jacob lifting the clay bowl of red lentil stew and handing it to Esau along with a piece of flatbread, his movements deliberate and measured. Esau takes the bowl with both shaking hands, nearly spilling the hot stew, and immediately begins eating with fierce urgency, swallowing large mouthfuls without chewing properly. Jacob watches silently, his arms now folded.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true
+  },
+  "scene_013": {
     "status": "failed",
-    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 2026091913585156033961QcRyrICh)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
-    "error_category": "transient"
+    "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+    "error_category": "download",
+    "unverified_url": "https://platform-outputs.agnes-ai.space/images/i2i/task_EG1moaCtQ215dKC2HyPPrGC3yPjRlESd/output.png"
+  },
+  "scene_018": {
+    "status": "failed",
+    "error": "pose_action_ok: The scene text describes Esau with shoulders slumped, staring down at his open and useless hands (no bowl), having turned away from Jacob. The generated image shows him holding a bowl with both hands and facing forward, contradicting the described pose and action.",
+    "error_category": "brain_exhausted"
+  },
+  "scene_005": {
+    "status": "ok",
+    "error": "http 429: {\"error\":{\"code\":\"\",\"message\":\"You\u2019ve reached the API rate limit for free users. Upgrade to a Token Plan to unlock higher limits and continue using the API without interruption. (request id: 20260926113705191355894igzRtmSx)\",\"type\":\"AgnesAI_error\"}}",
+    "error_category": "verify_unreachable",
+    "unverified_url": "https://platform-outputs.agnes-ai.space/images/i2i/task_OZ509eXpHyYko9baxDmYSadbz5rdb96L/output.png",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_jGSiOnQYENU6SmpcnJLwAwjw3Qaj6CvL/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_005.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Medium two-shot of Jacob nodding slowly with a faint satisfied expression as Esau raises his right hand and swears an oath, his fingers pressing against his palm in the ancient gesture of binding. Jacob extends his left hand toward Esau, palm up, as if already receiving what was just pledged. The red stew sits between them on the stone, no longer out of reach.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true
   }
 }

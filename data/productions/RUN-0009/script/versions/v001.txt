@@ -1,0 +1,142 @@
+=== SCENES ===
+CHARACTERS: father, younger_son
+LOCATION: father_house
+The father stands at the edge of his courtyard, his eyes fixed on the dusty road. The younger son stands before him, hands empty, pleading. The father's expression is heavy with unspoken sadness.
+---
+CHARACTERS: father, younger_son
+The father divides his wealth, handing a pouch of silver coins to his younger son. The younger son takes them with a greedy grip. The older son watches from a doorway, arms crossed, face displeased.
+---
+CHARACTERS: younger_son
+The younger son rides away on a donkey, waving dismissively without looking back. The father stands alone in the courtyard, watching him go, his shoulders slumped.
+---
+CHARACTERS: younger_son
+The younger son lounges in a foreign tavern, surrounded by drunken revelers and musicians. He throws coins into the air, laughing wildly. Colorful tents and strange banners in the background.
+---
+CHARACTERS: younger_son
+The younger son sits alone in a barren field, his clothes ragged, stomach visibly hollow. In the distance, a flock of pigs grazes. The sky is overcast, threatening rain.
+---
+CHARACTERS: younger_son
+The younger son tends a pig trough, feeding swine with trembling hands. He stares longingly at the pod husks in the trough, tears in his eyes. A farmer watches from nearby.
+---
+CHARACTERS: younger_son
+The younger son sits on the ground, head in his hands, weeping. Around him, a few scattered coins and empty cups. The scene is dim, lit by a single lantern.
+---
+CHARACTERS: younger_son
+The younger son begins walking home, leaning on a crude staff, his steps slow and painful. His clothes are torn, his beard unkempt. The road stretches behind him.
+---
+CHARACTERS: father
+The father stands on the roof of his house, squinting against the sun, scanning the horizon. His hands shade his eyes. The courtyard is empty except for a waiting lamb in the pen.
+---
+CHARACTERS: father, younger_son
+The father runs across the courtyard, his robe billowing. He reaches the younger son, who is barely recognizable, and embraces him tightly. The younger son collapses against his father, weeping.
+---
+CHARACTERS: father, younger_son
+The father calls to a servant, pointing to the younger son. The servant brings a fine robe, a ring, and sandals. The father places them on his son with gentle hands.
+---
+CHARACTERS: father, older_son
+The older son stands in the doorway, arms folded, face hard with resentment. The father approaches him, hands open in appeal, but the older son turns away.
+---
+CHARACTERS: father, younger_son, older_son
+Inside the house, a feast is prepared. The younger son sits at the table, now clean and robed, while the father looks on with joy. The older son remains outside, his back to the door.
+---
+CHARACTERS: father, younger_son
+The father and younger son walk together in the courtyard at dusk, arms around each other's shoulders. Music and laughter echo from inside. The older son is still absent.
+---
+CHARACTERS: father, younger_son, older_son, servant
+The father addresses the older son, who finally turns, his expression softening slightly. The younger son looks up at his brother with hope. A sense of reconciliation hangs in the air.
+---
+CHARACTERS: father, older_son
+LOCATION: courtyard
+PROPS: None
+The older son stands near the courtyard entrance, arms crossed, face still shadowed with hurt but no longer clenched in anger. The father steps toward him, one hand extended gently, his expression full of love and urgency. The music from the celebration continues softly in the background. Warm golden evening light fills the space.
+---
+CHARACTERS: father, older_son, younger_son
+LOCATION: courtyard
+PROPS: None
+The younger son steps forward from the doorway, his rough travel-worn clothes still on his body, hands trembling slightly at his sides. He looks between his father and his brother, hope flickering in his eyes. The father keeps his arm around the older son's shoulder, drawing him close. The three stand together in the warm glow of the courtyard.
+---
+CHARACTERS: older_son, younger_son
+LOCATION: courtyard
+PROPS: None
+The older son finally uncrosses his arms and reaches out, hesitantly placing a hand on his younger brother's shoulder. The younger son looks up, tears welling in his eyes, and nods slowly. A quiet understanding passes between them as the father watches from just behind, his face glowing with peace. The celebration light spills around them.
+
+=== AUDIO ===
+SCENE: scene_001
+VOICE: warm elderly male narrator
+A father stood at the edge of his courtyard, his eyes fixed on the dusty road that wound away toward the distant land. He had waited many days. He had waited many nights. And still, his younger son did not return.
+
+SCENE: scene_002
+VOICE: warm elderly male narrator
+It had begun with a reckless demand. The younger son had come to his father and said, "Father, give me the share of property that falls to me." It was as if he were already dead. The father divided his wealth between his two boys and sent them on their way.
+
+SCENE: scene_003
+VOICE: warm elderly male narrator
+The younger son sold everything and packed his bags. He traveled far from home, to a country that knew nothing of his father's house. There he threw himself into wild living, spending his money on pleasures that left him emptier with each passing day.
+
+SCENE: scene_004
+VOICE: warm elderly male narrator
+But when he had spent it all, a terrible famine struck that land. Every coin was gone, and no one gave him anything. The hunger grew so fierce that he hired himself out to a local farmer, feeding pigs — animals his people considered unclean.
+
+SCENE: scene_005
+VOICE: warm elderly male narrator
+He longed to eat the pods the swine were eating, but no one gave him any. In his desperation, he came to his senses. "How many of my father's hired servants have food to spare," he thought, "and here I am, starving to death."
+
+SCENE: scene_006
+VOICE: warm elderly male narrator
+"I will go back to him and say, 'Father, I have sinned against heaven and against you. I am no longer worthy to be called your son.'" So he began the long journey home, his feet sore, his heart heavy with shame.
+
+SCENE: scene_007
+VOICE: warm elderly male narrator
+But while he was still far off, his father saw him. The old man ran — not walked, not hurried, but ran — and threw his arms around his son's neck and kissed him.
+
+SCENE: scene_008
+VOICE: warm elderly male narrator
+"Son," the father said, his voice trembling with joy, "you are my son. Come, bring forth the best robe, put a ring on your hand, and kill the fattened calf. Let us celebrate."
+
+SCENE: scene_009
+VOICE: warm elderly male narrator
+And so the lost boy was found. The dead was alive again. And in that house, music and dancing filled the air as a father's love welcomed home a son who had wandered too far.
+
+SCENE: scene_010
+VOICE: warm elderly male narrator
+But outside, the older son stood in the shadow of the doorway, his face hard with resentment. He had stayed faithful, yet here his brother was celebrated for simply returning.
+
+SCENE: scene_011
+VOICE: warm elderly male narrator
+The father went out to him, pleading with his hands open. "Son," he said, "you are always with me, and all that is mine is yours. But we had to celebrate, for your brother was dead, and is alive again."
+
+SCENE: scene_012
+VOICE: warm elderly male narrator
+The older son looked at his father, then at his brother, and slowly, his hardened expression began to soften. The feast continued within, a song of redemption echoing into the night.
+
+SCENE: scene_013
+VOICE: warm elderly male narrator
+For a father's love does not keep score. It does not count the cost. It simply runs to meet the wandering child, no matter how far they have strayed.
+
+SCENE: scene_014
+VOICE: warm elderly male narrator
+And in that house, two brothers stood together — one who had been lost and found, and one who had never left but needed to remember: grace is not earned, it is given.
+
+SCENE: scene_015
+VOICE: warm elderly male narrator
+The road home is long, but the father's arms are always open. For where there is repentance, there is celebration. Where there is return, there is restoration. This is the story of the prodigal son.
+
+SCENE: scene_016
+VOICE: warm male narrator
+The older son could not hide his bitterness. "All these years I have served you," he said, "and never once did you give me a young goat to celebrate with my friends. But when this son of yours returns after swallowing your wealth with prostitutes, you kill the fattened calf for him!" Reference: Luke 15:29-30
+
+The father did not rebuke him. Instead he drew near and spoke with gentle urgency. "My son, you are always with me. Everything I have is yours." Reference: Luke 15:31
+
+"But we had to celebrate and be glad, for your brother was dead and is alive again. He was lost, and now he is found." Reference: Luke 15:32
+
+SCENE: scene_017
+VOICE: warm male narrator
+The younger son stepped into the light, his body still bearing the marks of his long suffering. He had returned with nothing but a broken heart and a repentant spirit. Yet here he stood, alive, embraced by the father who ran to meet him.
+
+Now he watched his older brother, afraid that anger would harden again. The father kept his arm around the elder son, pulling him close, refusing to let resentment build a wall between them.
+
+SCENE: scene_018
+VOICE: warm male narrator
+Then something shifted. The older son uncrossed his arms. His hand rose slowly and rested upon his brother's shoulder — heavy, uncertain, but real. The younger son looked up through tear-filled eyes and nodded, understanding everything that had been passed between them without a single word.
+
+Two brothers stood together at last. Not because the past was forgotten, but because grace was greater than the pain. The father watched them, and in his heart, the celebration grew even deeper — for now both sons were found.

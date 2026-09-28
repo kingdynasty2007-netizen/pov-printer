@@ -1,0 +1,29 @@
+{
+  "characters": [
+    {
+      "name": "eli",
+      "format": "bible_story",
+      "needs_reference": true
+    },
+    {
+      "name": "hannah",
+      "format": "bible_story",
+      "needs_reference": true
+    },
+    {
+      "name": "peninnah",
+      "format": "bible_story",
+      "needs_reference": true
+    },
+    {
+      "name": "samuel_as_baby",
+      "format": "bible_story",
+      "needs_reference": true
+    },
+    {
+      "name": "samuel_as_child",
+      "format": "bible_story",
+      "needs_reference": true
+    }
+  ]
+}

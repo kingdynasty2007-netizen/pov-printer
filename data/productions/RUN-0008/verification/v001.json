@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "status": "PASS",
+  "checks": {
+    "characters_match_ok": {
+      "passed": true,
+      "reason": "Only Esau and Jacob appear throughout all scenes, matching the approved story exactly with no invented characters."
+    },
+    "events_match_ok": {
+      "passed": true,
+      "reason": "All depicted events — Esau's arrival hungry, the request for stew, the birthright negotiation, the oath and sale, eating and departure — correspond to events in the approved story with no invented plot events or contradicted outcomes."
+    },
+    "coverage_ok": {
+      "passed": true,
+      "reason": "The breakdown covers all major beats: Esau's desperate arrival, the request for stew, Jacob's proposal for the birthright, Esau's dismissal and oath, the exchange of food, Esau eating and departing, and the resulting separation between the brothers."
+    },
+    "order_match_ok": {
+      "passed": true,
+      "reason": "Scenes follow the story's narrative sequence faithfully: arrival and plea → birthright negotiation → oath and transaction → eating and departure → aftermath showing the brothers' growing distance."
+    },
+    "tone_match_ok": {
+      "passed": true,
+      "reason": "The mood across scenes is grave, solemn, and contemplative, matching the story's biblical tone and its themes of spiritual loss, indifference, and irreversible consequence."
+    }
+  },
+  "required_fixes": [
+    "The JSON output is truncated/incomplete — the final scene description for Jacob ends mid-sentence ('one hand raised slightly as if still feeling the weigh'). The entire JSON response must be completed and properly closed."
+  ],
+  "warnings": [
+    "The scene breakdown's last entry is cut off mid-description, which may indicate the generation was interrupted."
+  ]
+}

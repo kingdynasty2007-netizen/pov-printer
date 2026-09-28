@@ -14,6 +14,7 @@ from collections import defaultdict
 CHECK_NAMES = [
     "count_ok", "role_match_ok", "outfit_match_ok",
     "style_match_ok", "height_proportion_ok", "era_consistency_ok",
+    "identity_similarity_ok",
 ]
 
 SYSTEMIC_THRESHOLD = 3   # same check failing on this many+ scenes = flag it

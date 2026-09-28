@@ -607,3 +607,159 @@ def verify_dry_run(script_text, topic, fmt, duration_secs, scene_count,
             ],
             "warnings": ["[DRY RUN] No real verification performed."],
         }
+
+# ============================================================
+# SCENE-BREAKDOWN vs APPROVED STORY — consistency check
+# PURPOSE: The breakdown is now generated FROM the approved story, but
+# this checks it didn't drift anyway — no invented characters/events,
+# nothing skipped, same order, same tone.
+# ============================================================
+
+SCENE_CONSISTENCY_CHECKS = [
+    "characters_match_ok",
+    "events_match_ok",
+    "coverage_ok",
+    "order_match_ok",
+    "tone_match_ok",
+]
+SCENE_CONSISTENCY_CRITICAL_CHECKS = {"characters_match_ok", "events_match_ok"}
+
+
+def _build_scene_consistency_prompt(scenes_text, story_text, topic, fmt):
+    return f"""You are checking whether a shot-by-shot scene breakdown stayed
+faithful to its approved source story — it must not invent new plot,
+drop characters, or reorder major events.
+
+FORMAT: {fmt}
+TOPIC: {topic}
+
+APPROVED STORY (the source of truth):
+---
+{story_text[:6000]}
+---
+
+SCENE BREAKDOWN TO CHECK (derived from the story above):
+---
+{scenes_text[:6000]}
+---
+
+Evaluate each check and respond with true/false + a specific reason.
+
+CHECKS:
+1. characters_match_ok: does the breakdown use ONLY characters that
+   appear in the approved story — no characters invented that aren't
+   in the story?
+2. events_match_ok: does every scene depict something that actually
+   happens in the approved story — no invented plot events, no
+   contradicted outcomes?
+3. coverage_ok: does the breakdown cover the story's major beats in
+   reasonable proportion — no large chunks of the story silently
+   skipped?
+4. order_match_ok: do the scenes follow the story's narrative order?
+5. tone_match_ok: does the mood/tone of the scene descriptions match
+   the story's tone?
+
+Respond ONLY with valid JSON in this exact structure (no extra text, no markdown fences):
+{{
+  "passed": true,
+  "status": "PASS",
+  "checks": {{
+    "characters_match_ok": {{"passed": true, "reason": "specific reason"}},
+    "events_match_ok": {{"passed": true, "reason": "specific reason"}},
+    "coverage_ok": {{"passed": true, "reason": "specific reason"}},
+    "order_match_ok": {{"passed": true, "reason": "specific reason"}},
+    "tone_match_ok": {{"passed": true, "reason": "specific reason"}}
+  }},
+  "required_fixes": [],
+  "warnings": []
+}}
+
+Rules for the status field:
+- "PASS": no critical check failed AND >= 80% of checks pass
+- "NEEDS_REWRITE": some checks failed but salvageable
+- "FAILED_QUALITY_GATE": characters_match_ok or events_match_ok failed, or too many checks failed
+"""
+
+
+def verify_scenes_against_story(scenes_text, story_text, topic, fmt):
+    prompt = _build_scene_consistency_prompt(scenes_text, story_text, topic, fmt)
+
+    try:
+        raw = _call_llm(prompt)
+    except RuntimeError as e:
+        error_text = str(e)
+        is_server_error = any(x in error_text for x in [
+            "HTTP 500", "HTTP 502", "HTTP 503", "network error", "rate limit", "rate limited",
+        ])
+        return {
+            "passed": False,
+            "status": "NEEDS_REWRITE" if is_server_error else "FAILED_QUALITY_GATE",
+            "checks": {},
+            "required_fixes": [
+                ("Verification service temporarily unavailable — not a consistency "
+                 "failure. Re-running will retry verification.") if is_server_error else
+                (f"Verification system error: {error_text[:200]}")
+            ],
+            "warnings": [f"Server error (will retry): {error_text[:200]}"] if is_server_error else [],
+            "error": error_text,
+            "_server_error": is_server_error,
+        }
+    except Exception as e:
+        return {
+            "passed": False,
+            "status": "FAILED_QUALITY_GATE",
+            "checks": {},
+            "required_fixes": [f"Unexpected verification error: {str(e)[:200]}"],
+            "warnings": [],
+            "error": str(e),
+        }
+
+    try:
+        result = _parse_json_response(raw)
+    except json.JSONDecodeError as e:
+        return {
+            "passed": False,
+            "status": "NEEDS_REWRITE",
+            "checks": {},
+            "required_fixes": [
+                "Verification response was truncated (JSON parse error). "
+                "This is a system issue, not a consistency failure. "
+                "Re-running will retry verification."
+            ],
+            "warnings": [f"JSON parse error: {str(e)[:200]}"],
+            "error": str(e),
+            "_parse_error": True,
+        }
+
+    checks = result.get("checks", {})
+    if not isinstance(checks, dict):
+        checks = {}
+    passed, status = _resolve_status(checks, fmt, SCENE_CONSISTENCY_CRITICAL_CHECKS)
+
+    return {
+        "passed": passed,
+        "status": status,
+        "checks": checks,
+        "required_fixes": result.get("required_fixes", []),
+        "warnings": result.get("warnings", []),
+    }
+
+
+def verify_scenes_against_story_dry_run(scenes_text, story_text, force_pass=False):
+    if force_pass:
+        checks = {name: {"passed": True, "reason": "[dry-run] auto-passed"} for name in SCENE_CONSISTENCY_CHECKS}
+        return {"passed": True, "status": "PASS", "checks": checks, "required_fixes": [],
+                "warnings": ["[DRY RUN] No real verification performed."]}
+    checks = {}
+    for name in SCENE_CONSISTENCY_CHECKS:
+        if name == "coverage_ok":
+            checks[name] = {"passed": False, "reason": "[dry-run] simulated failure"}
+        else:
+            checks[name] = {"passed": True, "reason": "[dry-run] auto-passed"}
+    return {
+        "passed": False,
+        "status": "NEEDS_REWRITE",
+        "checks": checks,
+        "required_fixes": ["[DRY RUN] Breakdown skips part of the story."],
+        "warnings": ["[DRY RUN] No real verification performed."],
+    }

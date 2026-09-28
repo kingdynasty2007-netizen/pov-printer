@@ -1,22 +1,36 @@
 # ============================================================
 # FILE: ref_character_generator.py
-# CHANGES:
-#   - Background-bleed fix: IMAGE_STYLE text is now explicitly
-#     scoped to rendering technique only, with a hard override
-#     telling the model to ignore any setting/location language and
-#     keep the background plain regardless. New background_plain_ok
-#     verification check backs this up.
-#   - Parallelized: character 1 processes alone (it becomes the
-#     style anchor), then every character after it runs in its own
-#     thread simultaneously — real speedup for 3+ characters.
-#   - Cross-character style consistency: character 1's actual image
-#     becomes a verification-time style anchor for every character
-#     after it (new style_vs_anchor_ok check). Anchor is NOT fed into
-#     generation — only verification — to avoid identity bleed
-#     between different characters.
-#   - Lane-cycling (_next_gen_lane/_next_verify_lane) is now lock-
-#     protected — needed now that multiple worker threads call it
-#     concurrently, which wasn't true before this rewrite.
+# PURPOSE: Generates persistent reference images — now for THREE
+# reference types, not just characters:
+#   - character  (existing behavior, unchanged)
+#   - location   (NEW — wide establishing shot, no people, reusable backdrop)
+#   - prop       (NEW — isolated object, plain background, product-shot style)
+#
+# All three share ONE pipeline (generation, verification, retry,
+# pacing, cooldown, upload) and — new — ONE style anchor: the very
+# first reference generated (of any type) becomes the style anchor
+# for every reference after it, so characters/locations/props all
+# match the same art style, not just characters matching each other.
+#
+# ref_prompts.json now supports {"style":..., "characters": {...},
+# "locations": {...}, "props": {...}}. Old flat {name: prompt} files
+# (characters only, no "characters" key) still work unchanged.
+#
+# Backward compatibility: every name reverify_ref_character_generator.py
+# imports (REF_PROMPTS_FILE, REFERENCE_CHARACTERS_FILE, REF_OUTPUT_FOLDER,
+# load_format_file, extract_image_style, local_image_to_data_uri,
+# verify_reference_image) is preserved with the same behavior when
+# ref_type="character" (the default).
+#
+# ORIGINAL CHANGES (kept):
+#   - Background-bleed fix + background_plain_ok check (characters/props).
+#   - Parallelized: first reference processes alone (style anchor),
+#     everyone else runs in parallel.
+#   - Cross-reference style consistency via style_vs_anchor_ok.
+#   - Lane-cycling is lock-protected for concurrent worker threads.
+#   - JSON parsing now uses _clean_json_response() instead of
+#     raw.strip("```json") — the old call stripped individual
+#     characters, not the substring, and could corrupt valid JSON.
 # ============================================================
 
 import os
@@ -38,17 +52,46 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 REF_PROMPTS_FILE = os.path.join(BASE_DIR, "ref_prompts.json")
 REF_OUTPUT_FOLDER = os.path.join(BASE_DIR, "ref_images")
 REFERENCE_CHARACTERS_FILE = os.path.join(BASE_DIR, "reference_characters.json")
+REFERENCE_LOCATIONS_FILE = os.path.join(BASE_DIR, "reference_locations.json")
+REFERENCE_PROPS_FILE = os.path.join(BASE_DIR, "reference_props.json")
 SCRIPTFORMAT_FOLDER = os.path.join(BASE_DIR, "scriptformat")
 
+REF_TYPE_CHARACTER = "character"
+REF_TYPE_LOCATION = "location"
+REF_TYPE_PROP = "prop"
+
+REF_TYPE_OUTPUT_FILE = {
+    REF_TYPE_CHARACTER: REFERENCE_CHARACTERS_FILE,
+    REF_TYPE_LOCATION: REFERENCE_LOCATIONS_FILE,
+    REF_TYPE_PROP: REFERENCE_PROPS_FILE,
+}
+
+# ref_prompts.json key -> ref_type, processed in this order
+REF_PROMPTS_KEY_TO_TYPE = [
+    ("characters", REF_TYPE_CHARACTER),
+    ("locations", REF_TYPE_LOCATION),
+    ("props", REF_TYPE_PROP),
+]
+
+REF_TYPE_TABLE = {
+    REF_TYPE_CHARACTER: "ref_characters",
+    REF_TYPE_LOCATION: "ref_locations",
+    REF_TYPE_PROP: "ref_props",
+}
+
 IMAGE_MODEL = "agnes-image-2.1-flash"
-IMAGE_SIZE = "768x1024"
+IMAGE_SIZE_BY_TYPE = {
+    REF_TYPE_CHARACTER: "768x1024",   # vertical portrait, unchanged
+    REF_TYPE_LOCATION: "1024x576",    # matches the pipeline's 16:9 scene size
+    REF_TYPE_PROP: "1024x1024",       # square product-style shot
+}
 IMAGE_URL = "https://apihub.agnes-ai.com/v1/images/generations"
 CHAT_URL = "https://apihub.agnes-ai.com/v1/chat/completions"
 VERIFY_MODEL = "agnes-2.0-flash"
 
 IMGBB_UPLOAD_URL = "https://api.imgbb.com/1/upload"
 
-MAX_ATTEMPTS_PER_CHARACTER = 3
+MAX_ATTEMPTS_PER_REFERENCE = 3
 NETWORK_RETRY_ATTEMPTS = 3
 
 SECONDS_BETWEEN_REQUESTS = 20
@@ -154,7 +197,6 @@ def extract_image_style(format_content):
             collected.append(line)
 
     result = "\n".join(collected).strip()
-    # Remove trailing separator lines from comment headers
     while result.startswith("#") and "=" in result:
         result = result.lstrip("#").lstrip().strip()
     return result
@@ -170,14 +212,66 @@ def local_image_to_data_uri(path):
     return f"data:{_guess_mime(path)};base64,{b64}"
 
 
-def generate_ref_image(character_name, prompt, image_style_text, previous_issue=None):
+def _clean_json_response(raw):
+    """Strips a ```json ... ``` fence WITHOUT eating stray characters —
+    the old raw.strip("```json") stripped individual characters, not
+    the substring, and could silently corrupt valid JSON."""
+    raw = raw.strip()
+    raw = re.sub(r"^```(?:json)?\s*", "", raw)
+    raw = re.sub(r"\s*```$", "", raw)
+    return raw.strip()
+
+
+def _local_path_for(name, ref_type):
+    if ref_type == REF_TYPE_CHARACTER:
+        return os.path.join(REF_OUTPUT_FOLDER, f"{name}.png")
+    subfolder = os.path.join(REF_OUTPUT_FOLDER, ref_type + "s")
+    os.makedirs(subfolder, exist_ok=True)
+    return os.path.join(subfolder, f"{name}.png")
+
+
+def _base_instruction_for_type(ref_type, image_style_text):
     style_instruction = ""
     if image_style_text:
         style_instruction = f"""
 
 VISUAL RENDERING STYLE (apply ONLY the art/rendering technique described
 below — line work, shading approach, coloring, illustration technique):
-{image_style_text}
+{image_style_text}"""
+
+    if ref_type == REF_TYPE_LOCATION:
+        override = """
+
+CRITICAL OVERRIDE: Apply the rendering TECHNIQUE from the style above
+(line work, shading, coloring) but this reference IS the location itself
+— render its actual architecture/environment/setting in full. This is a
+LOCATION reference sheet: a wide, empty establishing shot of the space
+with NO people or characters in it, showing enough of the environment
+that it can be reused as a consistent backdrop across multiple different
+camera angles and scenes."""
+        return (
+            "IMPORTANT: Wide establishing shot, no people, no characters, "
+            "nothing else occupying the frame."
+            f"{style_instruction}{override}"
+        )
+
+    if ref_type == REF_TYPE_PROP:
+        override = """
+
+CRITICAL OVERRIDE: Ignore any mention of specific locations, buildings,
+or environmental scenery in the style text above. This is a PROP
+reference sheet, NOT a scene — it MUST have a plain, minimal,
+undecorated background. No hands, no people, no other objects. The
+prop is the only subject in frame."""
+        return (
+            "IMPORTANT: A single, isolated product-style reference shot of "
+            "ONE object, centered, fully visible, not cropped, not held by "
+            "anyone."
+            f"{style_instruction}{override}"
+        )
+
+    # REF_TYPE_CHARACTER — original behavior, unchanged
+    override = """
 
 CRITICAL OVERRIDE: Ignore any mention of specific locations, buildings,
 architecture, streets, objects, or environmental scenery in the style
@@ -185,8 +279,7 @@ text above. This is a character reference sheet, NOT a scene — it MUST
 have a plain, minimal, undecorated background regardless of any setting
 described above. Do not render buildings, furniture, landscape, or any
 environmental detail."""
-
-    base_instruction = (
+    return (
         "IMPORTANT: Front-facing portrait, VERTICAL/PORTRAIT orientation. "
         "Character standing straight, arms relaxed at sides, neutral "
         "expression, hands empty, no props. The ENTIRE body must be "
@@ -194,9 +287,12 @@ environmental detail."""
         "camera positioned far enough back to fit the whole standing "
         "figure. Leave visible empty margin above the head and below the "
         "feet. This is a CHARACTER REFERENCE — full-body framing and a "
-        "plain background matter more than drama or close-up detail."
-        f"{style_instruction}"
+        f"plain background matter more than drama or close-up detail.{style_instruction}{override}"
     )
+
+
+def generate_ref_image(name, prompt, image_style_text, ref_type=REF_TYPE_CHARACTER, previous_issue=None):
+    base_instruction = _base_instruction_for_type(ref_type, image_style_text)
 
     if previous_issue:
         base_instruction += (
@@ -205,7 +301,8 @@ environmental detail."""
         )
 
     full_prompt = f"{prompt}\n\n{base_instruction}"
-    payload = {"model": IMAGE_MODEL, "prompt": full_prompt, "size": IMAGE_SIZE, "extra_body": {"response_format": "url"}}
+    size = IMAGE_SIZE_BY_TYPE.get(ref_type, IMAGE_SIZE_BY_TYPE[REF_TYPE_CHARACTER])
+    payload = {"model": IMAGE_MODEL, "prompt": full_prompt, "size": size, "extra_body": {"response_format": "url"}}
 
     last_error = "unknown"
     for attempt in range(1, NETWORK_RETRY_ATTEMPTS + 1):
@@ -238,33 +335,22 @@ environmental detail."""
     raise RuntimeError(last_error)
 
 
-def verify_reference_image(image_url, character_name, image_style_text, anchor_data_uri=None):
-    style_block = image_style_text if image_style_text else "No specific style requirement given — mark style_match_ok true by default."
-
-    anchor_note = ""
-    extra_check_line = ""
-    extra_json_field = ""
-    if anchor_data_uri:
-        anchor_note = """
-The FIRST image attached is a STYLE ANCHOR — the established illustration
-style already used for a DIFFERENT character in this same story. Ignore
-that character's identity/face/clothing entirely — only compare rendering
-technique (line weight, shading approach, color saturation, overall
-illustration style). The FINAL image is the candidate to check.
-"""
-        extra_check_line = "\n7. style_vs_anchor_ok: does the candidate's rendering technique closely match the anchor image? Flag ANY noticeable stylistic difference."
-        extra_json_field = ',\n"style_vs_anchor_ok": true/false'
+def _checklist_for_type(ref_type, anchor_data_uri):
+    if ref_type == REF_TYPE_LOCATION:
+        lines = """1. no_people_ok: zero people or characters visible anywhere in frame?
+2. single_location_ok: depicts ONE consistent location/setting, not a collage of multiple places?
+3. wide_shot_ok: wide/establishing shot showing enough of the space to be reused as a backdrop from different angles?
+4. style_match_ok: does the rendering TECHNIQUE match the required visual style below? Be strict."""
+        keys = ["no_people_ok", "single_location_ok", "wide_shot_ok", "style_match_ok"]
+    elif ref_type == REF_TYPE_PROP:
+        lines = """1. single_object_ok: exactly ONE instance of the object, no duplicates?
+2. no_hands_people_ok: not held by anyone, no hands or people visible?
+3. full_object_ok: the entire object is visible, not cropped?
+4. background_plain_ok: plain, minimal, undecorated background?
+5. style_match_ok: does the rendering TECHNIQUE match the required visual style below? Be strict."""
+        keys = ["single_object_ok", "no_hands_people_ok", "full_object_ok", "background_plain_ok", "style_match_ok"]
     else:
-        anchor_note = "\nThe attached image is the candidate to check.\n"
-
-    check_prompt = f"""
-This is a character reference sheet check for "{character_name}".
-{anchor_note}
-Required visual style for this image:
-{style_block}
-
-Check:
-1. person_count_ok: exactly ONE person visible, no extras?
+        lines = """1. person_count_ok: exactly ONE person visible, no extras?
 2. front_facing_ok: facing forward, not a side profile or back view?
 3. neutral_pose_ok: standing straight, arms relaxed, hands empty, no props?
 4. full_body_ok: full body visible from head to feet, not cropped?
@@ -273,7 +359,42 @@ Check:
    required, and vice versa. If no style was given, mark true by default.
 6. background_plain_ok: is the background plain, minimal, and
    undecorated — NO buildings, furniture, landscape, or environmental
-   scenery — even if the style text mentions a setting?{extra_check_line}
+   scenery — even if the style text mentions a setting?"""
+        keys = ["person_count_ok", "front_facing_ok", "neutral_pose_ok",
+                "full_body_ok", "style_match_ok", "background_plain_ok"]
+
+    if anchor_data_uri:
+        lines += "\n7. style_vs_anchor_ok: does the candidate's rendering technique closely match the anchor image? Flag ANY noticeable stylistic difference."
+        keys = keys + ["style_vs_anchor_ok"]
+
+    return lines, keys
+
+
+def verify_reference_image(image_url, name, image_style_text, ref_type=REF_TYPE_CHARACTER, anchor_data_uri=None):
+    style_block = image_style_text if image_style_text else "No specific style requirement given — mark style_match_ok true by default."
+
+    if anchor_data_uri:
+        anchor_note = """
+The FIRST image attached is a STYLE ANCHOR — the established illustration
+style already used elsewhere in this same story (possibly a different
+reference type). Ignore its specific identity/content — only compare
+rendering technique (line weight, shading approach, color saturation,
+overall illustration style). The FINAL image is the candidate to check.
+"""
+    else:
+        anchor_note = "\nThe attached image is the candidate to check.\n"
+
+    checklist_text, required_keys = _checklist_for_type(ref_type, anchor_data_uri)
+    json_fields = ", ".join(f'"{k}": true/false' for k in required_keys)
+
+    check_prompt = f"""
+This is a {ref_type} reference sheet check for "{name}".
+{anchor_note}
+Required visual style for this image:
+{style_block}
+
+Check:
+{checklist_text}
 
 If ANY check above is false, describe in "issue" the SPECIFIC VISUAL
 PROBLEM you actually see — not the name of the check. Bad: "full_body_ok".
@@ -283,9 +404,7 @@ enough that someone who cannot see the image would know exactly what
 is wrong.
 
 Respond ONLY with JSON:
-{{"person_count_ok": true/false, "front_facing_ok": true/false,
-"neutral_pose_ok": true/false, "full_body_ok": true/false,
-"style_match_ok": true/false, "background_plain_ok": true/false{extra_json_field},
+{{{json_fields},
 "issue": "<specific visual description of the problem, or 'none'>"}}
 """
     content = [{"type": "text", "text": check_prompt}]
@@ -318,13 +437,9 @@ Respond ONLY with JSON:
 
         try:
             raw = response.json()["choices"][0]["message"]["content"]
-            raw = raw.strip().strip("```json").strip("```").strip()
+            raw = _clean_json_response(raw)
             result = json.loads(raw)
-            required = ["person_count_ok", "front_facing_ok", "neutral_pose_ok",
-                        "full_body_ok", "style_match_ok", "background_plain_ok"]
-            if anchor_data_uri:
-                required.append("style_vs_anchor_ok")
-            passed = all(result.get(k) is True for k in required)
+            passed = all(result.get(k) is True for k in required_keys)
             return passed, result.get("issue", "unknown")
         except Exception as e:
             last_error = f"[{lane}] parse error: {e}"
@@ -340,12 +455,12 @@ def download_image(url, output_path):
         f.write(response.content)
 
 
-def upload_to_imgbb(image_path, character_name):
+def upload_to_imgbb(image_path, name):
     with open(image_path, "rb") as f:
         image_data = base64.b64encode(f.read()).decode("utf-8")
     response = requests.post(
         IMGBB_UPLOAD_URL,
-        data={"key": _imgbb_key, "image": image_data, "name": f"ref_{character_name}"},
+        data={"key": _imgbb_key, "image": image_data, "name": f"ref_{name}"},
         timeout=60,
     )
     if not response.ok:
@@ -357,78 +472,87 @@ def upload_to_imgbb(image_path, character_name):
         raise RuntimeError(f"No URL in ImgBB response: {data}")
 
 
-def save_ref_to_db(name, style, prompt, imgbb_url, local_path):
+def save_ref_to_db(name, style, prompt, imgbb_url, local_path, ref_type=REF_TYPE_CHARACTER):
+    table = REF_TYPE_TABLE.get(ref_type, "ref_characters")
     try:
-        supabase.table("ref_characters").insert({
+        supabase.table(table).insert({
             "name": name, "style": style, "prompt": prompt,
             "imgbb_url": imgbb_url, "local_path": local_path,
         }).execute()
     except Exception as e:
-        print(f"   ⚠️  Could not save to Supabase: {e}")
+        print(f"   ⚠️  Could not save to Supabase ({table}): {e}")
 
+
+def write_reference_json(ref_map, ref_type):
+    path = REF_TYPE_OUTPUT_FILE[ref_type]
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(ref_map, f, indent=2)
+    print(f"✅ Written: {path}")
 
 def write_reference_characters_json(ref_map):
-    with open(REFERENCE_CHARACTERS_FILE, "w", encoding="utf-8") as f:
-        json.dump(ref_map, f, indent=2)
-    print(f"✅ Written: {REFERENCE_CHARACTERS_FILE}")
+    """Kept for backward compatibility — old name, characters only."""
+    write_reference_json(ref_map, REF_TYPE_CHARACTER)
 
 
 board = None
 
 
-def process_one_character(character_name, prompt, image_style_text, anchor_state, style):
-    local_path = os.path.join(REF_OUTPUT_FOLDER, f"{character_name}.png")
+def process_one_reference(name, prompt, image_style_text, anchor_state, style, ref_type=REF_TYPE_CHARACTER):
+    local_path = _local_path_for(name, ref_type)
     previous_issue = None
 
-    for attempt in range(1, MAX_ATTEMPTS_PER_CHARACTER + 1):
-        board.update(character_name, f"generating (attempt {attempt}/{MAX_ATTEMPTS_PER_CHARACTER})")
+    for attempt in range(1, MAX_ATTEMPTS_PER_REFERENCE + 1):
+        board.update(name, f"generating (attempt {attempt}/{MAX_ATTEMPTS_PER_REFERENCE})")
         try:
-            agnes_url = generate_ref_image(character_name, prompt, image_style_text, previous_issue=previous_issue)
+            agnes_url = generate_ref_image(name, prompt, image_style_text, ref_type=ref_type, previous_issue=previous_issue)
         except Exception as e:
-            board.update(character_name, f"generation failed: {str(e)[:60]}")
+            board.update(name, f"generation failed: {str(e)[:60]}")
             previous_issue = None
             continue
 
-        board.update(character_name, "verifying")
+        board.update(name, "verifying")
         with anchor_state["lock"]:
             anchor_data_uri = anchor_state["data_uri"]
-        passed, issue = verify_reference_image(agnes_url, character_name, image_style_text, anchor_data_uri=anchor_data_uri)
+        passed, issue = verify_reference_image(agnes_url, name, image_style_text, ref_type=ref_type, anchor_data_uri=anchor_data_uri)
 
         if passed:
-            board.update(character_name, "downloading")
+            board.update(name, "downloading")
             try:
                 download_image(agnes_url, local_path)
             except Exception as e:
-                board.update(character_name, f"download failed: {str(e)[:60]}")
+                board.update(name, f"download failed: {str(e)[:60]}")
                 continue
 
-            board.update(character_name, "uploading to ImgBB")
+            board.update(name, "uploading to ImgBB")
             try:
-                imgbb_url = upload_to_imgbb(local_path, character_name)
+                imgbb_url = upload_to_imgbb(local_path, name)
             except Exception as e:
-                board.update(character_name, f"ImgBB upload failed: {str(e)[:60]}")
+                board.update(name, f"ImgBB upload failed: {str(e)[:60]}")
                 continue
 
-            save_ref_to_db(character_name, style or "unknown", prompt, imgbb_url, local_path)
-            board.update(character_name, "✅ ready", done=True)
+            save_ref_to_db(name, style or "unknown", prompt, imgbb_url, local_path, ref_type=ref_type)
+            board.update(name, "✅ ready", done=True)
 
             with anchor_state["lock"]:
                 if anchor_state["data_uri"] is None:
                     anchor_state["data_uri"] = local_image_to_data_uri(local_path)
 
-            return character_name, imgbb_url
+            return name, imgbb_url
         else:
-            board.update(character_name, f"rejected: {str(issue)[:60]}")
+            board.update(name, f"rejected: {str(issue)[:60]}")
             previous_issue = str(issue)
 
-    board.update(character_name, "❌ FAILED after all attempts", done=True)
-    return character_name, None
+    board.update(name, "❌ FAILED after all attempts", done=True)
+    return name, None
+
+# Backward-compat alias — old code/imports calling this name still work.
+process_one_character = process_one_reference
 
 
 def main():
     global board
 
-    print("\n=== REFERENCE CHARACTER GENERATOR ===\n")
+    print("\n=== REFERENCE GENERATOR (characters, locations, props) ===\n")
 
     if not os.path.exists(REF_PROMPTS_FILE):
         print(f"❌ {REF_PROMPTS_FILE} not found — run script_engine.py first")
@@ -437,16 +561,12 @@ def main():
     with open(REF_PROMPTS_FILE, "r", encoding="utf-8") as f:
         ref_data = json.load(f)
 
-    if "characters" in ref_data:
+    if "characters" in ref_data or "locations" in ref_data or "props" in ref_data:
         style = ref_data.get("style")
-        ref_prompts = ref_data["characters"]
     else:
+        # Old flat {name: prompt} format — characters only, unchanged behavior.
         style = None
-        ref_prompts = ref_data
-
-    if not ref_prompts:
-        print("❌ No characters found in ref_prompts.json — nothing to generate")
-        sys.exit(1)
+        ref_data = {"characters": ref_data}
 
     image_style_text = ""
     if style:
@@ -463,40 +583,52 @@ def main():
     else:
         print("⚠️  No style recorded in ref_prompts.json — style won't be enforced")
 
-    if image_style_text:
-        for name in ref_prompts:
-            ref_prompts[name] = ref_prompts[name].replace("[style-appropriate description]", image_style_text)
-        print(f"🔧 Replaced [style-appropriate description] with actual style text in {len(ref_prompts)} prompt(s)")
+    all_items = []  # (name, prompt, ref_type)
+    for key, ref_type in REF_PROMPTS_KEY_TO_TYPE:
+        group = ref_data.get(key) or {}
+        if image_style_text:
+            for name in group:
+                group[name] = group[name].replace("[style-appropriate description]", image_style_text)
+        for name, prompt in group.items():
+            all_items.append((name, prompt, ref_type))
 
-    items = list(ref_prompts.items())
-    print(f"📋 Found {len(items)} character(s): {', '.join(ref_prompts.keys())}\n")
+    if not all_items:
+        print("❌ No characters, locations, or props found in ref_prompts.json — nothing to generate")
+        sys.exit(1)
 
-    board = StatusBoard(list(ref_prompts.keys()))
+    by_type_count = {}
+    for _, _, t in all_items:
+        by_type_count[t] = by_type_count.get(t, 0) + 1
+    summary = ", ".join(f"{n} {t}(s)" for t, n in by_type_count.items())
+    print(f"📋 Found {len(all_items)} reference(s) — {summary}\n")
+
+    board = StatusBoard([name for name, _, _ in all_items])
     board.start()
 
+    # ONE shared style anchor across ALL types — the first reference
+    # processed (regardless of type) establishes the art style; every
+    # reference after it, characters/locations/props alike, is checked
+    # against that same anchor.
     anchor_state = {"data_uri": None, "lock": threading.Lock()}
-    successful_refs = {}
-
-    # First character processes ALONE — it becomes the style anchor for
-    # everyone else, so there's nothing to compare against until it's done.
-    first_name, first_prompt = items[0]
-    name, url = process_one_character(first_name, first_prompt, image_style_text, anchor_state, style)
-    if url:
-        successful_refs[name] = url
-
-    # Everyone else runs in parallel — real speedup starts at 3+ characters.
-    rest = items[1:]
+    successful_refs = {REF_TYPE_CHARACTER: {}, REF_TYPE_LOCATION: {}, REF_TYPE_PROP: {}}
     results_lock = threading.Lock()
+
+    first_name, first_prompt, first_type = all_items[0]
+    name, url = process_one_reference(first_name, first_prompt, image_style_text, anchor_state, style, ref_type=first_type)
+    if url:
+        successful_refs[first_type][name] = url
+
+    rest = all_items[1:]
     threads = []
 
-    def worker(name, prompt):
-        result_name, result_url = process_one_character(name, prompt, image_style_text, anchor_state, style)
+    def worker(name, prompt, ref_type):
+        result_name, result_url = process_one_reference(name, prompt, image_style_text, anchor_state, style, ref_type=ref_type)
         if result_url:
             with results_lock:
-                successful_refs[result_name] = result_url
+                successful_refs[ref_type][result_name] = result_url
 
-    for name, prompt in rest:
-        t = threading.Thread(target=worker, args=(name, prompt), daemon=True)
+    for name, prompt, ref_type in rest:
+        t = threading.Thread(target=worker, args=(name, prompt, ref_type), daemon=True)
         threads.append(t)
         t.start()
 
@@ -505,12 +637,18 @@ def main():
 
     board.stop()
 
-    if not successful_refs:
+    total_ok = sum(len(v) for v in successful_refs.values())
+    if total_ok == 0:
         print("\n❌ No reference images were generated successfully")
         sys.exit(1)
 
-    write_reference_characters_json(successful_refs)
-    print(f"\n✅ Done — {len(successful_refs)}/{len(items)} reference(s) ready")
+    for ref_type, ref_map in successful_refs.items():
+        if ref_map:
+            write_reference_json(ref_map, ref_type)
+        elif by_type_count.get(ref_type):
+            print(f"⚠️  {by_type_count[ref_type]} {ref_type}(s) were requested but NONE succeeded — file not written")
+
+    print(f"\n✅ Done — {total_ok}/{len(all_items)} reference(s) ready")
     print("   Next: batch_image_generator.py")
 
 

@@ -6,6 +6,16 @@
 # enforce the correct visual style (this was the root cause of a
 # reference character coming out photorealistic instead of cartoon
 # for a bible_story-format topic).
+#
+# CHANGE 2: ref_prompts.json now ALSO carries "locations" and "props"
+# alongside "characters" — the model identifies recurring
+# locations/props (not one-off ones) while writing chunk 1, the same
+# way it already identifies characters. ref_character_generator.py
+# reads all three and generates reference images for all three.
+#
+# CHANGE 3: added generate_story()/build_story_prompt() — full prose
+# story generation, upstream of the scene breakdown (see
+# production_manager.py for how it's used).
 # ============================================================
 
 import os
@@ -157,7 +167,11 @@ def call_llm(prompt, max_tokens, board=None, board_key="script_writing"):
 
 
 def _ref_prompts_section():
-    return '''First, reference character prompts:
+    return '''First, reference prompts for anything that needs a persistent visual
+reference: characters, plus any LOCATIONS or PROPS that recur across
+MULTIPLE scenes and need to look the same every time. Only include a
+location/prop entry if it recurs — a background or object that
+appears in just one scene does NOT need one, skip it.
 
 REF_PROMPTS_START
 {
@@ -165,6 +179,18 @@ REF_PROMPTS_START
     {
       "name": "character_name",
       "prompt": "Front-facing portrait of [description]. Standing straight, arms relaxed at sides, neutral expression, hands empty, no props. [style-appropriate description]. Plain background. Full body visible."
+    }
+  ],
+  "locations": [
+    {
+      "name": "location_name",
+      "prompt": "Description of the physical space: architecture, terrain, key landmarks, lighting/time of day. This is the location itself, wide establishing view, no people in it."
+    }
+  ],
+  "props": [
+    {
+      "name": "prop_name",
+      "prompt": "Description of the object alone: material, shape, size, distinguishing details."
     }
   ]
 }
@@ -175,8 +201,8 @@ REF_PROMPTS_END
 
 def _output_rules(scene_count, include_ref_prompts):
     ref_section = _ref_prompts_section() if include_ref_prompts else (
-        "Do NOT include a REF_PROMPTS section — characters are already "
-        "established from an earlier part of this script.\n\n"
+        "Do NOT include a REF_PROMPTS section — characters/locations/props are "
+        "already established from an earlier part of this script.\n\n"
     )
 
     return f'''============================================================
@@ -201,6 +227,8 @@ divider than the number of scenes you wrote.
 
 SCENES_START
 CHARACTERS: name1, name2
+LOCATION: location_name
+PROPS: prop_name1, prop_name2
 Scene description. If 2 named characters: name1 must be described as LEFT,
 name2 as RIGHT, in that exact order, matching the CHARACTERS: line order.
 If 3 named characters: order is LEFT, CENTER, RIGHT, matching CHARACTERS:
@@ -208,6 +236,15 @@ line order exactly. NEVER more than 3 named characters in one scene — if
 a moment needs a 4th or 5th person, split it into a separate scene instead.
 A scene with no named character present (an establishing/object shot) gets
 a blank "CHARACTERS:" line.
+The LOCATION: line is OPTIONAL — only include it when this scene happens
+in a location you defined in REF_PROMPTS above, and use its exact name.
+Leave it out entirely (no blank "LOCATION:" line) when the scene has no
+recurring-location reference, or when this scene is a continuation in the
+SAME location as the immediately preceding scene.
+The PROPS: line is OPTIONAL — only include it when one of the props you
+defined in REF_PROMPTS above visibly appears in this scene, using its
+exact name(s), comma-separated. Leave it out entirely when no defined
+prop appears in this scene.
 The character reference image defines identity and clothing ONLY — never
 assume a pose from it. State the actual pose/action in every scene's text,
 even if it seems obvious.
@@ -352,7 +389,10 @@ def _extract_json_object(text):
 
 
 def parse_script_output(raw_output, expect_ref_prompts):
-    result = {"ref_prompts": {}, "scenes_txt": "", "audio_txt": "", "raw": raw_output, "parse_errors": []}
+    result = {
+        "ref_prompts": {"characters": {}, "locations": {}, "props": {}},
+        "scenes_txt": "", "audio_txt": "", "raw": raw_output, "parse_errors": [],
+    }
 
     if expect_ref_prompts:
         ref_content = _extract_section(raw_output, "REF_PROMPTS_START", "REF_PROMPTS_END")
@@ -364,7 +404,17 @@ def parse_script_output(raw_output, expect_ref_prompts):
                     name = char.get("name", "").lower().strip()
                     prompt = char.get("prompt", "").strip()
                     if name and prompt:
-                        result["ref_prompts"][name] = prompt
+                        result["ref_prompts"]["characters"][name] = prompt
+                for loc in ref_data.get("locations", []):
+                    name = loc.get("name", "").lower().strip()
+                    prompt = loc.get("prompt", "").strip()
+                    if name and prompt:
+                        result["ref_prompts"]["locations"][name] = prompt
+                for prop in ref_data.get("props", []):
+                    name = prop.get("name", "").lower().strip()
+                    prompt = prop.get("prompt", "").strip()
+                    if name and prompt:
+                        result["ref_prompts"]["props"][name] = prompt
             except json.JSONDecodeError as e:
                 result["parse_errors"].append(f"ref_prompts JSON error: {e}")
         else:
@@ -464,7 +514,7 @@ def generate_chunk_with_retries(prompt, max_tokens, expect_ref_prompts, board=No
         parsed = parse_script_output(raw_output, expect_ref_prompts)
 
         hard_issues, soft_issues = validate_chunk(parsed)
-        if expect_ref_prompts and not parsed["ref_prompts"]:
+        if expect_ref_prompts and not parsed["ref_prompts"]["characters"]:
             hard_issues.append("no reference character prompts parsed")
 
         if not hard_issues and not soft_issues:
@@ -503,7 +553,12 @@ def write_output_files(scenes_txt, audio_txt, ref_prompts, style):
     with open(AUDIO_FILE, "w", encoding="utf-8") as f:
         f.write(audio_txt)
     with open(REF_PROMPTS_FILE, "w", encoding="utf-8") as f:
-        json.dump({"style": style, "characters": ref_prompts}, f, indent=2)
+        json.dump({
+            "style": style,
+            "characters": ref_prompts.get("characters", {}),
+            "locations": ref_prompts.get("locations", {}),
+            "props": ref_prompts.get("props", {}),
+        }, f, indent=2)
     print(f"✅ Written: {SCENES_FILE}, {AUDIO_FILE}, {REF_PROMPTS_FILE}")
 
 
@@ -538,7 +593,7 @@ def run(topic, style, duration_secs, scene_count, character_names,
 
         all_scenes_txt = []
         all_audio_txt = []
-        ref_prompts = {}
+        ref_prompts = {"characters": {}, "locations": {}, "props": {}}
         scenes_written = 0
         next_audio_number = 1
         chunk_index = 0
@@ -562,7 +617,7 @@ def run(topic, style, duration_secs, scene_count, character_names,
                     board=board, debug_label=f"chunk_{chunk_index}",
                 )
                 ref_prompts = parsed["ref_prompts"]
-                character_names = character_names or list(ref_prompts.keys())
+                character_names = character_names or list(ref_prompts["characters"].keys())
             else:
                 last_scene, last_narration = _last_scene_and_narration(all_scenes_txt[-1], all_audio_txt[-1])
                 prompt = build_continuation_prompt(
@@ -600,3 +655,85 @@ def run(topic, style, duration_secs, scene_count, character_names,
         return {"scenes_txt": final_scenes_txt, "audio_txt": final_audio_txt, "ref_prompts": ref_prompts}
     finally:
         board.stop()
+
+def _scripture_grounding_block(scripture_references):
+    """
+    Formats retrieved scripture the SAME way script_verifier.py's
+    _build_bible_verify_prompt does, so the story is actually grounded
+    in the same passages the quality gate later checks it against —
+    previously the verifier saw scripture_references but the story
+    generator never did, so a factual miss could only be caught AFTER
+    the fact (via a rewrite), never prevented up front.
+    """
+    if not scripture_references:
+        return (
+            "RETRIEVED SCRIPTURE: None retrieved — write from general "
+            "biblical knowledge, staying as historically/textually "
+            "accurate as you can."
+        )
+    lines = [
+        f"  - {r['reference']}: {r['text'][:200]}"
+        for r in scripture_references[:10]
+    ]
+    return (
+        "RETRIEVED SCRIPTURE (ground the story in these passages — do not "
+        "contradict them, and prefer their details over invented ones):\n"
+        + "\n".join(lines)
+    )
+
+
+def build_story_prompt(topic, style, format_content, duration_secs, scripture_references=None):
+    target_words = max(150, int(duration_secs * 2.3))  # ~2.3 spoken words/sec
+    scripture_block = _scripture_grounding_block(scripture_references)
+    return f'''Write a complete, self-contained NARRATIVE STORY — plain prose,
+told start to finish. This is the STORY ITSELF, not a shot list: no scene
+markers, no camera directions, no "SCENE:" labels, no character reference
+descriptions. Just the story, the way you'd tell it to someone.
+
+TOPIC: {topic}
+STYLE: {style}
+TARGET LENGTH: approximately {target_words} words (this story will later be
+narrated over roughly {duration_secs} seconds of video — do not pad or
+run long).
+
+{scripture_block}
+
+STYLE GUIDE (for tone, narration voice, and non-biblical formatting rules —
+NOT for scene/camera formatting, which does not apply here):
+{format_content}
+
+Write ONLY the story text. No title, no headers, no markdown, no
+commentary before or after it.'''
+
+def generate_story(topic, style, duration_secs, board=None, scripture_references=None):
+    """
+    Generates the full narrative story in prose — the source of truth
+    that the scene breakdown is later adapted from (never invented
+    fresh from the topic once this exists).
+
+    scripture_references (bible_story format): the SAME list
+    production_manager.run_research() retrieves and later verifies
+    against — passing it here grounds the story in those passages
+    up front instead of relying entirely on the verifier to catch a
+    factual miss after the fact.
+
+    Manages its own StatusBoard (heartbeat dots, so the terminal never
+    looks frozen during this call) when the caller doesn't pass one —
+    production_manager.py currently calls this with no board, so
+    without this the story-writing stage would run silent.
+    """
+    format_content = load_format(style)
+    target_words = max(150, int(duration_secs * 2.3))
+    max_tokens = min(_active["max_output_cap"], max(1500, int(target_words * 1.8)))
+    prompt = build_story_prompt(topic, style, format_content, duration_secs, scripture_references=scripture_references)
+
+    owns_board = board is None
+    if owns_board:
+        board = StatusBoard(["story_writing"])
+        board.start()
+    try:
+        story_text = call_llm(prompt, max_tokens, board=board, board_key="story_writing")
+        return story_text.strip()
+    finally:
+        if owns_board:
+            board.stop()

@@ -2,8 +2,21 @@
 # FILE: storage_manager.py
 # PURPOSE: All filesystem and SQLite operations for the manual
 # production pipeline. Single source of truth for paths,
-# directory creation, script versioning, JSON artifacts,
+# directory creation, story/script versioning, JSON artifacts,
 # and production state.
+#
+# CHANGE: added a "story" stage alongside "script" — the full prose
+# story now gets its own versioned folder and its own current.txt,
+# completely separate from the scene-breakdown ("script") versions,
+# so the two never collide on the same v001/v002/... numbering.
+#
+# CHANGE 2: _generate_run_id() now takes the next unused number from
+# BOTH the folder listing AND the productions table (whichever is
+# higher) — previously it only looked at folders, so a folder/DB
+# mismatch (e.g. after a crash) could hand out an ID that already
+# existed in the DB and crash with sqlite3.IntegrityError.
+# create_production() also retries a few times on a collision as a
+# belt-and-suspenders safety net.
 #
 # Does NOT touch Supabase — that remains in db.py / script_engine.py.
 # Does NOT store image/audio/video blobs — filesystem paths only.
@@ -70,19 +83,40 @@ def init_db():
 # ============================================================
 
 def _generate_run_id():
-    """Generate RUN-XXXX style ID. Finds the next unused number."""
+    """
+    Generate RUN-XXXX style ID. Takes the next unused number from BOTH
+    the folder listing AND the productions table — whichever is
+    higher — so a deleted folder or an orphaned DB row can never
+    cause the two to pick the same number again.
+    """
     os.makedirs(PRODUCTIONS_DIR, exist_ok=True)
     existing = [
         d for d in os.listdir(PRODUCTIONS_DIR)
         if d.startswith("RUN-") and os.path.isdir(os.path.join(PRODUCTIONS_DIR, d))
     ]
-    numbers = []
+    folder_numbers = []
     for name in existing:
         try:
-            numbers.append(int(name[4:]))
+            folder_numbers.append(int(name[4:]))
         except ValueError:
             pass
-    next_num = max(numbers, default=0) + 1
+    folder_max = max(folder_numbers, default=0)
+
+    db_max = 0
+    init_db()
+    with _db_lock:
+        conn = _get_conn()
+        try:
+            rows = conn.execute("SELECT id FROM productions WHERE id LIKE 'RUN-%'").fetchall()
+        finally:
+            conn.close()
+    for row in rows:
+        try:
+            db_max = max(db_max, int(row["id"][4:]))
+        except (ValueError, TypeError):
+            pass
+
+    next_num = max(folder_max, db_max) + 1
     return f"RUN-{next_num:04d}"
 
 
@@ -100,6 +134,8 @@ def create_production_dirs(run_id):
         "root": root,
         "input": os.path.join(root, "input"),
         "research": os.path.join(root, "research"),
+        "story": os.path.join(root, "story"),
+        "story_versions": os.path.join(root, "story", "versions"),
         "script": os.path.join(root, "script"),
         "script_versions": os.path.join(root, "script", "versions"),
         "verification": os.path.join(root, "verification"),
@@ -131,29 +167,42 @@ def create_production(topic, input_type, fmt, duration_secs, supabase_topic_id=N
     """
     Create a new production record. Returns (run_id, paths_dict).
     input_type: 'topic' or 'existing_script'
+
+    Retries a few times on a run_id collision (belt-and-suspenders on
+    top of _generate_run_id's fix — e.g. two runs launched at nearly
+    the same instant) rather than crashing the whole pipeline.
     """
     init_db()
-    run_id = _generate_run_id()
-    paths = create_production_dirs(run_id)
     now = _now()
+    last_error = None
 
-    with _db_lock:
-        conn = _get_conn()
-        try:
-            conn.execute(
-                """INSERT INTO productions
-                   (id, topic, input_type, format, duration_secs, stage,
-                    created_at, updated_at, supabase_topic_id)
-                   VALUES (?, ?, ?, ?, ?, 'created', ?, ?, ?)""",
-                (run_id, topic, input_type, fmt, duration_secs,
-                 now, now, supabase_topic_id),
-            )
-            conn.commit()
-        finally:
-            conn.close()
+    for attempt in range(5):
+        run_id = _generate_run_id()
+        paths = create_production_dirs(run_id)
 
-    print(f"📁 Production created: {run_id}")
-    return run_id, paths
+        with _db_lock:
+            conn = _get_conn()
+            try:
+                conn.execute(
+                    """INSERT INTO productions
+                       (id, topic, input_type, format, duration_secs, stage,
+                        created_at, updated_at, supabase_topic_id)
+                       VALUES (?, ?, ?, ?, ?, 'created', ?, ?, ?)""",
+                    (run_id, topic, input_type, fmt, duration_secs,
+                     now, now, supabase_topic_id),
+                )
+                conn.commit()
+            except sqlite3.IntegrityError as e:
+                last_error = e
+                conn.close()
+                continue
+            finally:
+                conn.close()
+
+        print(f"📁 Production created: {run_id}")
+        return run_id, paths
+
+    raise RuntimeError(f"Could not generate a unique run ID after 5 attempts: {last_error}")
 
 
 def update_production(run_id, **kwargs):
@@ -187,7 +236,7 @@ def get_production(run_id):
 
 
 # ============================================================
-# SCRIPT VERSIONING
+# VERSIONING — shared helpers (used by both story and script)
 # ============================================================
 
 def _version_label(n):
@@ -207,6 +256,53 @@ def _next_version_number(versions_dir):
             pass
     return max(numbers, default=0) + 1
 
+
+# ============================================================
+# STORY VERSIONING (the full prose story — upstream of the script)
+# ============================================================
+
+def save_story_version(paths, story_text):
+    """
+    Save story_text as the next STORY version (v001, v002, …), in its
+    OWN versions folder — never shares numbering with script versions.
+    Returns the version label (e.g. 'v001').
+    """
+    versions_dir = paths["story_versions"]
+    n = _next_version_number(versions_dir)
+    label = _version_label(n)
+    version_path = os.path.join(versions_dir, f"{label}.txt")
+    with open(version_path, "w", encoding="utf-8") as f:
+        f.write(story_text)
+    print(f"💾 Story saved as {label}")
+    return label
+
+
+def set_current_story(paths, story_text):
+    """Write (or overwrite) story/current.txt — only called after PASS."""
+    current_path = os.path.join(paths["story"], "current.txt")
+    with open(current_path, "w", encoding="utf-8") as f:
+        f.write(story_text)
+
+
+def load_story_version(paths, label):
+    """Load a specific story version by label (e.g. 'v001')."""
+    path = os.path.join(paths["story_versions"], f"{label}.txt")
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Story version {label} not found at {path}")
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def list_story_versions(paths):
+    """Return sorted list of story version labels that exist."""
+    versions_dir = paths["story_versions"]
+    files = [f for f in os.listdir(versions_dir) if f.startswith("v") and f.endswith(".txt")]
+    return sorted(files, key=lambda x: int(x[1:-4]))
+
+
+# ============================================================
+# SCRIPT VERSIONING (the scene breakdown — derived from the story)
+# ============================================================
 
 def save_script_version(paths, script_text):
     """

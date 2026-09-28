@@ -1,0 +1,14 @@
+{
+  "characters": [
+    {
+      "name": "esau",
+      "format": "bible_story",
+      "needs_reference": true
+    },
+    {
+      "name": "jacob",
+      "format": "bible_story",
+      "needs_reference": true
+    }
+  ]
+}

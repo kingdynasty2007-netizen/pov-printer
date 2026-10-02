@@ -1,41 +1,23 @@
-<p align="center">
-  <img src="https://github.com/kingdynasty2007-netizen/pov-printer/blob/eda2b30702021783c0ec37df44d4bdf47e6d8391/WhatsApp%20Image%202026-10-02%20at%204.59.49%20PM.jpeg" width="500" alt="POV Printer Logo">
-</p>
-
-<h1 align="center">POV PRINTER</h1>
-<p align="center">
-  A DIY Persistence-of-Vision Display That Prints Images In Thin Air
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Built%20With-Python%20%2B%20Arduino-blue?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Status-Work%20In%20Progress-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Made%20In-Abuja%2C%20NG-green?style=for-the-badge">
-</p>
-
 ### 🎥 Demo
-> Add a GIF or YouTube link here. This is the most important part!
-> `https://youtube.com/your-video-link`
-
-![Demo GIF](./assets/demo.gif)
+Coming soon — build in progress.
 
 ### How It Works
-A strip of LEDs spinning at high speed. We flash each LED at precise microsecond timings to draw an image in the air using persistence of vision. This repo contains the Python image processor + Arduino firmware.
+A strip of LEDs spinning at high speed. By flashing each LED at precise microsecond timings synced to rotation, it draws an image in thin air using persistence of vision (POV).
 
-1.  Python script converts any image -> 1D pixel columns
-2.  Sends data to Arduino via Serial
-3.  Arduino syncs with motor rotation (hall sensor) and flashes LEDs
+Planned pipeline:
+1. Python script converts an image into 1D pixel columns
+2. Data is sent to the Arduino over Serial
+3. Arduino syncs flashes to motor rotation using a hall sensor
 
-### Hardware Needed
-- Arduino Uno / Nano
-- WS2812B LED Strip
-- DC Motor + Hall Sensor (A3144)
-- 12V Power Supply
-- 3D Printed / Wood frame
+### Hardware (planned)
+- Arduino (board TBD — Uno/Nano/Mega)
+- WS2812B LED strip
+- DC motor + hall sensor (A3144)
+- 12V power supply
+- 3D printed or wood frame
+
+### Status
+This project is in the planning/early build stage. Wiring diagrams, firmware, and the Python image processor will be added as they're built and tested.
 
 ### Software Setup
-
-**1. Clone the repo**
-```bash
-git clone https://github.com/YOUR_USERNAME/pov-printer.git
-cd pov-printer
+Coming soon.

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/logo.png" width="500" alt="POV Printer Logo">
+  <img src="https://github.com/kingdynasty2007-netizen/pov-printer/blob/eda2b30702021783c0ec37df44d4bdf47e6d8391/WhatsApp%20Image%202026-10-02%20at%204.59.49%20PM.jpeg" width="500" alt="POV Printer Logo">
 </p>
 
 <h1 align="center">POV PRINTER</h1>

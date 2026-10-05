@@ -32,10 +32,14 @@ def kill_process_tree(process):
             pass
 
 
-def popen_for_stage(command, log_file):
+def popen_for_stage(command, log_file, cwd=None, env=None):
     """Starts a subprocess in its own process group so
     kill_process_tree can actually terminate it (and any children)."""
     popen_kwargs = {"stdout": log_file, "stderr": subprocess.STDOUT}
+    if cwd:
+        popen_kwargs["cwd"] = cwd
+    if env is not None:
+        popen_kwargs["env"] = env
     if os.name == "nt":
         popen_kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
     else:

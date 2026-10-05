@@ -42,18 +42,24 @@ import base64
 import threading
 import requests
 from dotenv import load_dotenv
+
+# Settle which run this stage works on BEFORE anything resolves paths.
+# Bare  -> newest run.  `... RUN-0009` -> that run.  POV_LEGACY=1 -> root folders.
+import run_paths
+run_paths.bootstrap_stage(sys.argv)
+
 from db import supabase
 from status_board import StatusBoard
 
 load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-REF_PROMPTS_FILE = os.path.join(BASE_DIR, "ref_prompts.json")
-REF_OUTPUT_FOLDER = os.path.join(BASE_DIR, "ref_images")
-REFERENCE_CHARACTERS_FILE = os.path.join(BASE_DIR, "reference_characters.json")
-REFERENCE_LOCATIONS_FILE = os.path.join(BASE_DIR, "reference_locations.json")
-REFERENCE_PROPS_FILE = os.path.join(BASE_DIR, "reference_props.json")
+_P = run_paths.get_paths()
+REF_PROMPTS_FILE = _P["ref_prompts_file"]
+REF_OUTPUT_FOLDER = _P["ref_images_dir"]
+REFERENCE_CHARACTERS_FILE = _P["ref_characters_file"]
+REFERENCE_LOCATIONS_FILE = _P["ref_locations_file"]
+REFERENCE_PROPS_FILE = _P["ref_props_file"]
 SCRIPTFORMAT_FOLDER = os.path.join(BASE_DIR, "scriptformat")
 
 REF_TYPE_CHARACTER = "character"
@@ -81,9 +87,39 @@ REF_TYPE_TABLE = {
 
 IMAGE_MODEL = "agnes-image-2.1-flash"
 IMAGE_SIZE_BY_TYPE = {
-    REF_TYPE_CHARACTER: "768x1024",   # vertical portrait, unchanged
+    # Characters are full-body references, so the canvas is deliberately TALL
+    # (2:3 instead of the old 3:4 768x1024). A 3:4 frame leaves the model
+    # choosing between a closer shot and a full figure, and it kept choosing
+    # closer — feet and ankles cropped off, which then failed the
+    # full_body_ok check and burned retries. The extra vertical room lets a
+    # head-to-toe figure fit with margin above the head and below the feet.
+    REF_TYPE_CHARACTER: "1024x1536",  # 2:3 tall portrait, full body with margin
     REF_TYPE_LOCATION: "1024x576",    # matches the pipeline's 16:9 scene size
     REF_TYPE_PROP: "1024x1024",       # square product-style shot
+}
+# Tried only if the API rejects the size above (HTTP 400), so a provider that
+# doesn't support 2:3 degrades to the old taller-than-square portrait instead of
+# failing the whole stage. Characters: 3:4, then 9:16.
+FALLBACK_SIZE_BY_TYPE = {
+    REF_TYPE_CHARACTER: ["768x1024", "576x1024"],
+}
+
+# Framing escalates DETERMINISTICALLY per attempt instead of relying only on
+# the verifier's free-text previous_issue, which the model largely ignored —
+# in RUN-0015 john failed 3/3 with slightly different crop levels each time.
+# Empty value = no extra text on that attempt.
+FRAMING_ESCALATION = {
+    REF_TYPE_CHARACTER: {
+        2: "CRITICAL REFRAME — the previous attempt was cropped. Pull the "
+           "camera much further back. Show the whole person from head to "
+           "toe with a large amount of empty background on all sides. The "
+           "body must occupy less than half the image height. Absolutely no "
+           "medium shot, cowboy shot, knee-up shot or close-up.",
+        3: "CRITICAL REFRAME — LAST ATTEMPT, the previous attempt was "
+           "cropped again. Use a wide full-body shot with the figure small "
+           "in a tall empty frame, standing far away from the camera. Both "
+           "feet AND the ground beneath them must be visible.",
+    },
 }
 IMAGE_URL = "https://apihub.agnes-ai.com/v1/images/generations"
 CHAT_URL = "https://apihub.agnes-ai.com/v1/chat/completions"
@@ -280,18 +316,22 @@ have a plain, minimal, undecorated background regardless of any setting
 described above. Do not render buildings, furniture, landscape, or any
 environmental detail."""
     return (
-        "IMPORTANT: Front-facing portrait, VERTICAL/PORTRAIT orientation. "
-        "Character standing straight, arms relaxed at sides, neutral "
-        "expression, hands empty, no props. The ENTIRE body must be "
-        "visible in frame — head, torso, legs, AND both feet, with the "
-        "camera positioned far enough back to fit the whole standing "
-        "figure. Leave visible empty margin above the head and below the "
-        "feet. This is a CHARACTER REFERENCE — full-body framing and a "
-        f"plain background matter more than drama or close-up detail.{style_instruction}{override}"
+        "IMPORTANT: Full-body character reference, HEAD-TO-TOE, EXTREME LONG "
+        "SHOT. The camera is far away and the figure is SMALL in the frame — "
+        "it fills only the middle ~60% of the image height, with clearly "
+        "empty space above the head and below the soles. Tall vertical "
+        "orientation. Do NOT use a medium shot, cowboy shot, knee-up shot, "
+        "waist-up shot, or close-up — those are exactly what was wrong with "
+        "previous attempts. Front-facing, standing straight, arms relaxed at "
+        "sides, neutral expression, hands empty, no props. Every part of the "
+        "body is inside the frame: top of the head, shoulders, torso, hips, "
+        "knees, ankles, and BOTH FEET. This is a CHARACTER REFERENCE — "
+        "full-body framing and a plain background matter more than drama or "
+        f"close-up detail.{style_instruction}{override}"
     )
 
 
-def generate_ref_image(name, prompt, image_style_text, ref_type=REF_TYPE_CHARACTER, previous_issue=None):
+def generate_ref_image(name, prompt, image_style_text, ref_type=REF_TYPE_CHARACTER, previous_issue=None, framing_note=""):
     base_instruction = _base_instruction_for_type(ref_type, image_style_text)
 
     if previous_issue:
@@ -300,37 +340,55 @@ def generate_ref_image(name, prompt, image_style_text, ref_type=REF_TYPE_CHARACT
             f"\"{previous_issue}\". Correct this specifically."
         )
 
+    if framing_note:
+        base_instruction += f"\n\n{framing_note}"
+
     full_prompt = f"{prompt}\n\n{base_instruction}"
     size = IMAGE_SIZE_BY_TYPE.get(ref_type, IMAGE_SIZE_BY_TYPE[REF_TYPE_CHARACTER])
-    payload = {"model": IMAGE_MODEL, "prompt": full_prompt, "size": size, "extra_body": {"response_format": "url"}}
 
-    last_error = "unknown"
-    for attempt in range(1, NETWORK_RETRY_ATTEMPTS + 1):
-        lane = _next_gen_lane()
-        _pace(lane, _gen_last_time)
-        headers = {"Authorization": f"Bearer {GEN_KEYS[lane]}", "Content-Type": "application/json"}
+    # If the API rejects the preferred size outright (HTTP 400 mentioning the
+    # size), fall back to the next one instead of failing all three attempts.
+    # A hard "unsupported size" error will never fix itself by retrying.
+    for size in [size] + [s for s in FALLBACK_SIZE_BY_TYPE.get(ref_type, []) if s != size]:
+        payload = {"model": IMAGE_MODEL, "prompt": full_prompt, "size": size, "extra_body": {"response_format": "url"}}
 
-        try:
-            response = requests.post(IMAGE_URL, headers=headers, json=payload, timeout=300)
-        except requests.exceptions.RequestException as e:
-            last_error = f"[{lane}] network error: {e}"
+        last_error = "unknown"
+        size_rejected = False
+        for attempt in range(1, NETWORK_RETRY_ATTEMPTS + 1):
+            lane = _next_gen_lane()
+            _pace(lane, _gen_last_time)
+            headers = {"Authorization": f"Bearer {GEN_KEYS[lane]}", "Content-Type": "application/json"}
+
+            try:
+                response = requests.post(IMAGE_URL, headers=headers, json=payload, timeout=300)
+            except requests.exceptions.RequestException as e:
+                last_error = f"[{lane}] network error: {e}"
+                continue
+
+            if response.status_code in (429, 503):
+                last_error = f"[{lane}] rate limited/queue full"
+                _trigger_cooldown(COOLDOWN_AFTER_LIMIT_SECONDS)
+                continue
+
+            if not response.ok:
+                body = response.text[:200]
+                last_error = f"[{lane}] HTTP {response.status_code}: {body}"
+                if response.status_code == 400 and "size" in body.lower():
+                    size_rejected = True
+                    break
+                continue
+
+            data = response.json()
+            try:
+                return data["data"][0]["url"]
+            except (KeyError, IndexError):
+                last_error = f"[{lane}] no url in response: {data}"
+                continue
+
+        if size_rejected:
+            print(f"   ⚠️  Size {size} rejected by API ({last_error}) — trying next size")
             continue
-
-        if response.status_code in (429, 503):
-            last_error = f"[{lane}] rate limited/queue full"
-            _trigger_cooldown(COOLDOWN_AFTER_LIMIT_SECONDS)
-            continue
-
-        if not response.ok:
-            last_error = f"[{lane}] HTTP {response.status_code}: {response.text[:200]}"
-            continue
-
-        data = response.json()
-        try:
-            return data["data"][0]["url"]
-        except (KeyError, IndexError):
-            last_error = f"[{lane}] no url in response: {data}"
-            continue
+        raise RuntimeError(last_error)
 
     raise RuntimeError(last_error)
 
@@ -503,8 +561,9 @@ def process_one_reference(name, prompt, image_style_text, anchor_state, style, r
 
     for attempt in range(1, MAX_ATTEMPTS_PER_REFERENCE + 1):
         board.update(name, f"generating (attempt {attempt}/{MAX_ATTEMPTS_PER_REFERENCE})")
+        framing_note = FRAMING_ESCALATION.get(ref_type, {}).get(attempt, "")
         try:
-            agnes_url = generate_ref_image(name, prompt, image_style_text, ref_type=ref_type, previous_issue=previous_issue)
+            agnes_url = generate_ref_image(name, prompt, image_style_text, ref_type=ref_type, previous_issue=previous_issue, framing_note=framing_note)
         except Exception as e:
             board.update(name, f"generation failed: {str(e)[:60]}")
             previous_issue = None
@@ -615,8 +674,25 @@ def main():
 
     first_name, first_prompt, first_type = all_items[0]
     name, url = process_one_reference(first_name, first_prompt, image_style_text, anchor_state, style, ref_type=first_type)
-    if url:
-        successful_refs[first_type][name] = url
+
+    # HARD STOP if the anchor fails. This first item IS the style anchor —
+    # every remaining item is verified against it. With no anchor, the rest
+    # would burn 8 more generations and several minutes of quota to produce
+    # references nobody can check for style consistency. Stop here instead,
+    # and say plainly what went wrong so the prompt can be fixed.
+    if not url:
+        board.stop()
+        print(f"\n❌ STYLE ANCHOR FAILED: '{first_name}' ({first_type}) "
+              f"could not be generated after "
+              f"{MAX_ATTEMPTS_PER_REFERENCE} attempts.")
+        print("   Everything after it is verified against this image, so there is")
+        print("   no point generating the rest — the pipeline is stopping here.")
+        print("   Most common cause: the image is cropped (feet/legs cut off) or the")
+        print("   style came back 3D/photorealistic instead of the required look.")
+        print("   Edit that character's prompt in ref_prompts.json, then run again.")
+        sys.exit(1)
+
+    successful_refs[first_type][name] = url
 
     rest = all_items[1:]
     threads = []

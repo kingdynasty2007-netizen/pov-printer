@@ -13,6 +13,12 @@ import re
 import queue
 import threading
 import itertools
+
+# Settle which run this stage works on BEFORE importing image_core, which
+# resolves its paths at import time. Bare -> newest run. `... RUN-0009` -> that run.
+import run_paths
+run_paths.bootstrap_stage(sys.argv)
+
 from image_core import (
     GEN_KEYS, VERIFY_KEYS, load_scenes, generate_image_url, download_image,
     verify_image, verification_passed, update_manifest_entry, load_manifest,

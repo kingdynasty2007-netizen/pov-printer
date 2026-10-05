@@ -4,6 +4,13 @@
 # RUN WITH: python batch_video_generator.py
 # ============================================================
 
+import sys
+
+# Settle which run this stage works on BEFORE importing video_core, which
+# resolves its paths at import time. Bare -> newest run. `... RUN-0009` -> that run.
+import run_paths
+run_paths.bootstrap_stage(sys.argv)
+
 from video_core import VIDEO_KEYS, load_manifest, load_video_scene_overrides, get_current_scene_keys, generate_videos
 from status_board import StatusBoard
 

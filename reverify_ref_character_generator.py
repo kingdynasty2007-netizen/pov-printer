@@ -17,6 +17,13 @@
 
 import os
 import json
+import sys
+
+# Settle which run this stage works on BEFORE importing ref_character_generator,
+# which resolves its paths at import time. Bare -> newest run.
+import run_paths
+run_paths.bootstrap_stage(sys.argv)
+
 from ref_character_generator import (
     REF_PROMPTS_FILE, REFERENCE_CHARACTERS_FILE, REF_OUTPUT_FOLDER,
     load_format_file, extract_image_style, local_image_to_data_uri,

@@ -10,14 +10,24 @@
 
 import os
 import sys
+import json
 import argparse
 import subprocess
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+
+# The queue still uses the flat folders at the project root, so pin that here,
+# BEFORE any project module resolves a path. Every stage it spawns inherits
+# this env var, which is what keeps the legacy queue working now that stage
+# scripts default to the newest run instead. run_paths.get_paths() stays
+# env-driven, so this also fixes the ref_characters_file check below.
+os.environ["POV_LEGACY"] = "1"
+
 from db import supabase
 import script_engine
 import run_lock
 import process_utils
+import run_paths
 from topic_utils import extract_style_tag
 from duration_utils import parse_duration, format_duration
 
@@ -148,6 +158,22 @@ def run_stage(name, command):
     return False, "failed"
 
 
+def _reference_characters_usable():
+    """True only if reference_characters.json exists AND has at least one
+    entry. image_core.py does sys.exit(1) at import without it, so a
+    'successful' ref stage that produced nothing usable is still a
+    failure — and that is exactly what a partial ref run looks like."""
+    path = run_paths.get_paths(announce=False)["ref_characters_file"]
+    if not os.path.exists(path):
+        return False
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+        return bool(content) and bool(json.loads(content))
+    except (ValueError, OSError):
+        return False
+
+
 def run_daily():
     print(f"\n=== TOPIC QUEUE RUNNER — {datetime.now().strftime('%Y-%m-%d %H:%M')} ===\n")
 
@@ -196,9 +222,23 @@ def run_daily():
     if reason == "stopped":
         finish("pending")
         return
-    if not ok:
-        finish("failed", {"status": "failed"})
-        return
+    # ref_character_generator.py exits 0 on a PARTIAL success (e.g. every
+    # character failed but a location succeeded), leaving
+    # reference_characters.json unwritten. batch_image_generator.py then
+    # hard-stops at import via image_core. So gate on the file, not the
+    # exit code, and give retry_refs.py a shot at only what's missing.
+    if not ok or not _reference_characters_usable():
+        print("⚠️  Reference generation incomplete — retrying only the missing ones")
+        ok2, reason2 = run_stage("retry_refs", [PYTHON, "retry_refs.py"])
+        if reason2 == "stopped":
+            finish("pending")
+            return
+        if not ok2 or not _reference_characters_usable():
+            print("❌ Reference generation failed after retry — stopping pipeline")
+            print("   reference_characters.json is required by batch_image_generator.py")
+            finish("failed", {"status": "failed"})
+            return
+    print("✅ References ready")
 
     for stage_name, script in [("images", "batch_image_generator.py"),
                                 ("video", "batch_video_generator.py"),

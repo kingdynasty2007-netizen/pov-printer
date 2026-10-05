@@ -1,2 +1,144 @@
+# ==========================================================================
+# POV Printer — repository ignore rules
+# Keep source code and small config; exclude secrets, virtualenvs,
+# runtime data and large generated media so clones/pulls stay small.
+# ==========================================================================
+
+# --------------------------------------------------------------------------
+# Python bytecode / caches
+# --------------------------------------------------------------------------
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --------------------------------------------------------------------------
+# Packaging / build artifacts
+# --------------------------------------------------------------------------
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+sdist/
+
+# --------------------------------------------------------------------------
+# Virtual environments (huge, fully regenerable from requirements.txt)
+# --------------------------------------------------------------------------
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# --------------------------------------------------------------------------
+# Environment files / secrets  (API keys MUST never be committed)
+# --------------------------------------------------------------------------
+.env
+.env.*
+*.env
+!.env.example
+
+# --------------------------------------------------------------------------
+# Runtime data, databases and pipeline output
+# --------------------------------------------------------------------------
+data/
+*.db
+*.sqlite
+*.sqlite3
+*.pkl
+*.pickle
+
+# --------------------------------------------------------------------------
+# Generated / reference media (large binary outputs)
+# --------------------------------------------------------------------------
+generated_images/
+ref_images/
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.jpe
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.webp
+*.svg
+*.ico
+*.heic
+*.raw
+
+# Video
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.flv
+*.wmv
+*.m4v
+*.mpeg
+*.mpg
+
+# Audio
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.opus
+*.wma
+
+# --------------------------------------------------------------------------
+# Logs
+# --------------------------------------------------------------------------
+*.log
+logs/
+pipeline_logs/
+
+# --------------------------------------------------------------------------
+# OS / editor junk
+# --------------------------------------------------------------------------
+desktop.ini
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+$RECYCLE.BIN/
+*.lnk
+*.swp
+*.swo
+*~
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# --------------------------------------------------------------------------
+# Local tooling / agent worktrees (contain full checkouts incl. venv, data)
+# --------------------------------------------------------------------------
+.kilo/
+
+# --------------------------------------------------------------------------
+# Temporary / scratch files
+# --------------------------------------------------------------------------
+*.tmp
+*.bak
+tmp/
+scratch/

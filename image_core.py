@@ -36,6 +36,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+import run_paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 SECONDS_BETWEEN_REQUESTS = 20
@@ -55,13 +56,14 @@ IMAGE_MODEL = "agnes-image-2.1-flash"
 VERIFY_MODEL = "agnes-2.0-flash"
 IMAGE_SIZE = "1024x576"
 
-SCENES_FILE = os.path.join(BASE_DIR, "scenes.txt")
-FRAMES_FILE = os.path.join(BASE_DIR, "frames.txt")
-OUTPUT_FOLDER = os.path.join(BASE_DIR, "generated_images")
-MANIFEST_FILE = os.path.join(BASE_DIR, "manifest.json")
-REFERENCE_CHARACTERS_FILE = os.path.join(BASE_DIR, "reference_characters.json")
-REFERENCE_LOCATIONS_FILE = os.path.join(BASE_DIR, "reference_locations.json")
-REFERENCE_PROPS_FILE = os.path.join(BASE_DIR, "reference_props.json")
+_P = run_paths.get_paths()
+SCENES_FILE = _P["scenes_file"]
+FRAMES_FILE = _P["frames_file"]
+OUTPUT_FOLDER = _P["images_dir"]
+MANIFEST_FILE = _P["manifest_file"]
+REFERENCE_CHARACTERS_FILE = _P["ref_characters_file"]
+REFERENCE_LOCATIONS_FILE = _P["ref_locations_file"]
+REFERENCE_PROPS_FILE = _P["ref_props_file"]
 
 CROWD_CHARACTERS = set()
 

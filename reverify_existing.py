@@ -20,6 +20,13 @@
 
 import os
 import itertools
+import sys
+
+# Settle which run this stage works on BEFORE importing image_core, which
+# resolves its paths at import time. Bare -> newest run. `... RUN-0009` -> that run.
+import run_paths
+run_paths.bootstrap_stage(sys.argv)
+
 from image_core import (
     VERIFY_KEYS, load_manifest, update_manifest_entry, get_current_scene_keys,
     verify_image, verification_passed, local_image_to_data_uri,

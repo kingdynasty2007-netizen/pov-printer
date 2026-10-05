@@ -10,6 +10,12 @@ import os
 import re
 import shutil
 import sys
+
+# Settle which run this stage works on BEFORE importing ffmpeg_core, which
+# resolves its paths at import time. Bare -> newest run. `... RUN-0009` -> that run.
+import run_paths
+run_paths.bootstrap_stage(sys.argv)
+
 from ffmpeg_core import (
     load_manifest, image_to_placeholder_video, mux_audio_onto_video,
     generate_silence, concatenate_clips, get_duration,
@@ -17,7 +23,7 @@ from ffmpeg_core import (
 )
 from status_board import StatusBoard
 
-IMAGE_SCENES_FILE = "scenes.txt"
+IMAGE_SCENES_FILE = run_paths.get_paths()["scenes_file"]
 
 
 def get_ordered_scene_keys(scenes_file=IMAGE_SCENES_FILE):

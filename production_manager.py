@@ -22,10 +22,16 @@
 #
 # Does NOT run image/audio/video generation itself.
 # Calls the existing script_engine, bible_strory_lookup,
-# ref_character_generator, batch_* generators via subprocess
-# (same pattern as topic_queue.py).
+# ref_character_generator, thumbnail_generator, batch_* generators
+# via subprocess (same pattern as topic_queue.py).
 #
-# YouTube API: NOT implemented here.
+# The media pipeline now runs "thumbnail" immediately after
+# "ref_characters" (the thumbnail uses the character references as
+# face anchors), and transparently falls back to retry_refs.py when
+# the reference stage comes back incomplete.
+#
+# YouTube UPLOAD: NOT implemented here. Only the thumbnail image is
+# produced so far; uploading it still needs OAuth + a publish stage.
 # Automatic queue: NOT implemented here.
 #
 # KNOWN BREAKING CHANGE: tests/test_pipeline.py calls run_verification_loop()
@@ -46,6 +52,7 @@ from dotenv import load_dotenv
 
 import storage_manager as sm
 import script_verifier as sv
+import run_paths
 
 load_dotenv()
 
@@ -831,50 +838,70 @@ def _dry_run_thumbnail(topic, error=None):
 
 
 # ============================================================
-# ROOT FILE SYNC — only called AFTER script PASS
+# MEDIA PIPELINE (calls existing scripts via subprocess)
 # ============================================================
 
-def _sync_breakdown_to_root(paths):
-    """
-    Copy approved breakdown files to the project root so the existing
-    batch_image_generator / batch_audio_generator / batch_video_generator
-    can find them without modification.
+def _run_one_media_stage(run_id, log_dir, stage_env, stage_name, command):
+    """Run one media stage as a subprocess, streaming a heartbeat dot so the
+    terminal never looks frozen. Returns the process return code."""
+    import process_utils
 
-    Called ONLY after the script has passed the quality gate.
-    This overwrites any staging files that script_engine wrote earlier.
-    """
-    import shutil
+    _log(run_id, f"▶️  Running media stage: {stage_name}")
+    sm.update_production(run_id, stage=stage_name)
+    log_path = os.path.join(log_dir, f"{stage_name}.log")
 
-    file_map = {
-        os.path.join(paths["breakdown"], "scenes.txt"):
-            os.path.join(BASE_DIR, "scenes.txt"),
-        os.path.join(paths["breakdown"], "audio_scenes.txt"):
-            os.path.join(BASE_DIR, "audio_scenes.txt"),
-        os.path.join(paths["breakdown"], "video_scenes.txt"):
-            os.path.join(BASE_DIR, "video_scenes.txt"),
-    }
-
-    for src, dst in file_map.items():
-        if os.path.exists(src):
-            shutil.copy2(src, dst)
-        else:
-            print(f"   ⚠️  Sync: source not found — {src}")
+    with open(log_path, "w", encoding="utf-8") as log_file:
+        process = process_utils.popen_for_stage(
+            command, log_file, cwd=BASE_DIR, env=stage_env,
+        )
+        try:
+            while process.poll() is None:
+                time.sleep(5)
+                print(".", end="", flush=True)   # heartbeat
+        except KeyboardInterrupt:
+            process_utils.kill_process_tree(process)
+            raise
+        print()
+        return process.returncode
 
 
-# ============================================================
-# MEDIA PIPELINE (calls existing scripts via subprocess) — unchanged
-# ============================================================
+def _reference_characters_usable(run_id):
+    """True only if reference_characters.json exists AND has at least one
+    entry. image_core.py hard-stops at import without it, so a "successful"
+    ref_characters stage that produced nothing usable is still a failure."""
+    path = run_paths.get_paths(run_id, announce=False)["ref_characters_file"]
+    if not os.path.exists(path):
+        return False
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return bool(json.load(f))
+    except (ValueError, OSError):
+        return False
+
 
 def _run_media_pipeline(run_id, paths):
     """
     Call the existing media pipeline stages via subprocess.
-    Same pattern as topic_queue.py.
+    Every stage gets POV_RUN_ID, so references, images, audio, video, the
+    manifest and the final video all land in data/productions/<run_id>/
+    and never in the shared root folders.
     Only called when run_media=True is passed to run_manual_pipeline().
-    """
-    import process_utils
 
+    Two deliberate behaviours:
+      - A ref_characters failure triggers retry_refs.py, which regenerates
+        ONLY what is still missing. This exists because
+        ref_character_generator.py exits 0 on a partial success (some
+        locations succeeded but every character failed), which would
+        otherwise walk into batch_image_generator.py and kill the run at
+        import time.
+      - A thumbnail failure is NON-fatal. The video is already made and
+        lives on disk; a missing thumbnail must not discard that.
+    """
     stages = [
         ("ref_characters", [PYTHON, "ref_character_generator.py"]),
+        # Runs right after refs, not at the end: it uses the character
+        # references as face anchors, so it needs them to already exist.
+        ("thumbnail",      [PYTHON, "thumbnail_generator.py"]),
         ("images",         [PYTHON, "batch_image_generator.py"]),
         ("audio",          [PYTHON, "batch_audio_generator.py"]),
         ("video",          [PYTHON, "batch_video_generator.py"]),
@@ -884,14 +911,40 @@ def _run_media_pipeline(run_id, paths):
     log_dir = paths["logs"]
     os.makedirs(log_dir, exist_ok=True)
 
+    stage_env = dict(os.environ)
+    stage_env[run_paths.RUN_ENV_VAR] = run_id
+    stage_env.pop(run_paths.LEGACY_ENV_VAR, None)
+
     for stage_name, command in stages:
-        _log(run_id, f"▶️  Running media stage: {stage_name}")
-        sm.update_production(run_id, stage=stage_name)
+        returncode = _run_one_media_stage(
+            run_id, log_dir, stage_env, stage_name, command
+        )
         log_path = os.path.join(log_dir, f"{stage_name}.log")
 
-        with open(log_path, "w", encoding="utf-8") as log_file:
-            process = process_utils.popen_for_stage(command, log_file)
-            returncode = process.wait()
+        if stage_name == "ref_characters":
+            # Gate on the FILE, not just the exit code: a partial ref run
+            # exits 0 while leaving reference_characters.json unwritten.
+            if returncode != 0 or not _reference_characters_usable(run_id):
+                _log(run_id,
+                     f"   ⚠️  ref_characters incomplete (exit {returncode}) "
+                     f"— running retry_refs.py for the missing ones")
+                retry_rc = _run_one_media_stage(
+                    run_id, log_dir, stage_env, "retry_refs",
+                    [PYTHON, "retry_refs.py"],
+                )
+                if retry_rc != 0 or not _reference_characters_usable(run_id):
+                    _log(run_id,
+                         f"   ❌ Reference generation failed after retry "
+                         f"(exit {retry_rc}) — see "
+                         f"{os.path.join(log_dir, 'retry_refs.log')}")
+                    raise RuntimeError(
+                        "Reference generation failed — the image stage cannot "
+                        "run without reference_characters.json. Pipeline stopped."
+                    )
+                _log(run_id, "   ✅ References complete after retry")
+            else:
+                _log(run_id, "   ✅ ref_characters complete")
+            continue
 
         if returncode != 0:
             _log(run_id,
@@ -903,6 +956,14 @@ def _run_media_pipeline(run_id, paths):
                 )
         else:
             _log(run_id, f"   ✅ {stage_name} complete")
+
+    final_video = run_paths.get_paths(run_id)["final_output"]
+    if os.path.exists(final_video):
+        size_mb = os.path.getsize(final_video) / (1024 * 1024)
+        _log(run_id, f"🎬 Final video: {final_video} ({size_mb:.1f} MB)")
+        sm.update_production(run_id, stage="complete")
+    else:
+        _log(run_id, "⚠️  Media pipeline finished but no final video was produced")
 
 
 # ============================================================
@@ -950,6 +1011,16 @@ def run_manual_pipeline(
         duration_secs=duration_secs,
         supabase_topic_id=supabase_topic_id,
     )
+
+    # Route EVERY file this run produces into data/productions/<run_id>/.
+    # script_engine (in-process) and all media subprocess stages read this.
+    # POV_LEGACY is cleared for the duration: if the caller's shell happens to
+    # have it set (e.g. they exported it to run the old queue by hand), an
+    # explicit POV_RUN_ID still wins, but dropping it stops a stale opt-out from
+    # leaking into the subprocess stage environments.
+    _previous_run_id_env = os.environ.get(run_paths.RUN_ENV_VAR)
+    _previous_legacy_env = os.environ.pop(run_paths.LEGACY_ENV_VAR, None)
+    os.environ[run_paths.RUN_ENV_VAR] = run_id
 
     print(f"\n{'='*60}")
     print(f"  RUN CREATED: {run_id}")
@@ -1021,9 +1092,6 @@ def run_manual_pipeline(
             scripture_references, dry_run=dry_run,
         )
 
-        # ---- SYNC APPROVED FILES TO ROOT ----
-        _sync_breakdown_to_root(paths)
-
         sm.update_production(run_id,
                              stage="ready_for_media",
                              script_status="approved",
@@ -1060,3 +1128,10 @@ def run_manual_pipeline(
         _log(run_id, f"❌ Pipeline stopped: {error_msg}")
         sm.update_production(run_id, stage="failed", error=error_msg[:500])
         raise
+    finally:
+        if _previous_run_id_env is None:
+            os.environ.pop(run_paths.RUN_ENV_VAR, None)
+        else:
+            os.environ[run_paths.RUN_ENV_VAR] = _previous_run_id_env
+        if _previous_legacy_env is not None:
+            os.environ[run_paths.LEGACY_ENV_VAR] = _previous_legacy_env

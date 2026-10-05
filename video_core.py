@@ -18,11 +18,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 #----updated file path so it will read better ----
+import run_paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MANIFEST_FILE = os.path.join(BASE_DIR, "manifest.json")
-OUTPUT_FOLDER = os.path.join(BASE_DIR, "generated_videos")
-VIDEO_SCENES_FILE = os.path.join(BASE_DIR, "video_scenes.txt")
-IMAGE_SCENES_FILE = os.path.join(BASE_DIR, "scenes.txt")
+_P = run_paths.get_paths()
+MANIFEST_FILE = _P["manifest_file"]
+OUTPUT_FOLDER = _P["video_dir"]
+VIDEO_SCENES_FILE = _P["video_scenes_file"]
+IMAGE_SCENES_FILE = _P["scenes_file"]
 
 
 SECONDS_BETWEEN_VIDEO_REQUESTS = 20
@@ -38,11 +40,6 @@ VIDEO_FPS = 24
 VIDEO_WIDTH = 1152
 VIDEO_HEIGHT = 768
 VIDEO_INFERENCE_STEPS = 8
-
-MANIFEST_FILE = "manifest.json"
-OUTPUT_FOLDER = "generated_videos"
-VIDEO_SCENES_FILE = "video_scenes.txt"
-IMAGE_SCENES_FILE = "scenes.txt"
 
 CREATE_VIDEO_URL = "https://apihub.agnes-ai.com/v1/videos"
 RESULT_VIDEO_URL = "https://apihub.agnes-ai.com/agnesapi"

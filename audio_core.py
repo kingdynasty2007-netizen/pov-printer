@@ -31,20 +31,18 @@ from google.genai import types
 
 load_dotenv()
 #----updated file path so it will read better ----
+import run_paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-NARRATION_FILE = os.path.join(BASE_DIR, "audio_scenes.txt")
-OUTPUT_FOLDER = os.path.join(BASE_DIR, "generated_audio")
-MANIFEST_FILE = os.path.join(BASE_DIR, "manifest.json")
+_P = run_paths.get_paths()
+NARRATION_FILE = _P["audio_scenes_file"]
+OUTPUT_FOLDER = _P["audio_dir"]
+MANIFEST_FILE = _P["manifest_file"]
 
 SECONDS_BETWEEN_REQUESTS = 3   # per key
 MAX_RETRIES = 3
 
 MODEL = "gemini-3.1-flash-tts-preview"
 SAMPLE_RATE = 24000
-
-NARRATION_FILE = "audio_scenes.txt"
-OUTPUT_FOLDER = "generated_audio"
-MANIFEST_FILE = "manifest.json"
 
 AVAILABLE_VOICES = [
     "Zephyr", "Puck", "Charon", "Kore", "Fenrir", "Leda", "Orus", "Aoede", "Enceladus",

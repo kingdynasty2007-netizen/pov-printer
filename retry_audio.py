@@ -6,6 +6,12 @@
 # ============================================================
 
 import sys
+
+# Settle which run this stage works on BEFORE importing audio_core, which
+# resolves its paths at import time. Bare -> newest run. `... RUN-0009` -> that run.
+import run_paths
+run_paths.bootstrap_stage(sys.argv)
+
 from audio_core import (
     GEMINI_KEYS, load_narration, generate_audio_once, load_manifest,
     update_manifest_entry, classify_error, MAX_RETRIES,

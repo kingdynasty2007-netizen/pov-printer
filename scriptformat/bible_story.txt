@@ -1,0 +1,792 @@
+# ============================================================
+# FORMAT FILE: bible_story.txt
+# PURPOSE:
+# Defines how the script engine writes biblical story videos.
+#
+# CONTENT TYPE:
+# Animated Bible story / Bible character story
+#
+# PRIMARY GOAL:
+# Create engaging, accurate, emotionally strong Bible stories
+# while remaining faithful to the biblical source material.
+# ============================================================
+
+
+FORMAT_NAME: BIBLE_STORY
+FORMAT_VERSION: 2.0
+
+
+# ============================================================
+# 1. STORY SOURCE
+# ============================================================
+
+SOURCE_TYPE:
+Biblical scripture must be treated as the primary factual source.
+
+The script engine should use the Bible database to retrieve
+relevant scripture before or during script generation.
+
+The LLM may use general biblical knowledge to understand the
+story, but factual claims about events, characters, locations,
+relationships, actions, and outcomes should be checked against
+the Bible database whenever possible.
+
+Do not invent biblical events and present them as scripture.
+
+If an important detail is not explicitly stated in scripture,
+the narration may describe it only as reasonable storytelling
+context and must not falsely present it as a biblical fact.
+
+
+# ============================================================
+# 2. BIBLE DATABASE USAGE
+# ============================================================
+
+The Bible database should contain searchable scripture organized
+by:
+
+- book
+- chapter
+- verse
+- verse_text
+
+Example structure:
+
+BOOK: 1 Samuel
+CHAPTER: 25
+VERSE: 10
+VERSE_TEXT: [scripture text]
+
+The script engine should be able to search the database using:
+
+- character name
+- event
+- location
+- topic
+- book
+- chapter
+- verse
+- related keywords
+
+Before writing a Bible story, retrieve the relevant scripture
+passages connected to the requested character or event.
+
+The retrieved scripture becomes the factual reference material
+for the LLM.
+
+The LLM should prioritize retrieved scripture over unsupported
+assumptions.
+
+
+# ============================================================
+# 3. SCRIPTURE REFERENCES
+# ============================================================
+
+When scripture is important to the story, the script should
+reference the relevant Bible passage.
+
+Scripture references may appear naturally in narration.
+
+Example:
+
+"David had been anointed by Samuel, but Saul still remained
+king over Israel."
+
+Reference:
+1 Samuel 16:13
+1 Samuel 24:20
+
+The system should store scripture references separately from
+the narration so they can be used later for verification,
+captions, descriptions, or metadata.
+
+Do not insert scripture quotations simply to make the script
+look biblical.
+
+Use scripture when it strengthens the story or establishes
+an important fact, event, promise, warning, decision, or
+consequence.
+
+
+# ============================================================
+# 4. BIBLICAL ACCURACY
+# ============================================================
+
+The story must remain faithful to the biblical account.
+
+The script must NOT:
+
+- create events that contradict scripture
+- change the outcome of major biblical events
+- change important relationships between characters
+- invent conversations and claim that they are direct biblical
+  quotations
+- attribute actions to characters that scripture clearly gives
+  to someone else
+- combine separate biblical events in a way that changes their
+  meaning
+- present speculation as established biblical fact
+
+The LLM may create natural dialogue for animation when the Bible
+does not provide the exact dialogue.
+
+However, invented dialogue must not contradict the character,
+situation, or biblical account.
+
+The system should distinguish between:
+
+1. DIRECT SCRIPTURE
+2. BIBLICAL FACT
+3. STORYTELLING NARRATION
+4. DRAMATIZED DIALOGUE
+5. REASONABLE CONTEXT
+
+
+# ============================================================
+# 5. STORYTELLING STYLE
+# ============================================================
+
+Use a cinematic animated Bible-storytelling style.
+
+The story should feel like a narrated animated movie rather
+than a chapter-by-chapter reading of scripture.
+
+Use:
+
+- strong opening
+- immediate story context
+- clear character motivation
+- rising tension
+- conflict
+- important turning points
+- emotional consequences
+- climax
+- resolution
+- meaningful ending
+
+The story should remain easy to understand for a general
+audience.
+
+
+# ============================================================
+# 6. NARRATION STYLE
+# ============================================================
+
+Third-person storytelling voice.
+
+Tone:
+
+- warm
+- calm
+- serious when appropriate
+- emotionally engaging
+- wise
+- cinematic
+- easy to understand
+
+Use simple language.
+
+Avoid unnecessarily complicated theological language.
+
+Narration should describe what is happening rather than
+simply listing historical facts.
+
+Weak:
+
+"David went to the wilderness and stayed there."
+
+Better:
+
+"With Saul's army closing in behind him, David disappeared
+into the wilderness, knowing that one mistake could cost him
+his life."
+
+
+# ============================================================
+# 7. OPENING / HOOK
+# ============================================================
+
+The first moments of the story must immediately create
+interest.
+
+The opening should preferably begin with one of:
+
+- a dangerous situation
+- an important decision
+- a shocking event
+- a powerful emotional moment
+- an unanswered question
+- a dramatic statement about the character
+- the consequence of an event before explaining how it happened
+
+Do not spend the opening scenes giving a long historical
+introduction before the story begins.
+
+The opening should create a question in the viewer's mind that
+the story will eventually answer.
+
+Example structure:
+
+DRAMATIC MOMENT
+        ↓
+QUESTION / CONSEQUENCE
+        ↓
+"How did this happen?"
+        ↓
+STORY BEGINS
+
+
+# ============================================================
+# 8. CHARACTER INTRODUCTION
+# ============================================================
+
+Introduce important characters naturally through the story.
+
+When introducing a character, establish:
+
+- name
+- role
+- important relationships
+- relevant personality or situation
+- what the character wants
+- what stands in the character's way
+
+Do not dump all character information into one paragraph.
+
+Reveal information as the story develops.
+
+
+# ============================================================
+# 9. STORY STRUCTURE
+# ============================================================
+
+The story should generally follow:
+
+HOOK
+↓
+SETUP
+↓
+CHARACTER / SITUATION
+↓
+CONFLICT
+↓
+ESCALATION
+↓
+TURNING POINT
+↓
+CLIMAX
+↓
+CONSEQUENCE
+↓
+RESOLUTION
+↓
+FINAL LESSON / REFLECTION
+
+
+The structure may change when the biblical story naturally
+requires a different structure.
+
+Do not force every Bible story into exactly the same pattern.
+
+
+# ============================================================
+# 10. SCENE STRUCTURE
+# ============================================================
+
+Each scene represents exactly 10 seconds of screen time.
+
+Scene count is determined by the requested video duration.
+
+Each scene must contain:
+
+- scene ID
+- clear visual moment
+- characters present
+- character actions
+- environment
+- emotional state
+- narration
+- relevant scripture reference when applicable
+
+Each scene should communicate ONE primary visual moment.
+
+Avoid putting multiple major events into one scene.
+
+
+# ============================================================
+# 11. NARRATION PER SCENE
+# ============================================================
+
+Each scene should normally contain:
+
+2-4 narration sentences.
+
+Narration should fit naturally inside approximately 10 seconds
+of screen time.
+
+Do not overload a scene with information.
+
+The narration and visual should describe the SAME moment.
+
+The image should not show one event while the narration describes
+a completely different event.
+
+
+# ============================================================
+# 12. PACING
+# ============================================================
+
+Pacing should gradually increase as the story approaches its
+main conflict or climax.
+
+Avoid:
+
+- long exposition blocks
+- repetitive explanations
+- repeating the same emotional point
+- unnecessary historical information
+- scenes that do not move the story forward
+
+Every scene should perform at least one useful function:
+
+- introduce information
+- develop a character
+- create curiosity
+- increase tension
+- reveal information
+- create emotional impact
+- advance the conflict
+- resolve the conflict
+
+
+# ============================================================
+# 13. EMOTIONAL STORYTELLING
+# ============================================================
+
+The script should make the viewer understand what the character
+is experiencing.
+
+Use:
+
+- fear
+- hope
+- grief
+- courage
+- betrayal
+- desperation
+- faith
+- temptation
+- victory
+- failure
+- redemption
+
+Only use emotions that are reasonable within the biblical story.
+
+Do not manufacture dramatic emotions that contradict the
+character or situation.
+
+
+# ============================================================
+# 14. DIALOGUE
+# ============================================================
+
+Dialogue may be created for animation when the Bible does not
+provide exact dialogue.
+
+Dialogue must:
+
+- fit the character
+- fit the historical setting
+- fit the situation
+- advance the story
+- remain consistent with scripture
+
+Do not put invented dialogue inside quotation marks and imply
+that it is an exact biblical quotation.
+
+When using an actual biblical statement, preserve its meaning
+and associate it with the correct scripture reference.
+
+
+# ============================================================
+# 15. BIBLE STORY RESEARCH
+# ============================================================
+
+Before generating the final script, identify:
+
+- main character
+- supporting characters
+- primary biblical event
+- beginning of the event
+- major conflict
+- important turning points
+- climax
+- outcome
+- relevant Bible passages
+
+Retrieve these passages from the Bible database.
+
+Build an internal STORY FACTS section before generating the
+final narration.
+
+Example:
+
+STORY_FACTS:
+
+Character:
+David
+
+Primary events:
+- David is anointed by Samuel.
+- Saul becomes jealous of David.
+- David flees from Saul.
+- David has opportunities to kill Saul.
+- David refuses to kill Saul.
+- Saul recognizes David's righteousness.
+
+SCRIPTURE:
+1 Samuel 16
+1 Samuel 18
+1 Samuel 24
+
+
+# ============================================================
+# 16. SCRIPTURE SELECTION
+# ============================================================
+
+The system should select scripture based on relevance.
+
+Prioritize:
+
+1. verses directly describing the event
+2. verses containing important dialogue
+3. verses explaining character actions
+4. verses establishing consequences
+5. verses explaining the conclusion
+
+Do not randomly insert verses.
+
+A scripture reference should have a clear relationship with the
+scene or narration.
+
+
+# ============================================================
+# 17. STORYTELLING VS SCRIPTURE
+# ============================================================
+
+The script may expand the biblical story for cinematic
+storytelling.
+
+However:
+
+BIBLICAL FACT:
+Must remain accurate.
+
+CINEMATIC DESCRIPTION:
+May describe environment, movement, atmosphere, and reasonable
+visual details.
+
+DRAMATIZED DIALOGUE:
+May be created when necessary but must not contradict scripture.
+
+SPECULATION:
+Must never be presented as confirmed biblical fact.
+
+
+# ============================================================
+# 18. IMAGE STYLE
+# ============================================================
+
+IMAGE_STYLE:
+Polished children's story 2D animated cartoon style.
+Clean line art, soft shading, subtle gradients.
+Biblical-era Middle Eastern setting.
+Mud-brick homes, stone steps, clay jars, dusty lanes.
+Warm golden lighting. Cinematic composition.
+Full-body characters visible. No modern objects. No text.
+
+The visual style may be refined for better consistency, but the
+core artistic direction must remain unchanged.
+
+Always maintain:
+
+- 2D animated cartoon appearance
+- clean line art
+- soft shading
+- subtle gradients
+- biblical-era Middle Eastern environments
+- cinematic composition
+- full-body characters where appropriate
+- historically appropriate clothing
+- no modern objects
+- no text inside generated images
+
+
+# ============================================================
+# 19. CHARACTER CONSISTENCY
+# ============================================================
+
+Characters must remain visually consistent across scenes.
+
+Use the character reference generated for each important
+character.
+
+When creating image prompts, consistently describe:
+
+- character appearance
+- clothing
+- age
+- hair
+- skin tone
+- body type
+- important identifying features
+
+Do not redesign a character from scene to scene unless the
+story explicitly requires a change.
+
+
+# ============================================================
+# 20. IMAGE PROMPT STRUCTURE
+# ============================================================
+
+Every image prompt should specify:
+
+1. location
+2. time / environment
+3. characters
+4. character positions
+5. character actions
+6. important objects
+7. camera shot
+8. composition
+9. lighting
+10. mood
+11. visual style
+
+Always include the established Bible image style.
+
+Example:
+
+"Wide cinematic shot of a young shepherd standing on a rocky
+hillside overlooking an ancient Middle Eastern village at
+sunset, holding a wooden staff, his expression tense as he
+watches the distant road, mud-brick homes and stone walls in
+the background, warm golden lighting, full-body character,
+polished children's story 2D animated cartoon style, clean line
+art, soft shading, subtle gradients, cinematic composition,
+no modern objects, no text."
+
+
+# ============================================================
+# 21. STORY QUALITY EVALUATION
+# ============================================================
+
+Every generated Bible script must be evaluated before it is
+approved for downstream generation.
+
+Evaluate:
+
+HOOK
+- Does the opening create immediate interest?
+- Does it create a question or reason to continue?
+
+BIBLICAL ACCURACY
+- Are the major events supported by scripture?
+- Are characters and relationships correct?
+- Are invented details clearly treated as dramatization?
+
+STORY STRUCTURE
+- Does the story have a clear beginning, conflict, climax,
+  and resolution?
+
+PACING
+- Does every scene move the story forward?
+- Are there unnecessary or repetitive scenes?
+
+CHARACTER DEVELOPMENT
+- Is the main character understandable?
+- Are motivations and decisions clear?
+
+EMOTIONAL PROGRESSION
+- Does the emotional intensity develop naturally?
+
+CURIOSITY
+- Does each major section give the viewer a reason to continue?
+
+CLIMAX
+- Does the story build toward a meaningful major event?
+
+PAYOFF
+- Does the ending properly resolve the story?
+
+SCRIPTURE USAGE
+- Are relevant passages being used?
+- Are scripture references attached to the correct events?
+
+VISUAL STORYTELLING
+- Can the story be clearly represented through animation?
+
+NARRATION
+- Is the language clear, natural, and appropriate for the
+  intended audience?
+
+
+# ============================================================
+# 22. QUALITY GATE
+# ============================================================
+
+The evaluator must produce:
+
+PASS
+
+or
+
+NEEDS_REWRITE
+
+A script should not continue to expensive image, video, or audio
+generation until it passes the quality gate.
+
+
+# ============================================================
+# 23. REWRITE SYSTEM
+# ============================================================
+
+If the script fails evaluation, identify the specific problems.
+
+Do not rewrite the entire script blindly.
+
+Example:
+
+PROBLEM:
+Scenes 4-7 contain repeated explanations of the same conflict.
+
+REWRITE:
+Combine the repeated information and use the freed scenes to
+increase the conflict.
+
+Another example:
+
+PROBLEM:
+The ending resolves too quickly.
+
+REWRITE:
+Build a stronger sequence between the climax and final
+resolution.
+
+
+# ============================================================
+# 24. REFERENCE STORIES
+# ============================================================
+
+Reference Bible-story transcripts may be used to identify
+successful storytelling patterns.
+
+The system should learn patterns such as:
+
+- opening structure
+- pacing
+- story progression
+- emotional development
+- use of narration
+- use of dialogue
+- curiosity techniques
+- transitions
+- endings
+- audience engagement
+
+Reference scripts must NOT be copied.
+
+The purpose of the reference dataset is to understand what
+storytelling structures and techniques are repeatedly effective
+within the Bible-story niche.
+
+
+# ============================================================
+# 25. FORMAT-SPECIFIC WRITING
+# ============================================================
+
+This format must remain independent from other content formats.
+
+Bible stories should not inherit writing rules from:
+
+- POV stories
+- history stories
+- generic documentaries
+- fictional stories
+- ranking videos
+
+Bible-specific rules take priority when this format is selected.
+
+
+# ============================================================
+# 26. OUTPUT
+# ============================================================
+
+The final script should produce:
+
+1. SCRIPT
+2. STORY FACTS
+3. SCRIPTURE REFERENCES
+4. CHARACTER LIST
+5. SCENE BREAKDOWN
+6. IMAGE PROMPTS
+7. AUDIO SCENES
+
+Primary files:
+
+scenes.txt
+audio_scenes.txt
+
+Each scene should remain clearly separated.
+
+Example:
+
+SCENE: scene_001
+
+NARRATION:
+...
+
+SCRIPTURE:
+...
+
+VISUAL:
+...
+
+IMAGE_PROMPT:
+...
+
+---
+
+SCENE: scene_002
+
+NARRATION:
+...
+
+SCRIPTURE:
+...
+
+VISUAL:
+...
+
+IMAGE_PROMPT:
+...
+
+
+# ============================================================
+# 27. FINAL PRINCIPLE
+# ============================================================
+
+The system should produce a story that feels like a cinematic
+animated Bible movie while remaining faithful to the biblical
+source.
+
+The priority order is:
+
+1. Biblical accuracy
+2. Story coherence
+3. Viewer engagement
+4. Emotional storytelling
+5. Clear narration
+6. Strong visual storytelling
+7. Consistent visual style
+8. Efficient scene structure

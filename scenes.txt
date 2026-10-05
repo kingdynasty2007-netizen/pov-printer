@@ -1,29 +1,60 @@
-1. prompt: Wide cinematic establishing shot of a small biblical-era Middle Eastern village just after sunrise, mud-brick homes, stone steps, clay jars, and a narrow dusty lane. Hannah stands outside her home in a relaxed three-quarter pose, left foot slightly forward, supporting a clay bowl against her waist with her left arm while her right hand pauses above the grain. Her shoulders are lowered, her head turned toward Micah approaching in the distance. Micah walks naturally toward her with an upright posture, one foot forward, trailing heel slightly raised, right arm swinging loosely and left hand near his rust-red sash. Warm golden morning light, polished children’s story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, consistent character designs, full-body characters visible, no modern objects.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: father, younger_son
+LOCATION: father_house
+The father stands at the edge of his courtyard, his eyes fixed on the dusty road. The younger son stands before him, hands empty, pleading. The father's expression is heavy with unspoken sadness.
 ---
-2. prompt: Medium two-shot in a sunlit biblical-era village lane. Hannah has turned fully toward Micah and has just placed a clay bowl on a low stone ledge. Both of her palms are open at waist height, her eyebrows slightly drawn together, chin lowered, and expression concerned but controlled. Micah stands two steps away with both feet shoulder-width apart, spine upright, right hand raised at chest height with the palm facing upward as he explains the urgent news, left hand relaxed beside his hip. His head tilts slightly forward in respectful conversation. Warm morning light, children’s story 2D animated cartoon style, clean expressive line art, soft shading, subtle gradients, emotional storytelling, consistent character appearance.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: father, younger_son
+The father divides his wealth, handing a pouch of silver coins to his younger son. The younger son takes them with a greedy grip. The older son watches from a doorway, arms crossed, face displeased.
 ---
-3. prompt: Side-view tracking shot of Hannah and Micah walking together along a winding path toward a hilltop sanctuary. Hannah walks on the left with a measured stride, right foot forward, left arm swinging naturally, and right hand lightly gathering the edge of her ochre shawl. Her torso leans forward slightly with determination and she looks toward the sanctuary. Micah walks half a step ahead on the right, shoulders squared but relaxed, right arm bent and subtly pointing toward the hill while his left arm hangs naturally. He turns his head back toward Hannah while keeping his feet directed forward. Dry grasses move in the breeze, ancient Middle Eastern hills in the distance, warm afternoon light, polished children’s story 2D animated cartoon style, clean line art, soft shading, cinematic atmosphere, full bodies visible.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: younger_son
+The younger son rides away on a donkey, waving dismissively without looking back. The father stands alone in the courtyard, watching him go, his shoulders slumped.
 ---
-4. prompt: Low-angle medium-wide shot at the gate of an ancient hilltop sanctuary. Azariah stands on the upper stone step in a dignified three-quarter pose, wooden staff planted firmly beside his right foot, right hand resting over the top of the staff, left hand open beside his robe, shoulders relaxed, head raised, and gaze directed toward Hannah and Micah. Hannah stands at the bottom step with both feet together in a respectful posture, hands folded loosely over her woven belt, looking upward with a serious but calm expression. Micah stands one step behind her with feet evenly apart, chin lowered in a respectful bow while keeping his back straight. Biblical-era stone architecture, gentle cinematic sunlight, children’s story 2D animated cartoon style, clean line art, soft shading, consistent proportions.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: younger_son
+The younger son lounges in a foreign tavern, surrounded by drunken revelers and musicians. He throws coins into the air, laughing wildly. Colorful tents and strange banners in the background.
 ---
-5. prompt: Shaded sanctuary courtyard with a long stone table, rolled maps, clay jars, and grain baskets. Azariah stands behind the table, bending slightly from the waist with his left palm flat on a simple map and his right index finger pointing toward a mountain pass. His feet are planted apart, expression thoughtful, eyes narrowed slightly. Hannah stands across from him, leaning forward just enough to study the map, left hand resting on the table edge and right hand touching her chin with two fingers. Micah stands at the right side of the table in profile, holding a rolled map under his left arm while his right hand traces the route above the map. His head follows the route and his mouth is slightly open as he asks a question. Overhead three-quarter camera angle, detailed hands and posture, warm filtered light, polished children’s story 2D animated cartoon style, clean line art, soft shading, subtle gradients.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: younger_son
+The younger son sits alone in a barren field, his clothes ragged, stomach visibly hollow. In the distance, a flock of pigs grazes. The sky is overcast, threatening rain.
 ---
-6. prompt: Medium-wide village square scene in late morning. Hannah stands at the center in a confident front-facing pose, feet slightly wider than hip-width, spine straight, one hand open toward the grain baskets with the palm upward while her other hand gestures gently toward a family bringing a sack. Her elbows remain bent and close to her body, expression warm and encouraging. In the background, Micah carries a woven basket from right to left with both hands, elbows bent, shoulders slightly forward from the weight, knees softly flexed, eyes checking his footing before looking toward Hannah for direction. Clay jars and woven baskets surround the square, warm sunlight, polished children’s story 2D animated cartoon style, clean line art, soft shading, cinematic storytelling, consistent character design.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: younger_son
+The younger son tends a pig trough, feeding swine with trembling hands. He stares longingly at the pod husks in the trough, tears in his eyes. A farmer watches from nearby.
 ---
-7. prompt: Dramatic afternoon scene on the road outside the village with a loaded wooden cart and dark clouds gathering over distant hills. Micah stands beside the cart in a three-quarter pose, feet staggered with his front foot angled toward the road and back foot turned toward the village. His right hand grips the cart rail while his left hand rests against his chest. His shoulders are subtly raised, brow furrowed, and gaze fixed on the dangerous hills. Hannah approaches from behind and stops half a step away, feet firmly planted, torso turned toward him, head lowered slightly so she can meet his eyes. Her hands remain open near her waist before she gently places her right hand on his upper arm. Micah’s shoulders begin to relax. Children’s story 2D animated cartoon style, clean line art, soft dramatic shading, cinematic storm light, emotional atmosphere.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: younger_son
+The younger son sits on the ground, head in his hands, weeping. Around him, a few scattered coins and empty cups. The scene is dim, lit by a single lantern.
 ---
-8. prompt: Symmetrical sunset composition in the sanctuary courtyard beside a loaded cart. Azariah stands facing the travelers with his staff held vertically in his left hand and his right hand raised at shoulder height, palm outward in a calm blessing gesture. His elbow is slightly bent, chin raised, and eyes compassionate. Hannah stands directly in front of him with feet close together, hands folded at her waist, shoulders relaxed, looking directly at him with quiet resolve. Micah stands one step behind Hannah and slightly to her right, head lowered respectfully but spine straight, both hands resting over the strap of his travel pouch, feet aligned toward the road. Warm amber and rose sunset light, ancient stone courtyard, polished children’s story 2D animated cartoon style, clean expressive line art, soft shading, subtle gradients, cinematic emotional tone.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: younger_son
+The younger son begins walking home, leaning on a crude staff, his steps slow and painful. His clothes are torn, his beard unkempt. The road stretches behind him.
 ---
-9. prompt: Warm twilight scene at a dry settlement as the loaded cart arrives. Hannah kneels beside a child-height clay jar with her knees together and back upright, supporting the jar with one hand while passing a smaller bowl forward with the other. Her expression is gentle and reassuring as she looks toward the waiting families. Micah stands beside the cart in a careful lifting posture, knees flexed, back straight, both hands gripping a woven basket close to his torso. He places the basket on the ground and begins to straighten, one hand moving briefly toward his hip. Hannah rises by pressing one hand against her thigh for support, then turns toward Micah with a grateful smile. Stone walls, dry settlement, soft twilight glow, polished children’s story 2D animated cartoon style, clean line art, soft shading, emotional cinematic composition, clear posture and hand placement.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: father
+The father stands on the roof of his house, squinting against the sun, scanning the horizon. His hands shade his eyes. The courtyard is empty except for a waiting lamb in the pen.
 ---
-10. prompt: Wide final cinematic tableau at dawn after the storm. Azariah stands on the left with his wooden staff planted beside him, weight evenly distributed across both feet, shoulders relaxed, free hand resting over his sash as he looks peacefully across the valley. Hannah stands in the center slightly ahead of the others, feet firmly planted, hands loosely clasped at waist level, head turned toward a thin stream of water flowing between the stones, posture upright but soft with relief. Micah stands on the right in a natural three-quarter pose, feet angled toward the valley, arms relaxed at his sides, shoulders no longer tense, looking first toward Hannah and then toward the water with a hopeful smile. Bright sunlight breaks over the valley, gentle mist, biblical-era Middle Eastern landscape, polished children’s story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic emotional lighting, consistent character appearance, no modern objects, no text.
-refs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png
+CHARACTERS: father, younger_son
+The father runs across the courtyard, his robe billowing. He reaches the younger son, who is barely recognizable, and embraces him tightly. The younger son collapses against his father, weeping.
+---
+CHARACTERS: father, younger_son
+The father calls to a servant, pointing to the younger son. The servant brings a fine robe, a ring, and sandals. The father places them on his son with gentle hands.
+---
+CHARACTERS: father, older_son
+The older son stands in the doorway, arms folded, face hard with resentment. The father approaches him, hands open in appeal, but the older son turns away.
+---
+CHARACTERS: father, younger_son, older_son
+Inside the house, a feast is prepared. The younger son sits at the table, now clean and robed, while the father looks on with joy. The older son remains outside, his back to the door.
+---
+CHARACTERS: father, younger_son
+The father and younger son walk together in the courtyard at dusk, arms around each other's shoulders. Music and laughter echo from inside. The older son is still absent.
+---
+CHARACTERS: father, younger_son, older_son, servant
+The father addresses the older son, who finally turns, his expression softening slightly. The younger son looks up at his brother with hope. A sense of reconciliation hangs in the air.
+---
+CHARACTERS: father, older_son
+LOCATION: courtyard
+PROPS: None
+The older son stands near the courtyard entrance, arms crossed, face still shadowed with hurt but no longer clenched in anger. The father steps toward him, one hand extended gently, his expression full of love and urgency. The music from the celebration continues softly in the background. Warm golden evening light fills the space.
+---
+CHARACTERS: father, older_son, younger_son
+LOCATION: courtyard
+PROPS: None
+The younger son steps forward from the doorway, his rough travel-worn clothes still on his body, hands trembling slightly at his sides. He looks between his father and his brother, hope flickering in his eyes. The father keeps his arm around the older son's shoulder, drawing him close. The three stand together in the warm glow of the courtyard.
+---
+CHARACTERS: older_son, younger_son
+LOCATION: courtyard
+PROPS: None
+The older son finally uncrosses his arms and reaches out, hesitantly placing a hand on his younger brother's shoulder. The younger son looks up, tears welling in his eyes, and nods slowly. A quiet understanding passes between them as the father watches from just behind, his face glowing with peace. The celebration light spills around them.

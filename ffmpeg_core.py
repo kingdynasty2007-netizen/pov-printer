@@ -12,16 +12,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 #----updated file path so it will read better ----
+import run_paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MANIFEST_FILE = os.path.join(BASE_DIR, "manifest.json")
-ASSEMBLY_FOLDER = os.path.join(BASE_DIR, "assembly_temp")
-FINAL_OUTPUT = os.path.join(BASE_DIR, "final_video.mp4")
-ASSEMBLY_LOG = os.path.join(BASE_DIR, "assembly_log.txt")
-
-MANIFEST_FILE = "manifest.json"
-ASSEMBLY_FOLDER = "assembly_temp"
-FINAL_OUTPUT = "final_video.mp4"
-ASSEMBLY_LOG = "assembly_log.txt"
+_P = run_paths.get_paths()
+MANIFEST_FILE = _P["manifest_file"]
+ASSEMBLY_FOLDER = _P["assembly_dir"]
+FINAL_OUTPUT = _P["final_output"]
+ASSEMBLY_LOG = _P["assembly_log"]
 
 VIDEO_WIDTH = 1152
 VIDEO_HEIGHT = 768

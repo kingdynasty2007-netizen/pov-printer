@@ -14,10 +14,6 @@
 # ============================================================
 
 KNOWN_FIXES = [
-    # Example entry (currently unused — the swap bug it would have
-    # caught is now fixed at the source in get_position_labels()).
-    # Keep the shape for the next one:
-    #
     # {
     #     "name": "center_right_position_swap",
     #     "match": lambda issue: "center" in issue.lower() and "right" in issue.lower()
@@ -32,10 +28,10 @@ KNOWN_FIXES = [
 
 
 def check_known_fixes(issue_text):
-    """Returns an extra_instruction string if a known pattern matches,
-    else None. Checked before brain ever gets called."""
+    """Returns (extra_instruction, name) if a known pattern matches,
+    else (None, None). Checked before brain ever gets called."""
     if not issue_text:
-        return None
+        return None, None
     for entry in KNOWN_FIXES:
         try:
             if entry["match"](issue_text):

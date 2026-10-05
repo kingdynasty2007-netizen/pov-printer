@@ -1,18 +1,245 @@
 {
-  "scene_001": {
-    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_KUx0O9Fkpf3kUUU1UAPho4wi8EQvlwuk/output.png",
-    "local_path": "generated_images/scene_001.png",
+  "scene_011": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_uKsdnOhu264vCTuJ5qO1AcuyuLqbnxtj/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_011.png",
     "characters": [
-      "hannah"
+      "esau"
     ],
-    "scene_text": "1. prompt: Wide cinematic establishing shot of a small biblical-era Middle Eastern village just after sunrise, mud-brick homes, stone steps, clay jars, and a narrow dusty lane. Hannah stands outside her home in a relaxed three-quarter pose, left foot slightly forward, supporting a clay bowl against her waist with her left arm while her right hand pauses above the grain. Her shoulders are lowered, her head turned toward Micah approaching in the distance. Micah walks naturally toward her with an upright posture, one foot forward, trailing heel slightly raised, right arm swinging loosely and left hand near his rust-red sash. Warm golden morning light, polished children\u2019s story 2D animated cartoon style, clean line art, soft shading, subtle gradients, cinematic composition, consistent character designs, full-body characters visible, no modern objects.\nrefs: https://i.ibb.co/39btyLLW/c2984680-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/PZJXgC1S/c2975c20-ad7e-11f1-9900-d5706461bc4c.png, https://i.ibb.co/gM8h7NmQ/3d0cd8e0-ad7f-11f1-9900-d5706461bc4c.png",
+    "scene_text": "Medium side-profile shot of Esau walking alone through the rocky wasteland, the last amber light of sunset painting his rough face in profile, his eyes fixed on some distant point with no remorse visible. The wind lifts dust around his feet as he moves steadily away, a solitary hunter returning to empty land.",
+    "location": null,
+    "props": [],
     "verified": true,
     "status": "ok"
   },
-  "scene_002": {
+  "scene_015": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_H9BA1wMflayhCrjsWSC4O4WtueQE2GHi/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_015.png",
+    "characters": [
+      "jacob"
+    ],
+    "scene_text": "Medium close-up of Jacob standing alone at the edge of his tent in the deep blue darkness, one hand raised slightly as if still feeling the weight of the birthright now resting in his possession. His expression is solemn, not triumphant, and the cold starlight falls on his face as he stares into the distance where his brother is gone forever.",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_017": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_8yEZyIs2rO5Es99GQoeXWTIOtZNTuDgo/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_017.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Esau steps forward, his jaw clenched, pointing a trembling finger at Jacob while his voice rises in accusation. Jacob stands rigid but does not flinch, his gaze steady despite the pain visible in his own eyes. Outside the tent flap, the warm desert wind stirs the fabric gently, carrying the sound of distant livestock and the quiet of an evening that has changed everything.",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_019": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_05tNwwG4L7wCKnBXogHKZi83ZXGqgbe0/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_019.png",
+    "characters": [
+      "jacob"
+    ],
+    "scene_text": "Jacob stands at the edge of the camp, a lone figure against the vast darkening sky, his leather bundle pressed to his chest. The first stars appear above him as he gazes toward the horizon where his journey will soon begin. His face carries no triumph \u2014 only the heavy weight of a blessing obtained through cunning and the beginning of a long road that will test his faith.",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_001": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_zvFJUKd9Rid8jwccbVhBl8oY7ZMJ5Wpm/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_001.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Wide cinematic shot of the wilderness camp at golden hour as Esau stumbles into frame from the dusty open fields, his body exhausted and covered in dust, tunic torn and stained from the hunt. He collapses onto his knees beside Jacob's cooking fire, gasping for breath, throat working as he stares desperately at the steaming red stew. Jacob stands calmly nearby, stirring the pot with a wooden spoon, watching his brother with quiet calculating eyes. Two brothers separated by hunger and ambition stand between the dying embers and the vast empty land.",
+    "location": "edom_camp",
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_014": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_JEwMkSXpvoz5zXdGtDNHX2bsimwAaOCd/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_014.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Extreme wide cinematic shot of the two brothers from a great distance \u2014 Esau a small dark figure vanishing into the western wilderness on one side of the frame, Jacob a smaller still figure near the tents on the other, the vast red earth of Edom stretching between them under a deep indigo night sky. The empty clay bowl is nearly invisible in the foreground, a final silent witness to what was sold and what was lost.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_003": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_J7Ez0sGqQTKtxZpabn8NK9REX7msomy9/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_003.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Medium two-shot of Jacob leaning forward slightly, speaking to Esau with a low but firm voice, his eyes locked on his brother's face. Esau stands unsteadily on unsteady legs, his hand still outstretched toward the bowl, mouth open in desperation. The red stew glows in the firelight between them, both brothers framed against the darkening sky.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_012": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_JgBJNERptigdDNgARPLxz597wJWkpAGH/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_012.png",
+    "characters": [
+      "jacob"
+    ],
+    "scene_text": "Medium close-up of Jacob standing at the edge of the camp, looking out toward the wilderness where Esau disappeared, his arms at his sides, his face caught between satisfaction and something heavier. The first stars appear above him as the golden light fades to cool blue twilight over the Hebrew hills.\n===SCENE_BREAK",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_016": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_6S6YLGI6TvqusD2orLKdTqAfdP3Wv6I6/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_016.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "In the dim interior of Isaac's tent, Esau enters looking disheveled and angry, his face flushed with resentment. He stops short when he sees Jacob standing near the doorway, clutching a small leather bundle containing the birthright document. Their eyes meet across the tent, and for a moment neither speaks \u2014 the air between them thick with unspoken betrayal and broken brotherhood.",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_007": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_wUNI6JdrgLLRHNq1Y4PSUBOuI6tHsyme/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_007.png",
+    "characters": [
+      "esau"
+    ],
+    "scene_text": "Close shot of Esau drinking deeply from the bowl, his head thrown back slightly, a few drops of red stew running down his chin onto his dusty tunic. His eyes are half-closed in pure physical relief, all thought of birthrights and oaths gone from his face. The empty camp fades into soft focus behind him.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_009": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_4tfrlo1Kh76I3Hcd0usgLkmA3VfxkT1p/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_009.png",
+    "characters": [
+      "jacob"
+    ],
+    "scene_text": "Close medium shot of Jacob alone by the dying fire, his face illuminated by the last orange embers, his expression thoughtful and grave as he stares into the space where Esau stood. He picks up the empty clay bowl and traces its rim with his thumb, the weight of what just transpired settling over his features. The tent shadows grow long around him.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_010": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_xMv222YWjOre6ofCFH7tHIOn9bOXIw5B/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_010.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Wide cinematic establishing shot of the full camp at twilight, two figures visible \u2014 Esau walking alone into the deepening wilderness on the left, his figure growing smaller against the vast darkening horizon, and Jacob sitting by the fire near the tents on the right, a solitary still figure. The red earth stretches endlessly between them, symbolizing the distance now opened between the two brothers.",
+    "location": null,
+    "props": [],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_004": {
+    "status": "ok",
+    "error": "pose_action_ok: The scene text specifies a 'Close shot of Esau's face' where he looks down with a glassy/exhausted expression and open mouth, but the generated image is a medium/wide shot of both full-body characters standing side-by-side. role_match_ok: Action does not match scene description (close-up vs wide shot, expression mismatch).",
+    "error_category": "brain_exhausted",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_Nl21vddXdSaFTPPdZtZyKIiRXOxzVw3v/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_004.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Close shot of Esau's face as he looks down at the steaming red stew, his eyes glassy with exhaustion and instinctual hunger, his mouth slightly open. He does not look at Jacob but speaks absently, his voice rough and weak, offering something intangible in exchange for the food. The bowl fills the lower frame, red and steaming, reflecting the firelight.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true
+  },
+  "scene_008": {
     "status": "failed",
-    "error": "HTTPSConnectionPool(host='platform-outputs.agnes-ai.space', port=443): Max retries exceeded with url: /images/i2i/task_3EWD79GK7S0SiDR3VHXBH1xkJ4L7DNkZ/output.png (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)')))",
+    "error": "pose_action_ok: The scene text describes Esau wiping his mouth with the back of his hand and the bowl being empty (with a hollow clatter), but the image shows him wiping his mouth with a cloth/napkin and the bowl is full of stew.",
+    "error_category": "brain_exhausted"
+  },
+  "scene_002": {
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_9hsmYMcp7keECZwRf58z7SLlzAhxWV98/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_002.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Close medium shot of Esau reaching a trembling hand toward the clay bowl of red lentil stew, his lips cracked and parched, eyes pleading. Jacob steps slightly between Esau and the bowl, raising one hand in a stop gesture while keeping his other hand on the wooden spoon, his expression unreadable and composed. The warm evening light catches the steam rising from the stew between them like a barrier.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true,
+    "status": "ok"
+  },
+  "scene_006": {
+    "status": "ok",
+    "error": "http 503 (queue full \u2014 all lanes cooling down 45s): {\"error\":{\"message\":\"image queue is full, please retry later (request id: 202609261134442305553568YqomLHM)\",\"type\":\"\",\"param\":\"\",\"code\":null}}",
+    "error_category": "transient",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_uRlF3tZj7It1oinas2w24vzbjuEOh3DS/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_006.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Close medium shot of Jacob lifting the clay bowl of red lentil stew and handing it to Esau along with a piece of flatbread, his movements deliberate and measured. Esau takes the bowl with both shaking hands, nearly spilling the hot stew, and immediately begins eating with fierce urgency, swallowing large mouthfuls without chewing properly. Jacob watches silently, his arms now folded.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true
+  },
+  "scene_013": {
+    "status": "failed",
+    "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
     "error_category": "download",
-    "unverified_url": "https://platform-outputs.agnes-ai.space/images/i2i/task_3EWD79GK7S0SiDR3VHXBH1xkJ4L7DNkZ/output.png"
+    "unverified_url": "https://platform-outputs.agnes-ai.space/images/i2i/task_EG1moaCtQ215dKC2HyPPrGC3yPjRlESd/output.png"
+  },
+  "scene_018": {
+    "status": "failed",
+    "error": "pose_action_ok: The scene text describes Esau with shoulders slumped, staring down at his open and useless hands (no bowl), having turned away from Jacob. The generated image shows him holding a bowl with both hands and facing forward, contradicting the described pose and action.",
+    "error_category": "brain_exhausted"
+  },
+  "scene_005": {
+    "status": "ok",
+    "error": "http 429: {\"error\":{\"code\":\"\",\"message\":\"You\u2019ve reached the API rate limit for free users. Upgrade to a Token Plan to unlock higher limits and continue using the API without interruption. (request id: 20260926113705191355894igzRtmSx)\",\"type\":\"AgnesAI_error\"}}",
+    "error_category": "verify_unreachable",
+    "unverified_url": "https://platform-outputs.agnes-ai.space/images/i2i/task_OZ509eXpHyYko9baxDmYSadbz5rdb96L/output.png",
+    "url": "https://platform-outputs.agnes-ai.space/images/i2i/task_jGSiOnQYENU6SmpcnJLwAwjw3Qaj6CvL/output.png",
+    "local_path": "/public/pov_printer/generated_images/scene_005.png",
+    "characters": [
+      "esau",
+      "jacob"
+    ],
+    "scene_text": "Medium two-shot of Jacob nodding slowly with a faint satisfied expression as Esau raises his right hand and swears an oath, his fingers pressing against his palm in the ancient gesture of binding. Jacob extends his left hand toward Esau, palm up, as if already receiving what was just pledged. The red stew sits between them on the stone, no longer out of reach.",
+    "location": null,
+    "props": [
+      "lentil_stew_bowl"
+    ],
+    "verified": true
   }
 }
